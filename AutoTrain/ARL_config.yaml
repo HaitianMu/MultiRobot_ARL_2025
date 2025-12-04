@@ -1,0 +1,62 @@
+behaviors:
+  RobotBrain:
+    trainer_type: ppo
+    hyperparameters:
+      batch_size: 1024
+      buffer_size: 10240
+      learning_rate: 0.0003
+      learning_rate_schedule: linear
+      beta: 0.005
+      beta_schedule: constant
+      epsilon: 0.2
+      epsilon_schedule: linear
+      lambd: 0.95
+      num_epoch: 3
+
+    network_settings:
+      vis_encode_type: simple
+      normalize: false
+      hidden_units: 256
+      num_layers: 3
+
+    reward_signals:
+      extrinsic:
+        gamma: 0.99
+        strength: 1.0
+
+    keep_checkpoints: 80
+    checkpoint_interval: 5000
+    max_steps: 400000
+    time_horizon: 64
+    summary_freq: 500
+
+  HumanBehavior:
+    trainer_type: ppo
+    hyperparameters:
+      batch_size: 1024
+      buffer_size: 10240
+      learning_rate: 0.0003
+      learning_rate_schedule: linear
+      beta: 0.005
+      beta_schedule: constant
+      epsilon: 0.2
+      epsilon_schedule: linear
+      lambd: 0.95
+      num_epoch: 3
+
+    network_settings:
+      vis_encode_type: simple
+      normalize: false
+      hidden_units: 256
+      num_layers: 3
+
+    reward_signals:
+      extrinsic:
+        gamma: 0.99
+        strength: 1.0
+
+    keep_checkpoints: 80
+    checkpoint_interval: 100000
+    max_steps: 8000000
+    time_horizon: 64
+    summary_freq: 10000

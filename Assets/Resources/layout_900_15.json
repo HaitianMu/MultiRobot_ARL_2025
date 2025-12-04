@@ -1,0 +1,173 @@
+{
+    "layouts":[
+    {
+      "name": "layout4",
+      "ExitRoom": "EntranceHall",
+      "ExitDoorPosition": "left",
+      "rooms": [
+        {
+          "roomName": "EntranceHall",
+          "xzPosition": {"x": 0, "y": 0, "z": 0},
+          "width": 12,
+          "height": 8,
+          "roomSize": 96,
+          "ConnectedRoom": ["MainCorridor", "ReceptionDesk"]
+        },
+        {
+          "roomName": "ReceptionDesk",
+          "xzPosition": {"x": 0, "y": 0, "z": 8},
+          "width": 6,
+          "height": 5,
+          "roomSize": 30,
+          "ConnectedRoom": ["EntranceHall"]
+        },
+        {
+          "roomName": "MainCorridor",
+          "xzPosition": {"x": 12, "y": 0, "z": 0},
+          "width": 3,
+          "height": 20,
+          "roomSize": 60,
+          "ConnectedRoom": ["EntranceHall", "DevOffice1", "DevOffice2", "Lounge", "SecondaryCorridor"]
+        },
+        {
+          "roomName": "DevOffice1",
+          "xzPosition": {"x": 15, "y": 0, "z": 0},
+          "width": 6,
+          "height": 7,
+          "roomSize": 42,
+          "ConnectedRoom": ["MainCorridor"]
+        },
+        {
+          "roomName": "DevOffice2",
+          "xzPosition": {"x": 15, "y": 0, "z": 7},
+          "width": 6,
+          "height": 7,
+          "roomSize": 42,
+          "ConnectedRoom": ["MainCorridor"]
+        },
+        {
+          "roomName": "Lounge",
+          "xzPosition": {"x": 15, "y": 0, "z": 14},
+          "width": 8,
+          "height": 6,
+          "roomSize": 48,
+          "ConnectedRoom": ["MainCorridor", "SecondaryCorridor"]
+        },
+        {
+          "roomName": "SecondaryCorridor",
+          "xzPosition": {"x": 12, "y": 0, "z": 20},
+          "width": 11,
+          "height": 3,
+          "roomSize": 33,
+          "ConnectedRoom": ["MainCorridor", "Lounge", "MeetingRoom", "ManagerSuite", "ServerRoom"]
+        },
+        {
+          "roomName": "MeetingRoom",
+          "xzPosition": {"x": 23, "y": 0, "z": 20},
+          "width": 10,
+          "height": 8,
+          "roomSize": 80,
+          "ConnectedRoom": ["SecondaryCorridor","ManagerSuite"]
+        },
+        {
+          "roomName": "ManagerSuite",
+          "xzPosition": {"x": 23, "y": 0, "z": 28},
+          "width": 8,
+          "height": 6,
+          "roomSize": 48,
+          "ConnectedRoom": ["SecondaryCorridor"]
+        },
+        {
+          "roomName": "ServerRoom",
+          "xzPosition": {"x": 12, "y": 0, "z": 23},
+          "width": 6,
+          "height": 5,
+          "roomSize": 30,
+          "ConnectedRoom": ["SecondaryCorridor"]
+        }
+      ]
+    },{
+      "name": "elementary_school",
+      "ExitRoom": "MainEntrance",
+      "ExitDoorPosition": "backward",
+      "rooms": [
+        {"roomName": "MainEntrance", "xzPosition": {"x":5,"z":0}, "width":6,"height":6, "ConnectedRoom": ["Corridor1"]},
+        {"roomName": "Corridor1", "xzPosition": {"x":5,"z":6}, "width":3,"height":20, "ConnectedRoom": ["MainEntrance","Class1A","Class1B","Corridor2"]},
+        {"roomName": "Class1A", "xzPosition": {"x":8,"z":6}, "width":6,"height":6, "ConnectedRoom": ["Corridor1"]},
+        {"roomName": "Class1B", "xzPosition": {"x":8,"z":12}, "width":6,"height":6, "ConnectedRoom": ["Corridor1"]},
+        {"roomName": "Corridor2", "xzPosition": {"x":0,"z":26}, "width":14,"height":3, "ConnectedRoom": ["Corridor1","Library","Gym"]},
+        {"roomName": "Library", "xzPosition": {"x":0,"z":29}, "width":8,"height":8, "ConnectedRoom": ["Corridor2"]},
+        {"roomName": "Gym", "xzPosition": {"x":8,"z":29}, "width":8,"height":10, "ConnectedRoom": ["Corridor2"]},
+        {"roomName": "TeachersLounge", "xzPosition": {"x":0,"z":6}, "width":5,"height":8, "ConnectedRoom": ["MainEntrance","Corridor1"]},
+        {"roomName": "Bathroom", "xzPosition": {"x":14,"z":6}, "width":4,"height":4, "ConnectedRoom": ["Corridor1","Class1A"]},
+        {"roomName": "Storage", "xzPosition": {"x":14,"z":10}, "width":4,"height":4, "ConnectedRoom": ["Corridor1","Bathroom"]}
+      ]
+    },{
+      "name": "hospital_er",
+      "ExitRoom": "EREntrance",
+      "ExitDoorPosition": "left",
+      "rooms": [
+        {"roomName": "EREntrance", "xzPosition": {"x":0,"z":0}, "width":8,"height":6, "ConnectedRoom": ["Triage","MainCorridor"]},
+        {"roomName": "Triage", "xzPosition": {"x":8,"z":0}, "width":6,"height":6, "ConnectedRoom": ["EREntrance"]},
+        {"roomName": "MainCorridor", "xzPosition": {"x":0,"z":6}, "width":3,"height":25, "ConnectedRoom": ["EREntrance","Exam1","Exam2","Trauma","Pharmacy"]},
+        {"roomName": "Exam1", "xzPosition": {"x":3,"z":6}, "width":6,"height":6, "ConnectedRoom": ["MainCorridor"]},
+        {"roomName": "Exam2", "xzPosition": {"x":3,"z":12}, "width":6,"height":6, "ConnectedRoom": ["MainCorridor"]},
+        {"roomName": "Trauma", "xzPosition": {"x":3,"z":18}, "width":8,"height":8, "ConnectedRoom": ["MainCorridor"]},
+        {"roomName": "Pharmacy", "xzPosition": {"x":3,"z":26}, "width":6,"height":5, "ConnectedRoom": ["MainCorridor"]},
+        {"roomName": "NursesStation", "xzPosition": {"x":9,"z":6}, "width":5,"height":5, "ConnectedRoom": ["MainCorridor"]},
+        {"roomName": "WaitingArea", "xzPosition": {"x":14,"z":0}, "width":10,"height":8, "ConnectedRoom": ["EREntrance"]},
+        {"roomName": "Bathroom", "xzPosition": {"x":14,"z":8}, "width":4,"height":4, "ConnectedRoom": ["WaitingArea"]},
+        {"roomName": "Janitor", "xzPosition": {"x":9,"z":26}, "width":4,"height":4, "ConnectedRoom": ["MainCorridor"]},
+        {"roomName": "Storage", "xzPosition": {"x":9,"z":30}, "width":4,"height":4, "ConnectedRoom": ["MainCorridor"]}
+      ]
+    },{
+      "name": "tech_office",
+      "ExitRoom": "Atrium",
+      "ExitDoorPosition": "backward",
+      "rooms": [
+        {"roomName": "Atrium", "xzPosition": {"x":10,"z":0}, "width":12,"height":10, "ConnectedRoom": ["Reception","MainHall"]},
+        {"roomName": "Reception", "xzPosition": {"x":22,"z":0}, "width":6,"height":6, "ConnectedRoom": ["Atrium"]},
+        {"roomName": "MainHall", "xzPosition": {"x":10,"z":10}, "width":3,"height":25, "ConnectedRoom": ["Atrium","DevZone1","DevZone2","MeetingWing"]},
+        {"roomName": "DevZone1", "xzPosition": {"x":13,"z":10}, "width":15,"height":10, "ConnectedRoom": ["MainHall","PodA","PodB"]},
+        {"roomName": "DevZone2", "xzPosition": {"x":13,"z":20}, "width":15,"height":10, "ConnectedRoom": ["MainHall","PodC","PodD"]},
+        {"roomName": "PodA", "xzPosition": {"x":28,"z":10}, "width":6,"height":6, "ConnectedRoom": ["DevZone1"]},
+        {"roomName": "PodB", "xzPosition": {"x":28,"z":16}, "width":6,"height":4, "ConnectedRoom": ["DevZone1"]},
+        {"roomName": "PodC", "xzPosition": {"x":28,"z":20}, "width":6,"height":6, "ConnectedRoom": ["DevZone2"]},
+        {"roomName": "PodD", "xzPosition": {"x":28,"z":26}, "width":6,"height":6, "ConnectedRoom": ["DevZone2"]},
+        {"roomName": "MeetingWing", "xzPosition": {"x":0,"z":10}, "width":10,"height":10, "ConnectedRoom": ["MainHall","Conference1","Conference2"]},
+        {"roomName": "Conference1", "xzPosition": {"x":0,"z":20}, "width":8,"height":6, "ConnectedRoom": ["MeetingWing","Conference2"]},
+        {"roomName": "Conference2", "xzPosition": {"x":0,"z":26}, "width":8,"height":6, "ConnectedRoom": ["MeetingWing"]},
+        {"roomName": "BreakRoom", "xzPosition": {"x":0,"z":32}, "width":10,"height":8, "ConnectedRoom": ["MainHall"]},
+        {"roomName": "ServerRoom", "xzPosition": {"x":10,"z":35}, "width":8,"height":6, "ConnectedRoom": ["MainHall","Bathroom"]},
+        {"roomName": "Bathroom", "xzPosition": {"x":18,"z":35}, "width":5,"height":5, "ConnectedRoom": ["MainHall"]}
+      ]
+    },{
+      "name": "shopping_mall",
+      "ExitRoom": "MallEntrance",
+      "ExitDoorPosition": "left",
+      "rooms": [
+        {"roomName": "MallEntrance", "xzPosition": {"x":0,"z":0}, "width":8,"height":10, "ConnectedRoom": ["MainHall"]},
+        {"roomName": "MainHall", "xzPosition": {"x":8,"z":0}, "width":4,"height":30, "ConnectedRoom": ["MallEntrance","NorthWing","SouthWing"]},
+        {"roomName": "NorthWing", "xzPosition": {"x":12,"z":0}, "width":20,"height":4, "ConnectedRoom": ["FoodCourt","MainHall","Store1","Store2","Store3"]},
+        {"roomName": "SouthWing", "xzPosition": {"x":12,"z":26}, "width":20,"height":4, "ConnectedRoom": ["MainHall","Store4","Store5","Store6"]},
+        {"roomName": "Store1", "xzPosition": {"x":12,"z":4}, "width":6,"height":8, "ConnectedRoom": ["NorthWing"]},
+        {"roomName": "Store2", "xzPosition": {"x":18,"z":4}, "width":7,"height":8, "ConnectedRoom": ["NorthWing"]},
+        {"roomName": "Store3", "xzPosition": {"x":25,"z":4}, "width":7,"height":8, "ConnectedRoom": ["NorthWing"]},
+        {"roomName": "Store4", "xzPosition": {"x":12,"z":30}, "width":8,"height":8, "ConnectedRoom": ["SouthWing"]},
+        {"roomName": "Store5", "xzPosition": {"x":20,"z":30}, "width":8,"height":8, "ConnectedRoom": ["SouthWing"]},
+        {"roomName": "Store6", "xzPosition": {"x":28,"z":30}, "width":8,"height":8, "ConnectedRoom": ["SouthWing"]},
+        {"roomName": "FoodCourt", "xzPosition": {"x":32,"z":0}, "width":15,"height":15, "ConnectedRoom": ["MainHall"]},
+        {"roomName": "Restaurant1", "xzPosition": {"x":32,"z":15}, "width":8,"height":8, "ConnectedRoom": ["FoodCourt"]},
+        {"roomName": "Restaurant2", "xzPosition": {"x":40,"z":15}, "width":8,"height":8, "ConnectedRoom": ["FoodCourt"]},
+        {"roomName": "Cinema", "xzPosition": {"x":0,"z":10}, "width":8,"height":15, "ConnectedRoom": ["MainHall","MallEntrance","Security"]},
+        {"roomName": "Bathroom1", "xzPosition": {"x":12,"z":12}, "width":4,"height":4, "ConnectedRoom": ["MainHall"]},
+        {"roomName": "Bathroom2", "xzPosition": {"x":12,"z":22}, "width":4,"height":4, "ConnectedRoom": ["MainHall"]},
+        {"roomName": "Security", "xzPosition": {"x":0,"z":25}, "width":6,"height":6, "ConnectedRoom": ["MallEntrance","Storage"]},
+        {"roomName": "Storage", "xzPosition": {"x":0,"z":31}, "width":6,"height":6, "ConnectedRoom": ["MallEntrance"]}
+      ]
+    }
+    
+    
+    
+    ]     
+}
