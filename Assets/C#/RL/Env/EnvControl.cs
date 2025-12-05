@@ -92,8 +92,8 @@ public partial class EnvControl : MonoBehaviour
     public CSVRead CsvRead;//读取火焰数据
     private void Start()
     {
-        CsvRead = new CSVRead();
-        CsvRead.TestFireDataLoading();//加载火焰数据
+       /* CsvRead = new CSVRead();
+        CsvRead.TestFireDataLoading();//加载火焰数据*/
         EnpisodeNum = 0;
         HumanNum = 10;
         EnpisodeTime = 0;
@@ -159,6 +159,7 @@ public partial class EnvControl : MonoBehaviour
     {
         runtime += Time.deltaTime;
         EnpisodeTime += Time.deltaTime;
+        UpdateSmokeFrame();//更新当前时间，便于读取烟雾数据
         //预览模式，机器人使用贪心算法，人类使用自由移动，火焰人为控制生成地点!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         if (!isTraining)
         {

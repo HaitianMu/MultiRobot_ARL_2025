@@ -370,7 +370,7 @@ MonoBehaviour:
   HumanPrefab: {fileID: 4212430261449273798, guid: c919a25b8f5be4e4ab0cf61b53fc2f9a, type: 3}
   RobotPrefab: {fileID: 4212430261449273798, guid: 74b45f810a581ca42b493d43b8f1528b, type: 3}
   BrainPrefab: {fileID: 0}
-  FirePrefab: {fileID: 0}
+  FirePrefab: {fileID: 5382018074620852037, guid: 09b60b70bce9e4444a1c43a135e3dc17, type: 3}
   RobotParent: {fileID: 2136710684}
   FireParent: {fileID: 19583558}
   RobotBrainParent: {fileID: 0}
@@ -379,12 +379,12 @@ MonoBehaviour:
   EpisodeNum: 0
   TotalSize: 0
   RoomNum: 0
-  isTest: 1
-  isTraining: 1
-  useRobot: 1
-  useFire: 1
-  useHumanAgent: 1
-  usePanic: 1
+  isTest: 0
+  isTraining: 0
+  useRobot: 0
+  useFire: 0
+  useHumanAgent: 0
+  usePanic: 0
   currentFloorhuman: 0
   FireStep: 0
   StepCount: 0
@@ -400,6 +400,12 @@ MonoBehaviour:
   EnpisodeTime: 0
   humanBrainNum: 10
   CsvRead: {fileID: 0}
+  fireCsvFile: {fileID: 4900000, guid: db63e38adc7243544a3723a6ac7a1cf0, type: 3}
+  gridStep: 0.5
+  minX: -10
+  minZ: -10
+  widthX: 100
+  lengthZ: 100
 --- !u!1001 &529632685
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1559,8 +1565,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2116594106}
+  - component: {fileID: 2116594107}
   m_Layer: 0
-  m_Name: SmokeList
+  m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1581,6 +1588,21 @@ Transform:
   m_Father: {fileID: 464273387}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2116594107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2116594105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d20009ac7c8f4f4ab99e175e53070fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  envControl: {fileID: 464273388}
+  mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+  material: {fileID: 2100000, guid: e0706226caf7a284b8b65e49c358f273, type: 2}
 --- !u!1 &2136710684
 GameObject:
   m_ObjectHideFlags: 0

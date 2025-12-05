@@ -63,16 +63,16 @@ public partial class FireControl : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate() //开始扩散,这样写是每一帧该火焰都会进行扩散！！！！
+    void FixedUpdate() //开始扩散,这样写是每一帧该火焰都会进行扩散！！！！//火焰停止扩散2025.12.05
     {
-        if (!isPossibleToSpread) return;
+       /* if (!isPossibleToSpread) return;
 
         if (spreadingCountDown <= 0)
         {
             StartCoroutine(TrySpreadFire());
             enabled = false; // 扩散后禁用
         }
-        spreadingCountDown--; 
+        spreadingCountDown--; */
     }
 
     private void OnTriggerEnter(Collider collision)//碰撞发生，当碰撞的物体是墙时，消除该火焰，当碰撞物体是门是，销毁门

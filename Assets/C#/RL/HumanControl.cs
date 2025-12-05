@@ -94,7 +94,7 @@ public partial class HumanControl: MonoBehaviour
            //当看到机器人时，人类会进行跟随
            //print("人类不使用大脑，依据当前环境来决定自己的行为状态");
             UpdateBehaviorModel(); //更新行为模式
-            print("不使用人类智能体");
+           // print("不使用人类智能体");
         }
         else
         {//这边则依据人类大脑提供的CurrentState进行移动，也是每一帧进行状态的改变。
