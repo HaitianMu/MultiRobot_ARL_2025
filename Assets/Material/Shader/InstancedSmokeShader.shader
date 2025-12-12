@@ -50,7 +50,7 @@ Shader "Custom/InstancedSmokeShader"
 
             // 将浓度映射到透明度 (你可以调整这个公式)
             // 比如：浓度 * 0.8，保证最浓的时候也不会完全不透明，看起来像烟
-            o.Alpha = clamp(density * 0.8, 0, 1); 
+            o.Alpha = clamp(density * 0.6, 0, 1); 
         }
         ENDCG
     }

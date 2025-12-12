@@ -1237,192 +1237,192 @@
    
   ]
 },{
-  "name": "layout_complex_50_sector_alpha_fixed",
-  "ExitRoom": "NeuralNetwork",
-  "ExitDoorPosition": "top",
+  "name": "layout_50",
+  "ExitRoom": "CrewDorms_A",
+  "ExitDoorPosition": "left",
   "rooms": [
-    {
-      "roomName": "CentralLobby",
-      "xzPosition": { "x": 0, "z": 0 },
-      "width": 16,
-      "height": 16,
-      "ConnectedRoom": ["CyberMedBay", "SecurityHub", "ExoLab", "MessHall"]
-    },
-    {
-      "roomName": "MessHall",
-      "xzPosition": { "x": -16, "z": 0 },
-      "width": 16,
-      "height": 16,
-      "ConnectedRoom": ["CrewDorms_A", "CrewDorms_B", "CentralLobby"]
-    },
-    {
-      "roomName": "CrewDorms_A",
-      "xzPosition": { "x": -32, "z": 0 },
-      "width": 16,
-      "height": 24,
-      "ConnectedRoom": ["MessHall", "RecLounge"]
-    },
-    {
-      "roomName": "CrewDorms_B",
-      "xzPosition": { "x": -16, "z": 16 },
-      "width": 16,
-      "height": 24,
-      "ConnectedRoom": ["MessHall", "RecLounge"]
-    },
-    {
-      "roomName": "RecLounge",
-      "xzPosition": { "x": -32, "z": 24 },
-      "width": 16,
-      "height": 16,
-      "ConnectedRoom": ["CrewDorms_A", "CrewDorms_B"]
-    },
-    {
-      "roomName": "CyberMedBay",
-      "xzPosition": { "x": 0, "z": -14 },
-      "width": 12,
-      "height": 14,
-      "ConnectedRoom": ["CentralLobby", "NaniteClinic", "TraumaCenter"]
-    },
-    {
-      "roomName": "NaniteClinic",
-      "xzPosition": { "x": -10, "z": -14 },
-      "width": 10,
-      "height": 10,
-      "ConnectedRoom": ["CyberMedBay"]
-    },
-    {
-      "roomName": "TraumaCenter",
-      "xzPosition": { "x": 12, "z": -14 },
-      "width": 12,
-      "height": 14,
-      "ConnectedRoom": ["CyberMedBay", "BioScanChamber"]
-    },
-    {
-      "roomName": "BioScanChamber",
-      "xzPosition": { "x": 24, "z": -14 },
-      "width": 10,
-      "height": 10,
-      "ConnectedRoom": ["TraumaCenter", "ExoLab"]
-    },
-    {
-      "roomName": "ExoLab",
-      "xzPosition": { "x": 16, "z": 0 },
-      "width": 20,
-      "height": 16,
-      "ConnectedRoom": ["CentralLobby", "HoloTraining", "DroneWorkshop", "BioScanChamber"]
-    },
-    {
-      "roomName": "HoloTraining",
-      "xzPosition": { "x": 16, "z": -24 },
-      "width": 14,
-      "height": 10,
-      "ConnectedRoom": ["ExoLab"]
-    },
-    {
-      "roomName": "DroneWorkshop",
-      "xzPosition": { "x": 36, "z": 0 },
-      "width": 14,
-      "height": 16,
-      "ConnectedRoom": ["ExoLab", "RechargeBay", "FabricationPlant"]
-    },
-    {
-      "roomName": "RechargeBay",
-      "xzPosition": { "x": 50, "z": 0 },
-      "width": 10,
-      "height": 10,
-      "ConnectedRoom": ["DroneWorkshop"]
-    },
-    {
-      "roomName": "FabricationPlant",
-      "xzPosition": { "x": 36, "z": 16 },
-      "width": 14,
-      "height": 14,
-      "ConnectedRoom": ["DroneWorkshop", "QuantumCore"]
-    },
-    {
-      "roomName": "SecurityHub",
-      "xzPosition": { "x": 0, "z": 16 },
-      "width": 20,
-      "height": 20,
-      "ConnectedRoom": ["CentralLobby", "NeuralNetwork", "Armory", "QuantumCore"]
-    },
-    {
-      "roomName": "Armory",
-      "xzPosition": { "x": -10, "z": 16 },
-      "width": 10,
-      "height": 12,
-      "ConnectedRoom": ["SecurityHub"]
-    },
-    {
-      "roomName": "NeuralNetwork",
-      "xzPosition": { "x": 0, "z": 36 },
-      "width": 16,
-      "height": 24,
-      "ConnectedRoom": ["SecurityHub", "AIIntegration", "ServerFarm"]
-    },
-    {
-      "roomName": "AIIntegration",
-      "xzPosition": { "x": -16, "z": 40 },
-      "width": 16,
-      "height": 12,
-      "ConnectedRoom": ["NeuralNetwork"]
-    },
-    {
-      "roomName": "ServerFarm",
-      "xzPosition": { "x": 2, "z": 60 },
-      "width": 12,
-      "height": 16,
-      "ConnectedRoom": ["NeuralNetwork", "CoolingSystem"]
-    },
-    {
-      "roomName": "CoolingSystem",
-      "xzPosition": { "x": 2, "z": 76 },
-      "width": 12,
-      "height": 10,
-      "ConnectedRoom": ["ServerFarm"]
-    },
-    {
-      "roomName": "QuantumCore",
-      "xzPosition": { "x": 20, "z": 16 },
-      "width": 16,
-      "height": 24,
-      "ConnectedRoom": ["SecurityHub", "FabricationPlant", "TemporalLab", "GravityChamber"]
-    },
-    {
-      "roomName": "GravityChamber",
-      "xzPosition": { "x": 36, "z": 30 },
-      "width": 12,
-      "height": 10,
-      "ConnectedRoom": ["QuantumCore"]
-    },
-    {
-      "roomName": "TemporalLab",
-      "xzPosition": { "x": 20, "z": 40 },
-      "width": 16,
-      "height": 14,
-      "ConnectedRoom": ["QuantumCore", "ChronoVault", "PsiChamber"]
-    },
-    {
-      "roomName": "ChronoVault",
-      "xzPosition": { "x": 36, "z": 44 },
-      "width": 10,
-      "height": 10,
-      "ConnectedRoom": ["TemporalLab"]
-    },
-    {
-      "roomName": "PsiChamber",
-      "xzPosition": { "x": 20, "z": 54 },
-      "width": 12,
-      "height": 10,
-      "ConnectedRoom": ["TemporalLab"]
-    },
-    {
-      "roomName": "ObservationDeck",
-      "xzPosition": { "x": 48, "z": 30 },
-      "width": 14,
-      "height": 24,
-      "ConnectedRoom": ["GravityChamber"]
-    }
+      {
+          "roomName": "CentralLobby",
+          "xzPosition": {"x": 0, "z": 0},
+          "width": 16,
+          "height": 16,
+          "ConnectedRoom": ["CyberMedBay", "SecurityHub", "ExoLab", "MessHall"]
+      },
+      {
+          "roomName": "MessHall",
+          "xzPosition": {"x": -16, "z": 0},
+          "width": 16,
+          "height": 16,
+          "ConnectedRoom": ["CrewDorms_A", "CrewDorms_B", "CentralLobby"]
+      },
+      {
+          "roomName": "CrewDorms_A",
+          "xzPosition": {"x": -32, "z": 0},
+          "width": 16,
+          "height": 24,
+          "ConnectedRoom": ["MessHall", "RecLounge"]
+      },
+      {
+          "roomName": "CrewDorms_B",
+          "xzPosition": {"x": -16, "z": 16},
+          "width": 16,
+          "height": 24,
+          "ConnectedRoom": ["MessHall", "RecLounge"]
+      },
+      {
+          "roomName": "RecLounge",
+          "xzPosition": {"x": -32, "z": 24},
+          "width": 16,
+          "height": 16,
+          "ConnectedRoom": ["CrewDorms_A", "CrewDorms_B"]
+      },
+      {
+          "roomName": "CyberMedBay",
+          "xzPosition": {"x": 0, "z": -14},
+          "width": 12,
+          "height": 14,
+          "ConnectedRoom": ["CentralLobby", "NaniteClinic", "TraumaCenter"]
+      },
+      {
+          "roomName": "NaniteClinic",
+          "xzPosition": {"x": -10, "z": -14},
+          "width": 10,
+          "height": 10,
+          "ConnectedRoom": ["CyberMedBay"]
+      },
+      {
+          "roomName": "TraumaCenter",
+          "xzPosition": {"x": 12, "z": -14},
+          "width": 12,
+          "height": 14,
+          "ConnectedRoom": ["CyberMedBay", "BioScanChamber"]
+      },
+      {
+          "roomName": "BioScanChamber",
+          "xzPosition": {"x": 24, "z": -14},
+          "width": 10,
+          "height": 10,
+          "ConnectedRoom": ["TraumaCenter", "ExoLab"]
+      },
+      {
+          "roomName": "ExoLab",
+          "xzPosition": {"x": 16, "z": 0},
+          "width": 20,
+          "height": 16,
+          "ConnectedRoom": ["CentralLobby", "HoloTraining", "DroneWorkshop", "BioScanChamber"]
+      },
+      {
+          "roomName": "HoloTraining",
+          "xzPosition": {"x": 16, "z": -24},
+          "width": 14,
+          "height": 10,
+          "ConnectedRoom": ["ExoLab", "TraumaCenter"]
+      },
+      {
+          "roomName": "DroneWorkshop",
+          "xzPosition": {"x": 36, "z": 0},
+          "width": 14,
+          "height": 16,
+          "ConnectedRoom": ["ExoLab", "RechargeBay", "FabricationPlant"]
+      },
+      {
+          "roomName": "RechargeBay",
+          "xzPosition": {"x": 50, "z": 0},
+          "width": 10,
+          "height": 10,
+          "ConnectedRoom": ["DroneWorkshop"]
+      },
+      {
+          "roomName": "FabricationPlant",
+          "xzPosition": {"x": 36, "z": 16},
+          "width": 14,
+          "height": 14,
+          "ConnectedRoom": ["DroneWorkshop", "QuantumCore"]
+      },
+      {
+          "roomName": "SecurityHub",
+          "xzPosition": {"x": 0, "z": 16},
+          "width": 20,
+          "height": 20,
+          "ConnectedRoom": ["CentralLobby", "NeuralNetwork", "Armory", "QuantumCore"]
+      },
+      {
+          "roomName": "Armory",
+          "xzPosition": {"x": -10, "z": 16},
+          "width": 10,
+          "height": 12,
+          "ConnectedRoom": ["SecurityHub"]
+      },
+      {
+          "roomName": "NeuralNetwork",
+          "xzPosition": {"x": 0, "z": 36},
+          "width": 16,
+          "height": 24,
+          "ConnectedRoom": ["SecurityHub", "AIIntegration", "ServerFarm"]
+      },
+      {
+          "roomName": "AIIntegration",
+          "xzPosition": {"x": -16, "z": 40},
+          "width": 16,
+          "height": 12,
+          "ConnectedRoom": ["NeuralNetwork"]
+      },
+      {
+          "roomName": "ServerFarm",
+          "xzPosition": {"x": 2, "z": 60},
+          "width": 12,
+          "height": 16,
+          "ConnectedRoom": ["NeuralNetwork", "CoolingSystem"]
+      },
+      {
+          "roomName": "CoolingSystem",
+          "xzPosition": {"x": 2, "z": 76},
+          "width": 12,
+          "height": 10,
+          "ConnectedRoom": ["ServerFarm"]
+      },
+      {
+          "roomName": "QuantumCore",
+          "xzPosition": {"x": 20, "z": 16},
+          "width": 16,
+          "height": 24,
+          "ConnectedRoom": ["SecurityHub", "FabricationPlant", "TemporalLab", "GravityChamber"]
+      },
+      {
+          "roomName": "GravityChamber",
+          "xzPosition": {"x": 36, "z": 30},
+          "width": 12,
+          "height": 10,
+          "ConnectedRoom": ["QuantumCore"]
+      },
+      {
+          "roomName": "TemporalLab",
+          "xzPosition": {"x": 20, "z": 40},
+          "width": 16,
+          "height": 14,
+          "ConnectedRoom": ["QuantumCore", "ChronoVault", "PsiChamber"]
+      },
+      {
+          "roomName": "ChronoVault",
+          "xzPosition": {"x": 36, "z": 44},
+          "width": 10,
+          "height": 10,
+          "ConnectedRoom": ["TemporalLab"]
+      },
+      {
+          "roomName": "PsiChamber",
+          "xzPosition": {"x": 20, "z": 54},
+          "width": 12,
+          "height": 10,
+          "ConnectedRoom": ["TemporalLab"]
+      },
+      {
+          "roomName": "ObservationDeck",
+          "xzPosition": {"x": 48, "z": 30},
+          "width": 14,
+          "height": 24,
+          "ConnectedRoom": ["GravityChamber"]
+      }
   ]
 }
   ]

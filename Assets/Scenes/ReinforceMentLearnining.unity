@@ -204,6 +204,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 789708397}
+  - {fileID: 1056481094}
+  - {fileID: 1608379192}
   m_Father: {fileID: 464273387}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -358,6 +360,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   runtime: 0
+  EpisodeNum: 0
+  EnpisodeTime: 0
+  StepCount: 0
+  FireStep: 0
   personList: []
   HumanBrainList: []
   RobotList: []
@@ -365,6 +371,7 @@ MonoBehaviour:
   FireList: []
   Exits: []
   cachedRoomPositions: []
+  FirePosition: []
   complexityControl: {fileID: 928955280}
   surface: {fileID: 1986788709}
   HumanPrefab: {fileID: 4212430261449273798, guid: c919a25b8f5be4e4ab0cf61b53fc2f9a, type: 3}
@@ -376,31 +383,27 @@ MonoBehaviour:
   RobotBrainParent: {fileID: 0}
   HumanBrainParent: {fileID: 0}
   humanParent: {fileID: 1341671606}
-  EpisodeNum: 0
   TotalSize: 0
   RoomNum: 0
   isTest: 0
   isTraining: 0
-  useRobot: 0
+  useRobotBrain: 0
   useFire: 0
   useHumanAgent: 0
   usePanic: 0
+  isMultiARL: 1
   currentFloorhuman: 0
-  FireStep: 0
-  StepCount: 0
   MaxStep: 0
   layoutNum: 0
-  FirePosition: []
   FireNum: 0
-  sumhealth: 0
-  startTime: 0
-  EnpisodeNum: 0
   HumanNum: 0
   EscapeHuman: 0
-  EnpisodeTime: 0
   humanBrainNum: 10
+  sumhealth: 0
+  startTime: 0
+  robotCount: 3
   CsvRead: {fileID: 0}
-  fireCsvFile: {fileID: 4900000, guid: db63e38adc7243544a3723a6ac7a1cf0, type: 3}
+  fireBinaryFile: {fileID: 4900000, guid: 7e991e165f2ab56439e4bad613c49cdd, type: 3}
   gridStep: 0.5
   minX: -10
   minZ: -10
@@ -635,7 +638,7 @@ PrefabInstance:
     - target: {fileID: 10268829736374538, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: e4c20156bd7bd2141acbe9fbc87bb488, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 10268829736374538, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
       propertyPath: m_BrainParameters.VectorObservationSize
       value: 102
@@ -695,6 +698,10 @@ PrefabInstance:
     - target: {fileID: 10268829736374540, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374540, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_TagString
+      value: RobotBrain
       objectReference: {fileID: 0}
     - target: {fileID: 6530910501676862312, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
       propertyPath: myEnv
@@ -823,6 +830,96 @@ MonoBehaviour:
   minheight: 2.5
   roomList: []
   ParentObject: {fileID: 0}
+--- !u!1001 &1056481093
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 133003830}
+    m_Modifications:
+    - target: {fileID: 10268829736374538, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_Model
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374538, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_BrainParameters.VectorObservationSize
+      value: 102
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374538, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_BrainParameters.NumStackedVectorObservations
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.4196596
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.0992656
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.2794428
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374540, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_Name
+      value: RobotBrain2
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374540, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374540, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_TagString
+      value: RobotBrain
+      objectReference: {fileID: 0}
+    - target: {fileID: 6530910501676862312, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: myEnv
+      value: 
+      objectReference: {fileID: 464273388}
+    - target: {fileID: 6530910501676862312, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: robot
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+--- !u!4 &1056481094 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+  m_PrefabInstance: {fileID: 1056481093}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1264463054 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1390373734701681569, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
@@ -1406,6 +1503,96 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1390373734701681569, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_PrefabInstance: {fileID: 1487801086}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1608379191
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 133003830}
+    m_Modifications:
+    - target: {fileID: 10268829736374538, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_Model
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374538, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_BrainParameters.VectorObservationSize
+      value: 102
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374538, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_BrainParameters.NumStackedVectorObservations
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.4196596
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.0992656
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.2794428
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374540, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_Name
+      value: RobotBrain3
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374540, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374540, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_TagString
+      value: RobotBrain
+      objectReference: {fileID: 0}
+    - target: {fileID: 6530910501676862312, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: myEnv
+      value: 
+      objectReference: {fileID: 464273388}
+    - target: {fileID: 6530910501676862312, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: robot
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+--- !u!4 &1608379192 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+  m_PrefabInstance: {fileID: 1608379191}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1622077930 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1390373734701681569, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
@@ -1601,7 +1788,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   envControl: {fileID: 464273388}
-  mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+  mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   material: {fileID: 2100000, guid: e0706226caf7a284b8b65e49c358f273, type: 2}
 --- !u!1 &2136710684
 GameObject:

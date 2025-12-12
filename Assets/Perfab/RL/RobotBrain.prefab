@@ -120,5 +120,12 @@ MonoBehaviour:
   robotInfo: {fileID: 0}
   currentFloor: 0
   stuckCounter: 0
+  _humanHealthObservation: 0
+  TotalHealthDecayRate: 0
+  HumanHealthDecayRate: 0
   floor_human: 0
-  isInitialized: 0
+  RobotIsInitialized: 0
+  robotPosition: {x: 0, y: 0, z: 0}
+  targetPosition: {x: 0, y: 0, z: 0}
+  SignalcostTime: 0
+  TotalcostTime: 0

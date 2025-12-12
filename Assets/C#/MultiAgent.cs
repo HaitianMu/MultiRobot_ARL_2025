@@ -142,7 +142,7 @@ public class MultiAgent : Agent
              Debug.Log("Human: " + human.transform.name);
          }
          Debug.Log("Robot: " + robot.transform.name);
-         Debug.Log("myEnv.useRobot " + myEnv.useRobot);//myEnv.isTraining
+         Debug.Log("myEnv.useRobotBrain " + myEnv.useRobotBrain);//myEnv.isTraining
          Debug.Log("myEnv.isTraining " + myEnv.isTraining);*/
     }
     public override void CollectObservations(VectorSensor sensor)
@@ -155,7 +155,7 @@ public class MultiAgent : Agent
         //Debug.Log("CollectObservations called.");
         if (myEnv == null || myEnv.useRobot is false)
         {
-            Debug.Log("myEnv is null or useRobot is false.");
+            Debug.Log("myEnv is null or useRobotBrain is false.");
             return;
         }
         int num = 0;
@@ -188,7 +188,7 @@ public class MultiAgent : Agent
     }
     /*public override void OnActionReceived(ActionBuffers actions)
     {
-        if (myEnv.useRobot is false)
+        if (myEnv.useRobotBrain is false)
             return;
         if (isTrans)  // ÅÐ¶Ï¹ý¶É×´Ì¬
             return;

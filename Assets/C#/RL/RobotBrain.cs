@@ -178,13 +178,13 @@ public class RobotBrain : Agent
         //总区域的面积，房间的数量/位置，每一个门的位置， 来学习建筑的生成逻辑
         // 计算环境边界（与Human观测保持一致）
 
-        if (myEnv.useRobot is false)
+        if (myEnv.useRobotBrain is false)
             return;
 
         //Debug.Log("CollectObservations called."); 
-        if (myEnv == null || myEnv.useRobot is false)
+        if (myEnv == null || myEnv.useRobotBrain is false)
         {
-            Debug.Log("myEnv is null or useRobot is false.");
+            Debug.Log("myEnv is null or useRobotBrain is false.");
             return;
         }
         //机器人位置观测值：2 * n（其中 n 为机器人的数量）,人类位置观测值：60,,房间位置观测值：30,出口位置观测值：2,火源位置观测值：6
@@ -271,7 +271,7 @@ public class RobotBrain : Agent
     }
     public override void OnActionReceived(ActionBuffers actions)
     {
-        if (myEnv.useRobot is false)
+        if (myEnv.useRobotBrain is false)
             return;
         //print("接收到了动作");
         MoveAgent(actions);  // 移动Agent
@@ -504,7 +504,7 @@ public class RobotBrain : Agent
 
     public override void Heuristic(in ActionBuffers actionsOut) // 这里的代码没什么用
     {
-        if (myEnv.useRobot is false)
+        if (myEnv.useRobotBrain is false)
             return;
 
         if (currentFloor != 3)

@@ -24,7 +24,7 @@ Unity会自动将.csv文件作为TextAsset处理*/
 public class CSVRead : MonoBehaviour
 {
     [Header("测试设置")]
-    public string resourcePath = "FireData/FireData1"; // Resources下的路径
+    public string resourcePath = "FireData/MultiARL_Firedata"; // Resources下的路径
     public bool logDetailedData = true;
 
     public List<FireData> dataList = new List<FireData>();

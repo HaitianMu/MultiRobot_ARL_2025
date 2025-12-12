@@ -37,7 +37,7 @@ public partial class HumanControl : MonoBehaviour
                             //print(this.name + "将自己加入机器人的跟随者列表");
                             myLeader.GetComponent<RobotControl>().myDirectFollowers.Add(gameObject.GetComponent<HumanControl>());//将自己加入机器人的跟随者列表
 
-                            if (myEnv.useRobot&&isFounded==false)//没有被机器人发现过
+                            if (myEnv.useRobotBrain&&isFounded==false)//没有被机器人发现过
                             {
                                   //机器人领导奖励
                                 //myLeader.GetComponent<RobotControl>().myAgent.AddReward(health*10);//靠近人类奖励

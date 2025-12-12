@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using UnityEngine;
 
 // 定义单帧的烟雾数据结构
@@ -19,7 +20,7 @@ public class SmokeFrame
 public partial class EnvControl : MonoBehaviour
 {
     [Header("Fire Data Settings")]
-    public TextAsset fireCsvFile; // 把 FireData1.csv 拖到这里
+    public TextAsset fireBinaryFile; // 把 FireData1.csv 拖到这里
     public float gridStep = 0.5f; // CSV里的网格步长，你的是0.5
     public float minX = -10f; // 根据你的CSV数据调整地图边界
     public float minZ = -10f;
@@ -37,61 +38,56 @@ public partial class EnvControl : MonoBehaviour
         LoadFireData();
     }
 
-    private void LoadFireData()
+    public void LoadFireData()
     {
-        if (fireCsvFile == null) return;
+        // 假设你通过Inspector引用了 .bytes 文件
+        // public TextAsset fireBinaryFile; 
+        if (fireBinaryFile == null) return;
 
-        string[] lines = fireCsvFile.text.Split('\n');
-        // 跳过表头，从第1行开始
-        for (int i = 1; i < lines.Length; i++)
+        // 使用 MemoryStream 读取二进制内容，速度极快
+        using (MemoryStream ms = new MemoryStream(fireBinaryFile.bytes))
+        using (BinaryReader reader = new BinaryReader(ms))
         {
-            if (string.IsNullOrWhiteSpace(lines[i])) continue;
-
-            string[] cols = lines[i].Split(',');
-            // CSV格式: X(0), Y(1), Z(2), mol(3), C(4), m(5), time(6)
-
-            float x = float.Parse(cols[0], CultureInfo.InvariantCulture);
-            float y_csv = float.Parse(cols[1], CultureInfo.InvariantCulture); // CSV的Y通常是Unity的Z
-            float z_height = float.Parse(cols[2], CultureInfo.InvariantCulture);
-            float density = float.Parse(cols[3], CultureInfo.InvariantCulture) * 1000000;//将mol/mol换位ppm
-            float time = float.Parse(cols[6], CultureInfo.InvariantCulture);
-
-            // 过滤掉浓度太低的（省内存，省渲染）
-            if (density < 0.01f) continue;
-
-            // 1. 获取或创建这一帧的数据容器
-            if (!_allSmokeFrames.ContainsKey(time))
+            // 循环直到读取完所有流
+            while (ms.Position < ms.Length)
             {
-                _allSmokeFrames[time] = new SmokeFrame();
-                // 初始化Grid (假设地图最大 100x100)
-                _allSmokeFrames[time].DensityGrid = new float[widthX * lengthZ];
-            }
-            SmokeFrame frame = _allSmokeFrames[time];
+                // 必须按写入的顺序读取！
+                float time = reader.ReadSingle();
+                float x = reader.ReadSingle();
+                float y_csv = reader.ReadSingle();
+                float z_height = reader.ReadSingle();
+                float density = reader.ReadSingle();
 
-            print(frame.ToString());
-
-            // 2. 存入渲染数据 (坐标转换: CSV Y -> Unity Z, CSV Z -> Unity Y)
-            Vector3 pos = new Vector3(x, z_height, y_csv);
-            frame.RenderMatrices.Add(Matrix4x4.TRS(pos, Quaternion.identity, Vector3.one * gridStep));
-            frame.RenderDensities.Add(density);
-
-            // 3. 存入逻辑数据 (网格化)
-            // 计算数组索引
-            int gridX = Mathf.RoundToInt((x - minX) / gridStep);
-            int gridZ = Mathf.RoundToInt((y_csv - minZ) / gridStep);
-
-            if (gridX >= 0 && gridX < widthX && gridZ >= 0 && gridZ < lengthZ)
-            {
-                int index = gridZ * widthX + gridX;
-                // 如果同一个格子有多个高度的数据，取最大的那个作为伤害参考
-                if (frame.DensityGrid[index] < density)
+                // 下面是原本的逻辑，直接复制过来即可
+                if (!_allSmokeFrames.ContainsKey(time))
                 {
-                    frame.DensityGrid[index] = density;
+                    _allSmokeFrames[time] = new SmokeFrame();
+                    _allSmokeFrames[time].DensityGrid = new float[widthX * lengthZ];
+                }
+                SmokeFrame frame = _allSmokeFrames[time];
+
+                // 存入渲染数据
+                Vector3 pos = new Vector3(x, z_height, y_csv);
+                // 注意：Matrix4x4.TRS 计算量很大，如果有几十万个点，这里依然会卡
+                // 如果可能，建议只存pos和density，在渲染时再构建矩阵
+                frame.RenderMatrices.Add(Matrix4x4.TRS(pos, Quaternion.identity, Vector3.one * gridStep));
+                frame.RenderDensities.Add(density);
+
+                // 存入逻辑数据
+                int gridX = Mathf.RoundToInt((x - minX) / gridStep);
+                int gridZ = Mathf.RoundToInt((y_csv - minZ) / gridStep);
+
+                if (gridX >= 0 && gridX < widthX && gridZ >= 0 && gridZ < lengthZ)
+                {
+                    int index = gridZ * widthX + gridX;
+                    if (frame.DensityGrid[index] < density)
+                    {
+                        frame.DensityGrid[index] = density;
+                    }
                 }
             }
         }
-        Debug.Log($"火灾数据加载完成！共加载 {lines.Length} 行数据。");
-       
+        Debug.Log("二进制火灾数据加载完成！");
     }
 
     // 在 FixedUpdate 更新当前帧指针

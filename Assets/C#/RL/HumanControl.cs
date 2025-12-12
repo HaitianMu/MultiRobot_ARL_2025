@@ -165,7 +165,7 @@ public partial class HumanControl: MonoBehaviour
             }
 
             Debug.Log("人类死亡");
-            if (myEnv.useRobot)
+            if (myEnv.useRobotBrain)
             {
                myEnv.RobotBrainList[0].AddReward(-300f);
                myEnv.RobotBrainList[0].LogReward("人类死亡对机器人的惩罚", -300);
@@ -233,7 +233,7 @@ public partial class HumanControl: MonoBehaviour
                 this.gameObject.SetActive(false);
                 myEnv.sumhealth += health;
 
-                if (myEnv.useRobot)
+                if (myEnv.useRobotBrain)
                 {
                     myEnv.RobotBrainList[0].AddReward((health) * 10);//单个人类逃生奖励,但人类有可能自己导航到出口，可能会影响训练结果，所以不能太大
                     myEnv.RobotBrainList[0].LogReward("单个人类逃生奖励", (health)*10);

@@ -345,7 +345,7 @@ public partial class HumanControl : MonoBehaviour
                     CurrentState = 1;//将移动状态设置为1；
                     stateTime = 0;//将状态持续时长设置为0，便于下一次状态的转换   
 
-                    if (myEnv.useRobot)
+                    if (myEnv.useRobotBrain)
                     {
                         myHumanBrain.AddReward(50);
                         myHumanBrain.LogReward("脱离恐慌状态的奖励", 50);
