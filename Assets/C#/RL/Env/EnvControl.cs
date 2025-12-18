@@ -8,6 +8,12 @@ using UnityEngine.AI;
 
 public partial class EnvControl : MonoBehaviour
 {
+    [Header("MARL Global Stats (Cached per Frame)")]
+    // 缓存的全局数据，供所有Agent读取，避免重复计算
+    public int CachedAliveHumans;
+    public float CachedAvgHealthDecay;
+    public float CachedGlobalReward; // 共享的团队奖励
+
     [Header("Runtime Stats")]
     public float runtime = 0;
     public int EpisodeNum = 0; // 总回合数
@@ -16,6 +22,8 @@ public partial class EnvControl : MonoBehaviour
     public int FireStep;       // 火焰生成计数器
 
     [Header("Agents Lists")]
+    [HideInInspector]
+    public SimpleMultiAgentGroup m_AgentGroup; // 这里不需要 new，放到 Awake 里更安全
     public List<HumanControl> personList = new();
     public List<HumanBrain> HumanBrainList = new();
     public List<RobotControl> RobotList = new();
@@ -52,9 +60,8 @@ public partial class EnvControl : MonoBehaviour
     public bool useHumanAgent;
     public bool usePanic;
     public bool isMultiARL;
-
+    public bool isAgentGroupInitialized=false;
     [Header("Demo Settings")]
-    public int currentFloorhuman = 0;
     public int MaxStep;
     public int layoutNum;
     public int FireNum;
@@ -65,12 +72,8 @@ public partial class EnvControl : MonoBehaviour
     public float startTime;
     public int robotCount = 3;
 
-    public CSVRead CsvRead;
-
     private void Start()
     {
-        CsvRead = new CSVRead();
-        CsvRead.TestFireDataLoading();//加载火焰数据
         EpisodeNum = 0;
         HumanNum = 50;
         EnpisodeTime = 0;
@@ -88,24 +91,16 @@ public partial class EnvControl : MonoBehaviour
         runtime += dt;
         EnpisodeTime += dt;
 
-        UpdateSmokeFrame(); // 更新当前时间，便于读取烟雾数据
+        // 1. 更新环境数据 (烟雾、全局状态)
+        UpdateSmokeFrame();
+        CalculateGlobalStats(); // [优化] 集中计算一次状态和奖励
 
-        // ----------- 1. 统计当前幸存人类数量 -----------
-        // 性能优化：尽量避免在Update中使用Linq，这里保留手动循环但写得更紧凑
-        currentFloorhuman = 0;
-        for (int i = 0; i < personList.Count; i++)
-        {
-            if (personList[i].isActiveAndEnabled)
-            {
-                currentFloorhuman++;
-            }
-        }
 
         // ----------- 2. 训练/测试 逻辑循环 -----------
         if (isTraining)
         {
-            bool timeOut = runtime > 90.0f; // 90秒超时
-            bool allDead = currentFloorhuman == 0;
+            bool timeOut = runtime > 300.0f; // 300秒超时
+            bool allDead = CachedAliveHumans == 0;
 
             // 触发重置的条件
             if (allDead || timeOut)
@@ -218,13 +213,11 @@ public partial class EnvControl : MonoBehaviour
 
         if (useHumanAgent)
         {
-            AddHumanBrain(humanBrainNum);
+            AddHumanBrain(HumanNum);
         }
 
         // 重新统计人数 (避免下一帧 FixedUpdate 之前的空窗期)
-        currentFloorhuman = countToSpawn;
-
-       
+        CachedAliveHumans   = countToSpawn;
             AddRobot();
             AddRobotBrain();
 
@@ -320,7 +313,82 @@ public partial class EnvControl : MonoBehaviour
         // 原因：频繁调用GC会导致严重的CPU尖峰（掉帧），ML-Agents训练时这会显著降低吞吐量。
         // Unity 的内存管理机制会自动处理，除非您有非常大的纹理在每一轮被加载且不再使用。
     }
+    public void AddGroupReward(float reward)
+    {
+        // 这会将奖励分配给组内的所有机器人（如果使用MA-POCA等算法）
+        m_AgentGroup.AddGroupReward(reward);
 
+        // 可选：同时也记录到第一个机器人的日志里方便调试
+        if (RobotBrainList.Count > 0)
+        {
+            RobotBrainList[0].LogReward("团队总奖励", reward);
+        }
+    }
+
+    /// <summary>
+    /// 集中计算全局状态，机器人直接读这个变量
+    /// </summary>
+    /// <summary>
+    /// [MA-POCA 核心] 集中计算全局状态和团队奖励
+    /// </summary>
+    private void CalculateGlobalStats()
+    {
+        CachedAliveHumans = 0;
+        float totalDecay = 0;
+
+        // 遍历一次，获取所有信息
+        for (int i = 0; i < personList.Count; i++)
+        {
+            if (personList[i].isActiveAndEnabled)
+            {
+                CachedAliveHumans++;
+                // 假设 HumanControl 有 currentDamagePerSecond 属性
+                // totalDecay += personList[i].currentDamagePerSecond; 
+            }
+        }
+
+        CachedAvgHealthDecay = CachedAliveHumans > 0 ? totalDecay / CachedAliveHumans : 0;
+
+        // [MA-POCA] 计算这一帧的团队奖励
+        // 逻辑：每一帧给微小惩罚促使快速行动 + 基于人类掉血的惩罚
+        float stepReward = -0.0005f;
+
+        // 如果你需要基于掉血给惩罚 (可选)
+        // stepReward -= CachedAvgHealthDecay * 0.001f;
+
+        // 存入缓存，方便 Debug
+        CachedGlobalReward = stepReward;
+
+        // [关键] 将奖励分发给整个机器人小组
+        if (useRobotBrain&&isAgentGroupInitialized)
+        {
+           // print(stepReward);
+            m_AgentGroup.AddGroupReward(stepReward);
+        }
+    }
+
+    // -----------------------------------------------------
+    // 高效烟雾查询接口 (供 HumanControl 调用)
+    // -----------------------------------------------------
+    public float GetSmokeDensity(Vector3 pos, float time)
+    {
+        // 将时间转换为帧索引 (假设0.5s一帧)
+        int frameIndex = Mathf.FloorToInt(time * 2f);
+
+        if (_smokeFramesByIndex.TryGetValue(frameIndex, out SmokeFrame frame))
+        {
+            // 逻辑坐标转换
+            int gridX = Mathf.RoundToInt((pos.x - minX) / gridStep);
+            int gridZ = Mathf.RoundToInt((pos.z - minZ) / gridStep);
+
+            if (gridX >= 0 && gridX < widthX && gridZ >= 0 && gridZ < lengthZ)
+            {
+                int index = gridZ * widthX + gridX;
+                return frame.DensityGrid[index];
+            }
+        }
+        return 0f;
+    }
     // 假设这些方法在 partial 类的另一部分中定义，为了编译通过，这里不作修改
     // private void AddExits() { ... }
     // private void RecordRoomPosition(...) { ... }

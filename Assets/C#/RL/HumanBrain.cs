@@ -1,192 +1,220 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
-using UnityEditor;
 using UnityEngine;
 
 public class HumanBrain : Agent
 {
-    // 在EnvController中定义常量
-    public const int MAX_HUMANS = 10; //最大人类数量， 与课程学习上限一致
-    public const int MAX_ROOMS = 15; // 与建筑设计上限一致
-    public const float INVALID_MARKER = -2f; // 超出[-1,1]范围的无效标记
-
+    [Header("References")]
     public EnvControl myEnv;
-    public HumanControl myHuman;//大脑对应的人类
-    public bool HumanIsInitialized=false;
-    public int HumanState;//根据决策确定的人类移动状态；
+    public HumanControl myHuman;
+    private RayPerceptionSensorComponent3D _raySensor;
 
+    [Header("Decision Frequency")]
+    [Tooltip("多久做一次决定（秒）。值越大，行为越稳定，收敛越容易。")]
+    public float decisionInterval = 1.0f; // 建议设置为 0.5 ~ 1.0 秒
+    private float _decisionTimer = 0f;
+
+    [Header("Status")]
+    public bool HumanIsInitialized = false;
+    public int HumanState; // 当前执行的状态
+
+    // ---------------------------------------------------------
+    // 1. 初始化
+    // ---------------------------------------------------------
+    public override void Initialize()
+    {
+        if (myHuman == null) myHuman = GetComponent<HumanControl>();
+        _raySensor = GetComponent<RayPerceptionSensorComponent3D>();
+
+        // 随机化初始计时器，防止所有人类在同一帧同时请求决策（分散计算压力）
+        _decisionTimer = UnityEngine.Random.Range(0f, decisionInterval);
+    }
+
+    // ---------------------------------------------------------
+    // 2. 游戏循环 (控制决策频率)
+    // ---------------------------------------------------------
     public void FixedUpdate()
     {
-        if (HumanIsInitialized)
+        if (!myEnv.useHumanAgent || myHuman == null) return;
+
+        // 累加时间
+        _decisionTimer += Time.fixedDeltaTime;
+
+        // 只有当时间到了，才请求新的决策
+        if (_decisionTimer >= decisionInterval)
         {
-            //print("初始化已完成，我的小人是"+myHuman.name);
-            return;
+            _decisionTimer = 0f;
+            RequestDecision(); // 主动请求决策 -> 触发 CollectObservations -> OnActionReceived
+        }
+
+        // 注意：在两次决策之间，myHuman.CurrentState 会保持上一次的值不变
+        // 这就是我们想要的“状态保持”效果
+
+        // 可选：每一帧给一点微小的生存奖励 (即便不做决策)
+        if (myEnv.isTraining)
+        {
+            AddReward(0.0001f);
         }
     }
 
+    // ---------------------------------------------------------
+    // 3. 拟真观测
+    // ---------------------------------------------------------
+    // ---------------------------------------------------------
+    // 核心修改：细化身体感受观测
+    // ---------------------------------------------------------
     public override void CollectObservations(VectorSensor sensor)
     {
-        //建议先固定观测值数量并确保严格归一化到[0, 1]范围，这是PPO算法稳定训练的前提条件
-        //在RequestDecision函数执行后，会先执行该函数来收集环境观测值
-        //观测值需要添加：
-        //每一个人类的位置，来学习人类的移动逻辑
-        //每一个机器人的位置，来学习其他机器人的移动逻辑，但目前只有一个机器人
-        //总区域的面积，房间的数量/位置，每一个门的位置， 来学习建筑的生成逻辑
-        // 计算环境边界（与Human观测保持一致）
-
-        if (!myEnv.useHumanAgent) return;
-
-        //Debug.Log("CollectObservations called."); 
-        if (myEnv == null || myEnv.useHumanAgent is false)
+        // 1. 安全检查与补齐 (Total Size = 5)
+        if (myEnv == null || myHuman == null || !myEnv.useHumanAgent)
         {
-            Debug.Log("myEnv is null or useHumanAgen is false.");
+            sensor.AddObservation(0f); // Health
+            sensor.AddObservation(0f); // CO
+            sensor.AddObservation(0f); // Temp
+            sensor.AddObservation(0f); // Panic
+            sensor.AddObservation(0f); // State
             return;
         }
-        //  print("场景对角线为长度为："+sceneDiagonal);
-        sensor.AddObservation(myHuman.health);//人类自己的生命值  1
-        sensor.AddObservation(myHuman.CurrentState);//人类当前的状态   1
-        // 归一化 Agent 位置 ，           2个
-        foreach (RobotBrain agent in myEnv.RobotBrainList)
+
+        // 2. 获取环境数据
+        var envData = myEnv.GetEnvironmentData(transform.position, myEnv.runtime);
+
+        // 3. 视觉模拟 (更新射线长度)
+        if (_raySensor != null)
         {
-            sensor.AddObservation(NormalizedPos(agent.robot.transform.position).x);
-            sensor.AddObservation(NormalizedPos(agent.robot.transform.position).z);
-            //Debug.Log("机器人的位置为" + normalizedPos);
+            // 能见度越低(m)，看得越近
+            float visualRange = Mathf.Clamp(envData.ValueM, 2f, 20f);
+            _raySensor.RayLength = visualRange;
         }
 
-        // 归一化 Human 位置，人类最多10个            20个
+        // ===================================================
+        // 4. 身体感受 (Vector Observation Size: 5)
+        // ===================================================
 
-        // 固定观测维度为 MAX_HUMANS * 2
-        for (int i = 0; i < MAX_HUMANS; i++)
-        {
-            if (i < myEnv.personList.Count)
-            {
-                // 填充实际人类位置
-                HumanControl human = myEnv.personList[i];
-                sensor.AddObservation(NormalizedPos(human.transform.position).x);
-                sensor.AddObservation(NormalizedPos(human.transform.position).z);
-            }
-            else
-            {
-                // 填充占位值（推荐使用无效坐标）
-                sensor.AddObservation(-1f); // x
-                sensor.AddObservation(-1f); // z
-            }
-        }
+        // [1] 生命值 (归一化 0-1)
+        sensor.AddObservation(myHuman.health / 100f);
 
+        // [2] CO 浓度 (归一化)
+        // 假设危险范围是 0 - 1000 ppm
+        // SmokeDensity 就是我们解析的 CO 浓度
+        sensor.AddObservation(Mathf.Clamp01(envData.SmokeDensity / 1000f));
 
-        //移除人类对于房间、出口、火源的感知
-        /*// 添加房间位置（相对Agent） 最大20个房间，  40//
-        int maxRooms = 20;
-        for (int i = 0; i < maxRooms; i++)
-        {
-            if (i < myEnv.cachedRoomPositions.Count)
-            {
-                Vector3 roomPos = myEnv.cachedRoomPositions[i];
-                sensor.AddObservation(NormalizedPos(roomPos).x);
-                sensor.AddObservation(NormalizedPos(roomPos).z);
-            }
-            else
-            {
-                // 填充占位值（推荐使用无效坐标）
-                sensor.AddObservation(-1f); // x
-                sensor.AddObservation(-1f); // z
-            }
-        }
-*/
-        //删除人类对火源和出口位置的感知
-       /* //添加出口位置   只有1个出口         39+[24,45]=[63,84]     2个
-        sensor.AddObservation(NormalizedPos(myEnv.Exits[0].transform.position).x);
-        sensor.AddObservation(NormalizedPos(myEnv.Exits[0].transform.position).z);
-        //Debug.Log("出口的位置为" + (myEnv.Exits[0].transform.position) / Mathf.Max(myEnv.complexityControl.buildingGeneration.totalWidth, myEnv.complexityControl.buildingGeneration.totalHeight));
+        // [3] 温度感知 (归一化)
+        // 假设常温 20度，火场高温 800度
+        // 使用 InverseLerp 将 20-800 映射到 0-1
+        sensor.AddObservation(Mathf.InverseLerp(20f, 800f, envData.ValueC));
 
-        //添加火源位置，目前火源只设置了三个      6个
-        for (int i = 0; i < 3; i++)
-        {
-            Vector3 firePos = myEnv.FirePosition[i];
-            {
-                // 位置归一化（相对于环境中心）
-                sensor.AddObservation(NormalizedPos(firePos).x);
-                sensor.AddObservation(NormalizedPos(firePos).z);
-                // Debug.Log("火源的位置为" + normalizedPos);
-            }
-        }*/
+        // [4] 恐慌等级 (0-1)
+        sensor.AddObservation(myHuman.panicLevel);
+
+        // [5] 当前执行的状态 (记忆)
+        // 0,1,2 -> 归一化到 0-1
+        sensor.AddObservation(HumanState / 2f);
     }
 
-    public Vector3 NormalizedPos(Vector3 pos)
-    {
-        float maxX = myEnv.complexityControl.buildingGeneration.totalWidth;
-        float maxZ = myEnv.complexityControl.buildingGeneration.totalHeight;
-        // 归一化到 [-1, 1] 范围
-        float normalizedX = (pos.x / maxX) * 2 - 1;
-        float normalizedZ = (pos.z / maxZ) * 2 - 1;
-
-        return new Vector3(normalizedX, 0.5f, normalizedZ);
-    }
-
+    // ---------------------------------------------------------
+    // 4. 动作接收 (只在 RequestDecision 后调用一次)
+    // ---------------------------------------------------------
     public override void OnActionReceived(ActionBuffers actions)
     {
-        if (!myEnv.useHumanAgent) return;
-        ChangeHumanState(actions);
+        if (!myEnv.useHumanAgent || myHuman == null) return;
+
+        // 获取离散动作 (0:冷静, 1:焦虑, 2:恐慌)
+        int actionState = actions.DiscreteActions[0];
+
+        // 更新状态
+        HumanState = actionState;
+
+        // 同步给身体脚本 (这一步很重要，身体脚本根据这个变量去执行具体的移动逻辑)
+        // 只有当 myEnv.useHumanAgent 为 true 时，HumanControl 才会听这里的
+        myHuman.CurrentState = HumanState;
+
+        // -----------------------------------------------------
+        // 奖励计算 (针对这一次决策的好坏)
+        // -----------------------------------------------------
+        if (myEnv.isTraining)
+        {
+            var envData = myEnv.GetEnvironmentData(transform.position, myEnv.runtime);
+            float danger = envData.SmokeDensity;
+
+            // 逻辑惩罚：
+            // 环境安全(烟雾<100)却选择恐慌(2) -> 浪费体力，给惩罚
+            if (danger < 100f && actionState == 2)
+            {
+                AddReward(-0.01f);
+            }
+            // 环境危险(烟雾>1000)却选择冷静(0) -> 反应迟钝，给大惩罚
+            else if (danger > 1000f && actionState == 0)
+            {
+                AddReward(-0.02f);
+            }
+            // 环境一般危险，且选择了焦虑(1) -> 给予鼓励 (可选)
+            else if (danger >= 100f && danger <= 1000f && actionState == 1)
+            {
+                AddReward(0.005f);
+            }
+        }
     }
 
-    public void ChangeHumanState(ActionBuffers actions)
+    // ---------------------------------------------------------
+    // 5. 手动测试
+    // ---------------------------------------------------------
+    public override void Heuristic(in ActionBuffers actionsOut)
     {
+        var discreteActions = actionsOut.DiscreteActions;
 
-        ActionSegment<int> DiscreteActions = actions.DiscreteActions;
-        //Debug.Log(this.name+"Actions:"+ DiscreteActions[0]);
-        //HumanState = DiscreteActions[0];
-            HumanState = DiscreteActions[0];
+        // 安全检查
+        if (discreteActions.Length == 0) return;
+
+        if (Input.GetKey(KeyCode.Alpha1)) discreteActions[0] = 0;
+        else if (Input.GetKey(KeyCode.Alpha2)) discreteActions[0] = 1;
+        else if (Input.GetKey(KeyCode.Alpha3)) discreteActions[0] = 2;
+        // 如果没有按键，保持当前状态 (这在 Heuristic 中比较难实现完全保持，默认通常是0)
     }
 
-    // 奖励统计可视化
+    // ---------------------------------------------------------
+    // 6. 奖励日志 (保持不变)
+    // ---------------------------------------------------------
     private Dictionary<string, float> rewardLog = new Dictionary<string, float>();
 
-    [System.Serializable]
-    private class RewardData
-    {
-        public string timestamp;
-        public Dictionary<string, float> rewards;
-    }
     public void LogReward(string type, float value)
     {
-        rewardLog.TryGetValue(type, out float current);
-        rewardLog[type] = current + value;
+        if (rewardLog.ContainsKey(type)) rewardLog[type] += value;
+        else rewardLog[type] = value;
     }
 
     void OnDestroy()
     {
-        // 定义保存路径（使用persistentDataPath）
+        if (myHuman != null) SaveRewardLog();
+    }
+
+    private void SaveRewardLog()
+    {
         string directoryPath = Path.Combine(Application.persistentDataPath, "HumanReward");
-        string filePath = Path.Combine(directoryPath, $"Human_Reward_log_{DateTime.Now:yyyyMMdd_HHmmss}.json");
+        // 使用 Guid 防止文件名重复冲突
+        string fileName = $"Human_{Guid.NewGuid().ToString().Substring(0, 8)}_{DateTime.Now:HHmmss}.txt";
+        string filePath = Path.Combine(directoryPath, fileName);
 
         try
         {
-            // 确保目录存在
-            if (!Directory.Exists(directoryPath))
-            {
-                Directory.CreateDirectory(directoryPath);
-            }
+            if (!Directory.Exists(directoryPath)) Directory.CreateDirectory(directoryPath);
 
-            string result = "";
-            foreach (var kv in rewardLog)
+            using (StreamWriter writer = new StreamWriter(filePath))
             {
-                Debug.Log($"{kv.Key}: {kv.Value}");
-                result += $"{kv.Key}: {kv.Value}\n";
+                writer.WriteLine("Type,Value");
+                foreach (var kv in rewardLog)
+                {
+                    writer.WriteLine($"{kv.Key},{kv.Value}");
+                }
             }
-            // 写入文件
-            File.WriteAllText(filePath, result);
-
-            // 日志输出
-            Debug.Log($"奖励数据已保存到: {filePath}\n{result}");
         }
         catch (Exception e)
         {
-            Debug.LogError($"保存奖励数据失败: {e.Message}");
+            Debug.LogWarning($"保存奖励失败: {e.Message}");
         }
     }
 }

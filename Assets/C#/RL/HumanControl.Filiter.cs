@@ -7,8 +7,6 @@ using Random = UnityEngine.Random;
 public partial class HumanControl: MonoBehaviour
 {
     // Åö×²¼ì²â¼ÆÊýÆ÷
-    public int dazingCountDown;
-    public GameObject myTopLevelLeader;
     public List<HumanControl> myDirectFollowers;
     // Start is called before the first frame update
 

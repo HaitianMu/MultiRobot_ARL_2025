@@ -25,7 +25,7 @@ public partial class HumanControl : MonoBehaviour
                 List<GameObject> leaderCandidates = GetCandidate_Clam(new List<string> { "Robot" }, 360, 20).Item1;
                 if (leaderCandidates.Count > 0)
                 {
-                    print("发现了符合追随条件的机器人，进入追随者模式");
+                   // print("发现了符合追随条件的机器人，进入追随者模式");
 
                     myLeader = leaderCandidates[0];
 

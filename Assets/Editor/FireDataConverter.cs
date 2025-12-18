@@ -2,49 +2,60 @@ using UnityEngine;
 using UnityEditor;
 using System.IO;
 using System.Globalization;
-using System.Collections.Generic;
 
 public class FireDataConverter : EditorWindow
 {
     [MenuItem("Tools/Convert Fire CSV to Binary")]
     public static void Convert()
     {
-        // 1. 设置路径 (请修改为你实际的CSV路径)
         string csvPath = Application.dataPath + "/Resources/FireData/MultiARL_Firedata.csv";
-        string binaryPath = Application.dataPath + "/Resources/FireData/MultiARL_Firedata.bytes";
+        string binaryPath = Application.dataPath + "/Resources/FireData/MultiARL_Firedata_byte.bytes";
+
+        if (!File.Exists(csvPath))
+        {
+            Debug.LogError($"未找到文件: {csvPath}");
+            return;
+        }
 
         string[] lines = File.ReadAllLines(csvPath);
 
-        // 使用BinaryWriter写入数据
         using (FileStream fs = new FileStream(binaryPath, FileMode.Create))
         using (BinaryWriter writer = new BinaryWriter(fs))
         {
-            // 写入行数（或者你可以先写入版本号等头信息）
-            // 这里我们直接写数据
+            // CSV结构: X,Y,Z,mol/mol,C,m,time
             for (int i = 1; i < lines.Length; i++)
             {
                 if (string.IsNullOrWhiteSpace(lines[i])) continue;
-                // 优化：使用Span或直接处理字符串避免GC，但在Editor里慢点没关系
                 string[] cols = lines[i].Split(',');
 
-                // 解析数据
+                // 1. 解析基础坐标
                 float x = float.Parse(cols[0], CultureInfo.InvariantCulture);
-                float y_csv = float.Parse(cols[1], CultureInfo.InvariantCulture);
-                float z_height = float.Parse(cols[2], CultureInfo.InvariantCulture);
-                float density = float.Parse(cols[3], CultureInfo.InvariantCulture) * 1000000;
-                float time = float.Parse(cols[6], CultureInfo.InvariantCulture);
+                float y_csv = float.Parse(cols[1], CultureInfo.InvariantCulture); // Unity Z
+                float z_height = float.Parse(cols[2], CultureInfo.InvariantCulture); // Unity Y
 
-                if (density < 0.01f) continue;
+                // 2. 解析数据列
+                float densityRaw = float.Parse(cols[3], CultureInfo.InvariantCulture);
+                float density = densityRaw * 1000000; // 烟雾浓度 (ppm)
 
-                // 写入二进制：不需要写 key 名称，只写值，顺序要记住！
-                writer.Write(time);     // 0: time
-                writer.Write(x);        // 1: x
-                writer.Write(y_csv);    // 2: y (csv)
-                writer.Write(z_height); // 3: z
-                writer.Write(density);  // 4: density
+                float valC = float.Parse(cols[4], CultureInfo.InvariantCulture); // 第4列 C
+                float valM = float.Parse(cols[5], CultureInfo.InvariantCulture); // 第5列 m
+
+                float time = float.Parse(cols[6], CultureInfo.InvariantCulture); // 第6列 Time
+
+                // 阈值过滤：你可以根据需求决定是否保留空数据，这里为了保险暂时不过滤，或者仅过滤极小值
+                // if (density < 0.01f && valC < 0.01f) continue; 
+
+                // 3. 写入二进制 (顺序必须严格记忆!)
+                writer.Write(time);      // 0
+                writer.Write(x);         // 1
+                writer.Write(y_csv);     // 2 (Unity Z)
+                writer.Write(z_height);  // 3 (Unity Y)
+                writer.Write(density);   // 4 (Smoke)
+                writer.Write(valC);      // 5 (C) -> 新增
+                writer.Write(valM);      // 6 (m) -> 新增
             }
         }
         AssetDatabase.Refresh();
-        Debug.Log("转换完成！二进制文件已生成。");
+        Debug.Log($"全量数据转换完成！已包含 C 和 m 列。");
     }
 }

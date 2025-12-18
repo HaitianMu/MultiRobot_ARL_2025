@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.AI.Navigation;
 using UnityEngine;
+using Unity.MLAgents;
 using UnityEngine.AI;
 
 
@@ -107,11 +108,19 @@ public partial class EnvControl : MonoBehaviour
     // ---------------------------------------------------------
     public void AddRobotBrain()
     {
-        // 优化：不再通过名字 Find("RobotBrain1")，而是通过 Tag 查找所有大脑
-        // 请确保预制体 Tag 设置为 "RobotBrain"
+        // 【修复1】必须先清空列表，防止回合重置时重复添加
+        RobotBrainList.Clear();
+
+        // 注意：FindGameObjectsWithTag 找不到 SetActive(false) 的物体
         GameObject[] brainObjs = GameObject.FindGameObjectsWithTag("RobotBrain");
 
-        // 排序以保证确定性（避免每次运行匹配顺序不同）
+        if (brainObjs.Length == 0)
+        {
+            Debug.LogError("未找到 Tag 为 'RobotBrain' 的物体！请检查 Tag 设置或物体是否被隐藏。");
+            return;
+        }
+
+        // 排序以保证确定性
         brainObjs = brainObjs.OrderBy(g => g.name).ToArray();
 
         int count = Mathf.Min(RobotList.Count, brainObjs.Length);
@@ -121,30 +130,37 @@ public partial class EnvControl : MonoBehaviour
             RobotBrain brain = brainObjs[i].GetComponent<RobotBrain>();
             RobotControl robot = RobotList[i];
 
+            // 加入列表
             RobotBrainList.Add(brain);
 
-            // 双向绑定
-            robot.myAgent = brain;
-            brain.robot = robot.gameObject;
-            brain.robotNavMeshAgent = robot.GetComponent<NavMeshAgent>();
-            brain.robotInfo = robot;
-            brain.robotRigidbody = robot.GetComponent<Rigidbody>();
-            brain.robotDestinationCache = robot.transform.position;
-
-            // 重置状态
-            brain.stuckCounter = 0;
-            brain.SignalcostTime = 0;
-            brain.TotalcostTime = 0;
-            brain._humanHealthObservation = 100;
-            brain.robotPosition = robot.transform.position;
-            brain.RobotIsInitialized = true;
+            // 【修复2】利用 RobotBrain 内部的方法进行绑定，代码更整洁
+            // 这行代码替代了你原本手写的 7-8 行赋值代码
+            brain.BindRobotBody(robot.gameObject);
         }
-    }
 
-    // ---------------------------------------------------------
-    // 4. 人类生成优化：移除手动 Start 和 垃圾内存分配
-    // ---------------------------------------------------------
-    public void AddPerson(int num)
+        // 【关键】注册到 MA-POCA 组
+
+         m_AgentGroup = new SimpleMultiAgentGroup();
+        if (!isAgentGroupInitialized)
+        {
+            foreach (var brain in RobotBrainList)
+            {
+                // 只有绑定了身体的大脑才注册，防止空引用
+                if (brain.RobotIsInitialized)
+                {
+                    m_AgentGroup.RegisterAgent(brain);
+                }
+            }
+
+            Debug.Log($"已注册 {RobotBrainList.Count} 个机器人大脑到智能体组。");
+            isAgentGroupInitialized = true;
+        }
+        }
+
+        // ---------------------------------------------------------
+        // 4. 人类生成优化：移除手动 Start 和 垃圾内存分配
+        // ---------------------------------------------------------
+        public void AddPerson(int num)
     {
         // 移除：Vector3[] RoomPosition = new Vector3[10]; // 从未使用的内存分配
 

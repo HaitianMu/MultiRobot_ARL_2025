@@ -9,153 +9,125 @@ using static BuildingGeneratiion;
 
 public partial class HumanControl : MonoBehaviour
 {
-    // HumanAgent.cs
-    public bool UsePanic;
-    // 计算总伤害速率（线性组合）
+
+
+    [Header("Panic Settings")]
     public float damagePerSecond = 0;
+
+    // 缓存一些不需要每帧计算的常量
+    private const float MAX_PANIC_TIME = 0.5f; // 恐慌更新间隔（秒），避免每帧更新节省性能
+    private float _panicUpdateTimer = 0f;
+
+    // 优化：恐慌计算参数
+    private const float CO_WEIGHT = 0.4f;
+    private const float TEMP_WEIGHT = 0.3f;
+    private const float VIS_WEIGHT = 0.3f;
+
+    private const float MIN_CO = 65f;       // ppm
+    private const float MAX_CO = 650f;
+    private const float MIN_TEMP = 20f;     // °C
+    private const float MAX_TEMP = 820f;
+    private const float MIN_VIS = 0.5f;     // m
+    private const float MAX_VIS = 30.5f;
+
     void UpdatePanicLevelAndHealth()
     {
-        //根据当前的时间和人类所处位置读取数据；这里要使用hashmap来减少计算时间
-        CSVRead cSVRead = myEnv.CsvRead;//获取内存中的火焰数据
+        // 1. 性能优化：限制恐慌逻辑的更新频率 (例如每0.5秒更新一次，而不是每帧)
+        // 掉血逻辑通常需要每帧计算（保持平滑），但恐慌值可以降低频率
 
-        Key key = new Key();
-        //这里要进行映射
-        key.X = Mathf.Round(this.gameObject.transform.position.x*2f)/2f;
-        key.Y= Mathf.Round(this.gameObject.transform.position.z * 2f) / 2f; 
+        // -----------------------------------------------------
+        // 核心优化：直接调用 EnvControl 的 O(1) 接口获取环境数据
+        // -----------------------------------------------------
+        // 这里的 GetEnvironmentData 返回 struct，没有任何 GC
+        var envData = myEnv.GetEnvironmentData(transform.position, myEnv.runtime);
 
+        // 获取解析好的数据
+        float smokeDensity = envData.SmokeDensity; // 对应 mol/mol * 10^6
+        float tempC = envData.ValueC;              // 对应 CSV 第4列 (Temperature/C)
+        float visibilityM = envData.ValueM;        // 对应 CSV 第5列 (Visibility/m)
 
-        // 将实时时间映射到0-240秒范围内（每0.5秒一个数据点）
-        //火焰的仿真数据保存了30s，所以将当前时间/8来模仿在火灾场景中的停留时间
+        // -----------------------------------------------------
+        // 2. 健康值计算 (每帧执行)
+        // -----------------------------------------------------
+        // 计算伤害速率
+        CalculateHealthDecay(smokeDensity, tempC);
 
-        float normalizedTime = ((myEnv.runtime +3)/ 3);
-        key.Time = Mathf.Round(normalizedTime * 2f) / 2f; // 取整到0.5秒间隔
-       // key.Time = Mathf.Round(myEnv.runtime * 2f) / 2f;
-        // 确保时间不超过29.5秒
-       // key.Time = Mathf.Clamp(key.Time, 0f, 29.5f);
+        // 应用伤害
+        if (damagePerSecond > 0)
+        {
+            this.health -= damagePerSecond * Time.fixedDeltaTime;
+        }
 
+        // -----------------------------------------------------
+        // 3. 恐慌值更新 (低频执行)
+        // -----------------------------------------------------
+        _panicUpdateTimer += Time.fixedDeltaTime;
+        if (_panicUpdateTimer >= MAX_PANIC_TIME)
+        {
+            _panicUpdateTimer = 0f;
 
-        //print(key.ToString());
-        if (cSVRead.FireMap.TryGetValue(key, out FireData currFireData)) {
+            if (UsePanic && !myEnv.useHumanAgent && stateTime > PanicChangeTime)
+            {
+                // 更新恐慌值
+                float newPanicLevel = CalculatePanicValue(smokeDensity, tempC, visibilityM);
+                this.panicLevel = Mathf.Clamp01(newPanicLevel);
 
-            // 找到了对应的火焰数据
-            //Debug.Log($"找到火焰数据: {currFireData}");
-            // 使用 currFireData 进行后续处理
-            
-            float COConcentration = currFireData.COConcentration;
-            float Temperature = currFireData.Temperature;
-            float Visibility = currFireData.Visibility;
-            ////调整人类的视野参数，视野最小设置为5m，最大设置为15m
-            this.visionLimit = (int)Visibility/3 + 10;
-            // 计算人类恐慌值（0-1范围）
-            // 先将CO浓度从mol/mol转换为ppm：ppm = mol/mol × 1,000,000
-            float COConcentrationPPM = COConcentration * 1000000f;
-           
-            if (stateTime > PanicChangeTime&&!myEnv.useHumanAgent) {
-                float panicLevel = GetPanicvalue(COConcentrationPPM, Temperature, Visibility);
-                this.panicLevel = Mathf.Clamp01(panicLevel);
-                //print("更新人类恐慌等级:" + panicLevel + "时间;" + myEnv.runtime);
-                stateTime = 0;
+                // 更新视野 (根据能见度)
+                // 视野最小 5m, 最大 15m. 可见度数据(m) 通常很大，需要缩放
+                // 你的原逻辑: (int)Visibility/3 + 10
+                this.visionLimit = Mathf.Clamp((int)(visibilityM / 3f) + 10, 5, 15);
+
+                stateTime = 0; // 重置状态计时
             }
+        }
+    }
+    /// <summary>
+    /// 计算恐慌值 (纯数学计算，无GC)
+    /// </summary>
+    private float CalculatePanicValue(float coPPM, float temp, float visibility)
+    {
+        // 归一化计算 (Mathf.InverseLerp 比手动除法更安全且自带Clamp)
+        float coFactor = Mathf.InverseLerp(MIN_CO, MAX_CO, coPPM);
+        float tempFactor = Mathf.InverseLerp(MIN_TEMP, MAX_TEMP, temp);
+        // 能见度越低，恐慌越高，所以是 1 - factor
+        float visFactor = 1f - Mathf.InverseLerp(MIN_VIS, MAX_VIS, visibility);
 
-            //每帧更改人类的生命衰减速率 
-            GetHealth(COConcentrationPPM,Temperature);
+        return (coFactor * CO_WEIGHT) + (tempFactor * TEMP_WEIGHT) + (visFactor * VIS_WEIGHT);
+    }
 
-            //this.panicLevel = 0f;  //9.4测试用  冷静状态
-            //this.panicLevel = 0.5f; //焦虑状态
-            //this.panicLevel = 0.8f; //恐慌状态
+    /// <summary>
+    /// 计算掉血速率
+    /// </summary>
+    private void CalculateHealthDecay(float coPPM, float temp)
+    {
+        const float BASE_DAMAGE = 0.5f;
+        const float CO_DMG_MULT = 2.0f;
+        const float TEMP_DMG_MULT = 1.0f;
+
+        // 只有当环境参数超过安全阈值时才开始扣血
+        // 这里假设 CSV 中的 mol/mol * 10^6 即为 CO PPM
+
+        float coDanger = Mathf.InverseLerp(0f, MAX_CO, coPPM);
+        float tempDanger = Mathf.InverseLerp(20f, MAX_TEMP, temp);
+
+        // 如果环境很安全，不扣血或者只扣很少
+        if (coDanger <= 0.05f && tempDanger <= 0.05f)
+        {
+            damagePerSecond = 0f;
         }
         else
         {
-            // 没有找到对应的火焰数据
-            Debug.LogWarning($"未找到位置({key.X:F2}, {key.Y:F2}, {key.Z:F2}) 时间{key.Time:F2}s的火焰数据");
-            currFireData = null; // 或者设置默认值
-        };//这个返回的是bool类型，返回的数据在currFireData中
-
-        /*//参考文献：褚若诗. 异质行人地铁站台应急疏散行为建模与仿真[D]. 北京:北京交通大学,2022.  硕士学位论文 p22
-        exitDistance=Vector3.Distance(this.transform.position, myEnv.Exits[0].transform.position); //目前距离出口的距离
-
-        // 基础项计算
-        float healthTerm = Mathf.Clamp01(1-(health /100));                    //人类自身的健康值,健康值越低，焦虑程度越高
-        *//*float distanceTerm = Mathf.Clamp01(exitDistance /startDistanceToExit); //距离出口的距离*//*
-        float sceneDiagonal = Mathf.Sqrt(
-           Mathf.Pow(myEnv.complexityControl.buildingGeneration.totalWidth, 2) +
-           Mathf.Pow(myEnv.complexityControl.buildingGeneration.totalHeight, 2)
-       );
-
-        float distanceTerm = Mathf.Clamp01(exitDistance / (sceneDiagonal/3)); //距离出口的距离比上1/2对角线的长度，远于对角线一半就一定恐慌
-        // 综合计算
-        panicLevel =
-           0.45f * healthTerm +  //健康项初期基本为0
-            0.6f * distanceTerm;*/
-
-        //计算完恐慌度后，更新人类的期望速度,就是人类的当前速度
-
-        // 根据恐慌度更新当前速度。插值函数。第一个参数 a 表示起始值，第二个参数 b 表示结束值，第三个参数 t 表示插值的权重
-
-        //恐慌缓解奖励
-        /* float deltaPanic = lastPanicLevel - panicLevel;
-         if (deltaPanic > 0.1)
-         {
-             myEnv.RobotBrainList[0].AddReward(20 * deltaPanic);
-             myEnv.RobotBrainList[0].LogReward("恐慌情绪缓解奖励", 20 * deltaPanic);
-         }
-         lastPanicLevel = panicLevel;*/
-        // 群体传染项 todo
-        /* float socialTerm = 0f;
-         Collider[] neighbors = Physics.OverlapSphere(transform.position, 3f);
-         foreach (var neighbor in neighbors)
-         {
-             if (neighbor.TryGetComponent<HumanControl>(out var other))
-             {
-                 float distance = Vector3.Distance(transform.position, other.transform.position);
-                 socialTerm += other.panicLevel / (distance * distance + 0.1f);
-             }
-         }*/
+            damagePerSecond = BASE_DAMAGE
+                              + (coDanger * CO_DMG_MULT)
+                              + (tempDanger * TEMP_DMG_MULT);
+        }
     }
-    public float GetPanicvalue(float COConcentrationPPM, float Temperature, float Visibility)
-    {
-        // 归一化参数（根据实际安全阈值调整）
-        float coWeight = 0.4f;    // CO浓度权重
-        float tempWeight = 0.3f;  // 温度权重
-        float visWeight = 0.3f;   // 能见度权重
-
-        float panicLevel =
-                (Mathf.Clamp01((COConcentrationPPM - 65f) / (650f - 65f)) * coWeight) +        // CO浓度：65-650 ppm
-                (Mathf.Clamp01((Temperature - 20f) / (820f - 20f)) * tempWeight) +             // 温度：20-820°C
-                (1f - Mathf.Clamp01((Visibility - 0.5f) / (30.5f - 0.5f))) * visWeight;        // 能见度：0.5-30.5m
-        return panicLevel;
-    }
-
-    public void GetHealth(float COConcentrationPPM,float Temperature)
-    {
-        float coDamageMultiplier = 2f;    // CO伤害系数
-        float tempDamageMultiplier = 1f; // 温度伤害系数
-        float baseDamageRate = 0.5f;       // 基础伤害速率
-        // 环境参数范围
-         const float MIN_CO = 0f;        // ppm
-         const float MAX_CO = 650f;
-         const float MIN_TEMP = 20f;      // °C
-         const float MAX_TEMP = 820f;
-         
-
-        // 计算归一化的环境危险度（0-1范围）
-        float coDanger = Mathf.Clamp01((COConcentrationPPM - MIN_CO) / (MAX_CO - MIN_CO));
-        float tempDanger = Mathf.Clamp01((Temperature - MIN_TEMP) / (MAX_TEMP - MIN_TEMP));
-        // 计算总伤害速率（线性组合）
-         damagePerSecond = baseDamageRate
-            + (coDanger * coDamageMultiplier)
-            + (tempDanger * tempDamageMultiplier);
-        // 应用伤害
-        health -= damagePerSecond*Time.deltaTime;
-        
-    }
-
 
     private void UpdateBehaviorModel()
     {
         //人类状态转变：参考文献：[1]孙华锴.考虑恐慌情绪的人群疏散行为模型研究[D].中南大学,2022.DOI:10.27661/d.cnki.gzhnu.2022.000847.
 
-        if (myEnv.usePanic&&UsePanic)
+        if (myEnv.usePanic)
         {
             if (panicLevel < 0.3) { CurrentState = 0; }
             else if (panicLevel <= 0.6 && panicLevel >= 0.3) { CurrentState = 1; }
@@ -309,8 +281,7 @@ public partial class HumanControl : MonoBehaviour
     //人类的混乱移动！！！！！！！！！！！！！！！！！！！！！！！
 
 
-    //与机器人的对抗行为：！！！！！！！！！！！
-    public float robotDetectTime; // 模式2中，记录首次检测到机器人的时间
+    //与机器人的对抗行为：！！！！！！！！！！
     public void HandleRobotInteraction()
     {
         List<GameObject> leaderCandidates = GetCandidate(new List<string> { "Robot" }, 360, 30).Item1;

@@ -1,50 +1,108 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class RobotControl : MonoBehaviour
 {
-    public string robotCommand;
-    public List<HumanControl> myDirectFollowers;
-    public int robotFollowerCounter;
+    [Header("Status")]
+    public bool isRunning = true; // 机器人是否处于工作状态
+    public int robotFollowerCounter; // 仅用于 Inspector 显示，逻辑直接用 List.Count
+
+    [Header("References")]
+    // 这个引用由 RobotBrain.BindRobotBody() 自动赋值
     public RobotBrain myAgent;
-    // bot的NavMeshAgent组件
+    public List<HumanControl> myDirectFollowers = new List<HumanControl>();
+
     private NavMeshAgent _botNavMeshAgent;
-    public bool isRunning;//机器人是否处于工作状态
-    // Start is called before the first frame update
-    public void Start()
+
+    private void Awake()
     {
-        this.gameObject.SetActive(true);
-        isRunning = true;//机器人默认工作
-        myDirectFollowers = new List<HumanControl>();
         _botNavMeshAgent = GetComponent<NavMeshAgent>();
-        _botNavMeshAgent.speed = 6f;//将机器人速度设置为5m/s
-    }
-
-    public void Update()
-    {
-        robotFollowerCounter = myDirectFollowers.Count;
-        myAgent.robotPosition=this.transform.position;
-
-    }
-
-    private void OnTriggerEnter(Collider trigger)
-    {
-        // Debug.Log("碰撞发生，碰撞体的标签是：" + trigger.transform.tag);
-        GameObject triggerObject = trigger.gameObject;
-      
-        switch (trigger.transform.tag)
+        // 确保速度设置正确 (也可以在 Inspector 中设置)
+        if (_botNavMeshAgent != null)
         {
-            case "Fire":
-                print("机器人碰到火焰");
-                myAgent.stuckCounter++;
-                myAgent.AddReward(-5);//碰一次给5点惩罚
-                myAgent.LogReward("机器人触碰火焰惩罚",-5);
-                break;
+            _botNavMeshAgent.speed = 6f;
+            _botNavMeshAgent.avoidancePriority = 0; // 机器人优先级最高，推着人走
         }
     }
 
+    private void Start()
+    {
+        // 确保物体激活
+        this.gameObject.SetActive(true);
+    }
 
+    private void Update()
+    {
+        // ---------------------------------------------------------
+        // 1. 自动维护跟随者列表 (Lazy Cleanup)
+        // ---------------------------------------------------------
+        // 防止 HumanControl 销毁后，这里还留着空引用
+        // 倒序遍历以安全移除元素
+        for (int i = myDirectFollowers.Count - 1; i >= 0; i--)
+        {
+            if (myDirectFollowers[i] == null || !myDirectFollowers[i].isActiveAndEnabled)
+            {
+                myDirectFollowers.RemoveAt(i);
+            }
+        }
+
+        // 更新计数器供 Brain 观测
+        robotFollowerCounter = myDirectFollowers.Count;
+
+        // ---------------------------------------------------------
+        // 注意：移除了 myAgent.robotPosition = this.transform.position
+        // 原因：RobotBrain 已经持有 Robot 的引用，它可以直接访问 transform，
+        // 不需要这里每帧去“推送”数据，这是一种更高效的架构。
+        // ---------------------------------------------------------
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // 【安全检查】如果大脑还没绑定，不要处理逻辑
+        if (myAgent == null || !myAgent.RobotIsInitialized) return;
+
+        GameObject triggerObject = other.gameObject;
+
+        if (other.CompareTag("Fire"))
+        {
+            // Debug.Log("机器人碰到火焰");
+
+            // 增加卡死计数，促使 Agent 尝试改变策略
+            myAgent.stuckCounter += 10;
+
+            // 给予惩罚
+            myAgent.AddReward(-5f);
+
+            // 如果你在 Brain 里实现了日志系统，可以调用，但要注意判空
+            // myAgent.LogReward("机器人触碰火焰惩罚", -5);
+        }
+    }
+
+    // ---------------------------------------------------------
+    // 辅助方法：供 HumanControl 调用
+    // ---------------------------------------------------------
+
+    /// <summary>
+    /// 当人类决定跟随机器人时调用
+    /// </summary>
+    public void AddFollower(HumanControl human)
+    {
+        if (!myDirectFollowers.Contains(human))
+        {
+            myDirectFollowers.Add(human);
+        }
+    }
+
+    /// <summary>
+    /// 当人类恐慌或到达出口离开时调用
+    /// </summary>
+    public void RemoveFollower(HumanControl human)
+    {
+        if (myDirectFollowers.Contains(human))
+        {
+            myDirectFollowers.Remove(human);
+        }
+    }
 }
