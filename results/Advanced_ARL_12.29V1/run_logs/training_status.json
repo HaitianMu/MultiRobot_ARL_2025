@@ -1,0 +1,474 @@
+{
+    "RobotBrain": {
+        "checkpoints": [
+            {
+                "steps": 4992,
+                "file_path": "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-4992.onnx",
+                "reward": null,
+                "creation_time": 1767019562.574592,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-4992.pt"
+                ]
+            },
+            {
+                "steps": 9955,
+                "file_path": "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-9955.onnx",
+                "reward": 5.0,
+                "creation_time": 1767019648.5674489,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-9955.pt"
+                ]
+            },
+            {
+                "steps": 14947,
+                "file_path": "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-14947.onnx",
+                "reward": null,
+                "creation_time": 1767019739.099139,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-14947.pt"
+                ]
+            },
+            {
+                "steps": 19980,
+                "file_path": "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-19980.onnx",
+                "reward": 6.0,
+                "creation_time": 1767019835.8559263,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-19980.pt"
+                ]
+            },
+            {
+                "steps": 24972,
+                "file_path": "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-24972.onnx",
+                "reward": null,
+                "creation_time": 1767019930.2384877,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-24972.pt"
+                ]
+            },
+            {
+                "steps": 29996,
+                "file_path": "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-29996.onnx",
+                "reward": 7.0,
+                "creation_time": 1767020021.9286776,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-29996.pt"
+                ]
+            },
+            {
+                "steps": 34988,
+                "file_path": "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-34988.onnx",
+                "reward": null,
+                "creation_time": 1767020113.005398,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-34988.pt"
+                ]
+            },
+            {
+                "steps": 39953,
+                "file_path": "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-39953.onnx",
+                "reward": 5.0,
+                "creation_time": 1767020205.4354482,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-39953.pt"
+                ]
+            },
+            {
+                "steps": 44945,
+                "file_path": "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-44945.onnx",
+                "reward": null,
+                "creation_time": 1767020301.4021466,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-44945.pt"
+                ]
+            },
+            {
+                "steps": 49978,
+                "file_path": "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-49978.onnx",
+                "reward": 5.0,
+                "creation_time": 1767020391.4005723,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-49978.pt"
+                ]
+            },
+            {
+                "steps": 54945,
+                "file_path": "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-54945.onnx",
+                "reward": 6.0,
+                "creation_time": 1767020487.7345278,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-54945.pt"
+                ]
+            },
+            {
+                "steps": 59937,
+                "file_path": "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-59937.onnx",
+                "reward": 6.0,
+                "creation_time": 1767020579.0910206,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-59937.pt"
+                ]
+            },
+            {
+                "steps": 64962,
+                "file_path": "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-64962.onnx",
+                "reward": 8.0,
+                "creation_time": 1767020795.6152415,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-64962.pt"
+                ]
+            },
+            {
+                "steps": 69954,
+                "file_path": "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-69954.onnx",
+                "reward": 8.0,
+                "creation_time": 1767021029.8829453,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-69954.pt"
+                ]
+            },
+            {
+                "steps": 74986,
+                "file_path": "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-74986.onnx",
+                "reward": 3.0,
+                "creation_time": 1767021278.8443973,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-74986.pt"
+                ]
+            },
+            {
+                "steps": 79978,
+                "file_path": "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-79978.onnx",
+                "reward": 3.0,
+                "creation_time": 1767021505.777386,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-79978.pt"
+                ]
+            },
+            {
+                "steps": 84940,
+                "file_path": "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-84940.onnx",
+                "reward": null,
+                "creation_time": 1767021738.03525,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-84940.pt"
+                ]
+            },
+            {
+                "steps": 89996,
+                "file_path": "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-89996.onnx",
+                "reward": null,
+                "creation_time": 1767021964.3794072,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-89996.pt"
+                ]
+            },
+            {
+                "steps": 94953,
+                "file_path": "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-94953.onnx",
+                "reward": null,
+                "creation_time": 1767022212.993581,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-94953.pt"
+                ]
+            },
+            {
+                "steps": 99945,
+                "file_path": "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-99945.onnx",
+                "reward": null,
+                "creation_time": 1767022427.851211,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-99945.pt"
+                ]
+            },
+            {
+                "steps": 104973,
+                "file_path": "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-104973.onnx",
+                "reward": null,
+                "creation_time": 1767022677.2930202,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-104973.pt"
+                ]
+            },
+            {
+                "steps": 109997,
+                "file_path": "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-109997.onnx",
+                "reward": -6.0,
+                "creation_time": 1767022903.412417,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-109997.pt"
+                ]
+            },
+            {
+                "steps": 114989,
+                "file_path": "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-114989.onnx",
+                "reward": null,
+                "creation_time": 1767023143.3506424,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-114989.pt"
+                ]
+            },
+            {
+                "steps": 119951,
+                "file_path": "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-119951.onnx",
+                "reward": 5.0,
+                "creation_time": 1767023368.8251433,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-119951.pt"
+                ]
+            },
+            {
+                "steps": 124943,
+                "file_path": "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-124943.onnx",
+                "reward": null,
+                "creation_time": 1767023596.5324566,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-124943.pt"
+                ]
+            },
+            {
+                "steps": 127567,
+                "file_path": "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-127567.onnx",
+                "reward": null,
+                "creation_time": 1767023708.3806186,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-127567.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 127567,
+            "file_path": "results\\Advanced_ARL_12.29V1\\RobotBrain.onnx",
+            "reward": null,
+            "creation_time": 1767023708.3806186,
+            "auxillary_file_paths": [
+                "results\\Advanced_ARL_12.29V1\\RobotBrain\\RobotBrain-127567.pt"
+            ]
+        }
+    },
+    "HumanBehavior": {
+        "checkpoints": [
+            {
+                "steps": 99983,
+                "file_path": "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-99983.onnx",
+                "reward": null,
+                "creation_time": 1767019572.7037408,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-99983.pt"
+                ]
+            },
+            {
+                "steps": 199998,
+                "file_path": "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-199998.onnx",
+                "reward": -4.648699522018433,
+                "creation_time": 1767019668.7625985,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-199998.pt"
+                ]
+            },
+            {
+                "steps": 299988,
+                "file_path": "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-299988.onnx",
+                "reward": null,
+                "creation_time": 1767019775.9748647,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-299988.pt"
+                ]
+            },
+            {
+                "steps": 399971,
+                "file_path": "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-399971.onnx",
+                "reward": null,
+                "creation_time": 1767019881.53137,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-399971.pt"
+                ]
+            },
+            {
+                "steps": 499940,
+                "file_path": "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-499940.onnx",
+                "reward": 0.4780002236366272,
+                "creation_time": 1767019985.0049462,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-499940.pt"
+                ]
+            },
+            {
+                "steps": 599970,
+                "file_path": "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-599970.onnx",
+                "reward": 201.60802367329597,
+                "creation_time": 1767020088.8592098,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-599970.pt"
+                ]
+            },
+            {
+                "steps": 699938,
+                "file_path": "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-699938.onnx",
+                "reward": null,
+                "creation_time": 1767020192.89222,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-699938.pt"
+                ]
+            },
+            {
+                "steps": 799970,
+                "file_path": "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-799970.onnx",
+                "reward": null,
+                "creation_time": 1767020298.711635,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-799970.pt"
+                ]
+            },
+            {
+                "steps": 899944,
+                "file_path": "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-899944.onnx",
+                "reward": null,
+                "creation_time": 1767020403.998155,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-899944.pt"
+                ]
+            },
+            {
+                "steps": 999961,
+                "file_path": "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-999961.onnx",
+                "reward": -4.107499480247498,
+                "creation_time": 1767020510.1538277,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-999961.pt"
+                ]
+            },
+            {
+                "steps": 1099951,
+                "file_path": "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-1099951.onnx",
+                "reward": null,
+                "creation_time": 1767020651.0411506,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-1099951.pt"
+                ]
+            },
+            {
+                "steps": 1199943,
+                "file_path": "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-1199943.onnx",
+                "reward": -13.902499198913574,
+                "creation_time": 1767020926.7414885,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-1199943.pt"
+                ]
+            },
+            {
+                "steps": 1299988,
+                "file_path": "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-1299988.onnx",
+                "reward": 104.0236366347355,
+                "creation_time": 1767021174.3210344,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-1299988.pt"
+                ]
+            },
+            {
+                "steps": 1399976,
+                "file_path": "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-1399976.onnx",
+                "reward": null,
+                "creation_time": 1767021449.630363,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-1399976.pt"
+                ]
+            },
+            {
+                "steps": 1499956,
+                "file_path": "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-1499956.onnx",
+                "reward": null,
+                "creation_time": 1767021712.387513,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-1499956.pt"
+                ]
+            },
+            {
+                "steps": 1599983,
+                "file_path": "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-1599983.onnx",
+                "reward": null,
+                "creation_time": 1767021968.9319706,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-1599983.pt"
+                ]
+            },
+            {
+                "steps": 1699936,
+                "file_path": "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-1699936.onnx",
+                "reward": null,
+                "creation_time": 1767022236.1561458,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-1699936.pt"
+                ]
+            },
+            {
+                "steps": 1799945,
+                "file_path": "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-1799945.onnx",
+                "reward": -0.9429997801780701,
+                "creation_time": 1767022501.4764106,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-1799945.pt"
+                ]
+            },
+            {
+                "steps": 1899947,
+                "file_path": "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-1899947.onnx",
+                "reward": null,
+                "creation_time": 1767022763.5568337,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-1899947.pt"
+                ]
+            },
+            {
+                "steps": 1999962,
+                "file_path": "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-1999962.onnx",
+                "reward": null,
+                "creation_time": 1767023032.3771865,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-1999962.pt"
+                ]
+            },
+            {
+                "steps": 2099997,
+                "file_path": "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-2099997.onnx",
+                "reward": null,
+                "creation_time": 1767023279.5317073,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-2099997.pt"
+                ]
+            },
+            {
+                "steps": 2199984,
+                "file_path": "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-2199984.onnx",
+                "reward": null,
+                "creation_time": 1767023543.8177943,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-2199984.pt"
+                ]
+            },
+            {
+                "steps": 2268656,
+                "file_path": "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-2268656.onnx",
+                "reward": null,
+                "creation_time": 1767023708.5057104,
+                "auxillary_file_paths": [
+                    "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-2268656.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 2268656,
+            "file_path": "results\\Advanced_ARL_12.29V1\\HumanBehavior.onnx",
+            "reward": null,
+            "creation_time": 1767023708.5057104,
+            "auxillary_file_paths": [
+                "results\\Advanced_ARL_12.29V1\\HumanBehavior\\HumanBehavior-2268656.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "1.8.2+cu111"
+    }
+}

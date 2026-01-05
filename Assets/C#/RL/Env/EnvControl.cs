@@ -72,6 +72,32 @@ public partial class EnvControl : MonoBehaviour
     public float startTime;
     public int robotCount = 3;
 
+    private void Awake()
+    {
+        LoadFireData();
+        // 【核心修改 1】在 Awake 里只创建一次组
+        // 以后无论重置多少次回合，都用这个组，不要再 new 了
+        m_AgentGroup = new SimpleMultiAgentGroup();
+
+        // 预先找到所有的 Brain (假设 Brain 是场景里的固定物体，不随回合销毁)
+        // 如果 Brain 也是动态生成的，那逻辑会复杂很多，建议 Brain 设为固定
+        RobotBrain[] brains = transform.GetComponentsInChildren<RobotBrain>(true);
+        brains = brains.OrderBy(g => g.name).ToArray(); // 排序保证顺序
+
+        RobotBrainList.Clear();
+        foreach (var brain in brains)
+        {
+            RobotBrainList.Add(brain);
+
+            // 【核心修改 2】一出生就注册，终身有效
+            m_AgentGroup.RegisterAgent(brain);
+        }
+
+        isAgentGroupInitialized = true;
+        Debug.Log($"[EnvControl] 初始化完成，已注册 {RobotBrainList.Count} 个大脑。");
+    
+}
+
     private void Start()
     {
         EpisodeNum = 0;
@@ -148,7 +174,7 @@ public partial class EnvControl : MonoBehaviour
         else if (!useRobotBrain)
         {
             // 没有机器人时仅记录简单的Env奖励
-            this.LogReward("总人数", 10);
+            this.LogReward("总人数", 50);
             this.LogReward("回合数", 1);
             this.LogReward("运行花费的总时间", EnpisodeTime);
         }
@@ -185,7 +211,8 @@ public partial class EnvControl : MonoBehaviour
         }
         else
         {
-            layoutname = "layout_50";
+            // layoutname = "layout_50";
+            layoutname = "liwenzheng5floor";
         }
 
         // 生成地图
@@ -237,7 +264,7 @@ public partial class EnvControl : MonoBehaviour
     /// </summary>
     private void LogRewardStats()
     {
-        this.LogReward("总人数", 10);
+        this.LogReward("总人数", 50);
         this.LogReward("回合数", 1);
         this.LogReward("运行花费的总时间", EnpisodeTime);
 
@@ -388,6 +415,21 @@ public partial class EnvControl : MonoBehaviour
             }
         }
         return 0f;
+    }
+    public void AddRobotGroupReward(float reward)
+    {
+        // 安全检查
+        if (m_AgentGroup != null && RobotBrainList.Count > 0)
+        {
+            // 1. 给强化学习算法加分（这是给 AI 训练用的）
+            m_AgentGroup.AddGroupReward(reward);
+
+            // 2. 给 TensorBoard 画图用的（这是给人看的）
+            // 使用 Academy.Instance.StatsRecorder
+            // StatAggregationMethod.Sum 表示：如果这一帧加了多次奖励，或者为了看总和，将其累加
+            // 如果你想看平均每次加了多少，可以用 StatAggregationMethod.Average
+            Academy.Instance.StatsRecorder.Add("Custom/GroupReward", reward, StatAggregationMethod.Sum);
+        }
     }
     // 假设这些方法在 partial 类的另一部分中定义，为了编译通过，这里不作修改
     // private void AddExits() { ... }

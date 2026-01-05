@@ -1,0 +1,159 @@
+{
+    "HumanBehavior": {
+        "checkpoints": [
+            {
+                "steps": 999973,
+                "file_path": "results\\MARL_1.3V1\\HumanBehavior\\HumanBehavior-999973.onnx",
+                "reward": null,
+                "creation_time": 1767439461.5114071,
+                "auxillary_file_paths": [
+                    "results\\MARL_1.3V1\\HumanBehavior\\HumanBehavior-999973.pt"
+                ]
+            },
+            {
+                "steps": 1499951,
+                "file_path": "results\\MARL_1.3V1\\HumanBehavior\\HumanBehavior-1499951.onnx",
+                "reward": -1.1250000298023224,
+                "creation_time": 1767440117.942593,
+                "auxillary_file_paths": [
+                    "results\\MARL_1.3V1\\HumanBehavior\\HumanBehavior-1499951.pt"
+                ]
+            },
+            {
+                "steps": 1999958,
+                "file_path": "results\\MARL_1.3V1\\HumanBehavior\\HumanBehavior-1999958.onnx",
+                "reward": null,
+                "creation_time": 1767440780.1085744,
+                "auxillary_file_paths": [
+                    "results\\MARL_1.3V1\\HumanBehavior\\HumanBehavior-1999958.pt"
+                ]
+            },
+            {
+                "steps": 2499999,
+                "file_path": "results\\MARL_1.3V1\\HumanBehavior\\HumanBehavior-2499999.onnx",
+                "reward": null,
+                "creation_time": 1767441428.581732,
+                "auxillary_file_paths": [
+                    "results\\MARL_1.3V1\\HumanBehavior\\HumanBehavior-2499999.pt"
+                ]
+            },
+            {
+                "steps": 2999985,
+                "file_path": "results\\MARL_1.3V1\\HumanBehavior\\HumanBehavior-2999985.onnx",
+                "reward": null,
+                "creation_time": 1767442086.4223769,
+                "auxillary_file_paths": [
+                    "results\\MARL_1.3V1\\HumanBehavior\\HumanBehavior-2999985.pt"
+                ]
+            },
+            {
+                "steps": 3499961,
+                "file_path": "results\\MARL_1.3V1\\HumanBehavior\\HumanBehavior-3499961.onnx",
+                "reward": null,
+                "creation_time": 1767442740.8793926,
+                "auxillary_file_paths": [
+                    "results\\MARL_1.3V1\\HumanBehavior\\HumanBehavior-3499961.pt"
+                ]
+            },
+            {
+                "steps": 3999950,
+                "file_path": "results\\MARL_1.3V1\\HumanBehavior\\HumanBehavior-3999950.onnx",
+                "reward": -4.730000168085098,
+                "creation_time": 1767443372.6138823,
+                "auxillary_file_paths": [
+                    "results\\MARL_1.3V1\\HumanBehavior\\HumanBehavior-3999950.pt"
+                ]
+            },
+            {
+                "steps": 4499964,
+                "file_path": "results\\MARL_1.3V1\\HumanBehavior\\HumanBehavior-4499964.onnx",
+                "reward": 1.538710743188858,
+                "creation_time": 1767444004.9881434,
+                "auxillary_file_paths": [
+                    "results\\MARL_1.3V1\\HumanBehavior\\HumanBehavior-4499964.pt"
+                ]
+            },
+            {
+                "steps": 4999981,
+                "file_path": "results\\MARL_1.3V1\\HumanBehavior\\HumanBehavior-4999981.onnx",
+                "reward": null,
+                "creation_time": 1767444641.6778255,
+                "auxillary_file_paths": [
+                    "results\\MARL_1.3V1\\HumanBehavior\\HumanBehavior-4999981.pt"
+                ]
+            },
+            {
+                "steps": 5480718,
+                "file_path": "results\\MARL_1.3V1\\HumanBehavior\\HumanBehavior-5480718.onnx",
+                "reward": -2.5605506610668205,
+                "creation_time": 1767445182.105679,
+                "auxillary_file_paths": [
+                    "results\\MARL_1.3V1\\HumanBehavior\\HumanBehavior-5480718.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 5480718,
+            "file_path": "results\\MARL_1.3V1\\HumanBehavior.onnx",
+            "reward": -2.5605506610668205,
+            "creation_time": 1767445182.105679,
+            "auxillary_file_paths": [
+                "results\\MARL_1.3V1\\HumanBehavior\\HumanBehavior-5480718.pt"
+            ]
+        }
+    },
+    "RobotBrain": {
+        "checkpoints": [
+            {
+                "steps": 99933,
+                "file_path": "results\\MARL_1.3V1\\RobotBrain\\RobotBrain-99933.onnx",
+                "reward": 22.0,
+                "creation_time": 1767440505.236262,
+                "auxillary_file_paths": [
+                    "results\\MARL_1.3V1\\RobotBrain\\RobotBrain-99933.pt"
+                ]
+            },
+            {
+                "steps": 199960,
+                "file_path": "results\\MARL_1.3V1\\RobotBrain\\RobotBrain-199960.onnx",
+                "reward": 31.0,
+                "creation_time": 1767442852.8063564,
+                "auxillary_file_paths": [
+                    "results\\MARL_1.3V1\\RobotBrain\\RobotBrain-199960.pt"
+                ]
+            },
+            {
+                "steps": 299959,
+                "file_path": "results\\MARL_1.3V1\\RobotBrain\\RobotBrain-299959.onnx",
+                "reward": 21.0,
+                "creation_time": 1767445078.3719327,
+                "auxillary_file_paths": [
+                    "results\\MARL_1.3V1\\RobotBrain\\RobotBrain-299959.pt"
+                ]
+            },
+            {
+                "steps": 305657,
+                "file_path": "results\\MARL_1.3V1\\RobotBrain\\RobotBrain-305657.onnx",
+                "reward": 25.5,
+                "creation_time": 1767445182.032964,
+                "auxillary_file_paths": [
+                    "results\\MARL_1.3V1\\RobotBrain\\RobotBrain-305657.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 305657,
+            "file_path": "results\\MARL_1.3V1\\RobotBrain.onnx",
+            "reward": 25.5,
+            "creation_time": 1767445182.032964,
+            "auxillary_file_paths": [
+                "results\\MARL_1.3V1\\RobotBrain\\RobotBrain-305657.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "1.8.2+cu111"
+    }
+}

@@ -134,18 +134,22 @@ public partial class HumanControl : MonoBehaviour
             }
         }
 
-        // Debug.Log("人类死亡");
-
-        if (myEnv.useRobotBrain)
+        if (myEnv.useRobotBrain && myEnv.RobotBrainList.Count > 0)
         {
-            // 给机器人团队惩罚
-            // 注意：如果使用的是 POCA，通常只需要给 GroupReward 或者其中一个 Robot 给即可
-            if (myEnv.RobotBrainList.Count > 0)
-            {
-                myEnv.RobotBrainList[0].AddReward(-1.0f); // 适当降低惩罚数值，-300太大了会导致梯度爆炸
-                // myEnv.RobotBrainList[0].LogReward("人类死亡惩罚", -1.0f);
-            }
+            // 机器人团队惩罚：作为保护者，行人死亡是严重的失败
+            // 建议：惩罚值应与行人逃生奖励对等
+            myEnv.AddRobotGroupReward(-1.0f);
         }
+
+        if (myEnv.useHumanAgent)
+        {
+            // 人类端：除了基础死亡分，还可以根据距离出口的远近额外扣分（惩罚没跑多远就死了）
+            // float distPenalty = Mathf.Clamp01(exitDistance / 100f) * -0.5f;
+            myHumanBrain.SetReward(-1.0f);
+            myHumanBrain.EndEpisode();
+        }
+
+        gameObject.SetActive(false);
 
         if (myEnv.useHumanAgent)
         {
@@ -171,16 +175,24 @@ public partial class HumanControl : MonoBehaviour
     private void OnTriggerEnter(Collider trigger)
     {
         GameObject triggerObject = trigger.gameObject;
-        isReturnFromLastDoor = triggerObject == lastDoorWentThrough;
 
         switch (trigger.transform.tag)
         {
             case "Door":
-                lastDoorWentThrough = triggerObject;
-                if (_doorMemoryQueue.Count > 0 && !_doorMemoryQueue.Contains(triggerObject))
+                // --- 探索奖励逻辑 ---
+                // 如果这个门不在最近的记忆队列里，说明是“新区域探索”
+                if (!_doorMemoryQueue.Contains(triggerObject))
+                {
+                    if (myEnv.useHumanAgent)
+                    {
+                        myHumanBrain.AddReward(0.05f); // 给予微量探索奖励，鼓励通过门
+                                                       // myHumanBrain.LogReward("探索新区域", 0.05f);
+                    }
+
                     _doorMemoryQueue.Enqueue(triggerObject);
-                if (_doorMemoryQueue.Count > 3)
-                    _doorMemoryQueue.Dequeue();
+                    if (_doorMemoryQueue.Count > 3) _doorMemoryQueue.Dequeue();
+                }
+                lastDoorWentThrough = triggerObject;
                 break;
 
             case "Exit":
@@ -188,11 +200,19 @@ public partial class HumanControl : MonoBehaviour
                 break;
 
             case "Fire":
-                // 扣血逻辑已在 UpdatePanicLevelAndHealth 中处理，这里主要处理瞬时惩罚
+                // --- 火源避障惩罚 ---
                 if (myEnv.useHumanAgent)
                 {
-                    // 可以在这里给一点瞬时的负反馈，但不要太多
-                    // myHumanBrain.AddReward(-0.05f); 
+                    // 瞬时惩罚，让Agent对“火”这个标签产生恐惧，而不只是对掉血恐惧
+                    myHumanBrain.AddReward(-0.01f);
+                }
+                break;
+
+            case "Robot":
+                // 可选：如果行人主动靠近机器人，可以给一点点奖励，鼓励受引导
+                if (myEnv.useHumanAgent && CurrentState != 0)
+                {
+                    myHumanBrain.AddReward(0.01f);
                 }
                 break;
         }
@@ -213,11 +233,15 @@ public partial class HumanControl : MonoBehaviour
         myEnv.sumhealth += health;
         myEnv.EscapeHuman++;
 
-        // === 机器人奖励 ===
-        if (myEnv.useRobotBrain && myEnv.RobotBrainList.Count > 0)
+        // === 机器人奖励修改 (修复群体奖励为0的问题) ===
+        if (myEnv.useRobotBrain)
         {
-            // 机器人成功救出人类，给予大奖
-            myEnv.RobotBrainList[0].AddReward(1.0f);
+            // 原代码：myEnv.RobotBrainList[0].AddReward(1.0f); 
+            // 缺点：只奖励第0个机器人，且不计入 Group Reward
+
+            // --- 修改后 ---
+            // 优点：所有机器人平分这份荣誉，促进合作
+            myEnv.AddRobotGroupReward(1.0f);
         }
 
         // === 人类奖励 ===

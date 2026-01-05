@@ -5,20 +5,27 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using System.Text.RegularExpressions;
 using static JsonLoad;
+using System.Linq;
 
 public partial class BuildingControl : MonoBehaviour
 {
 
     [System.Serializable]
-    public class Layout                 //布局数据类，用来读取json数据
+    public class EmergencyExit
+    {
+        public string ExitRoom;
+        public string position;
+    }
+    [System.Serializable]
+    public class Layout
     {
         public string name;
-        public String ExitRoom;
-        public String ExitDoorPosition;//right left forward backward
+        // 修改这里：匹配 JSON 中的数组结构
+        public List<EmergencyExit> EmergencyExits;
         public Room[] rooms;
     }
-
     [System.Serializable]
     public class LayoutList
     {
@@ -27,141 +34,106 @@ public partial class BuildingControl : MonoBehaviour
     // Start is called before the first frame update
     public void GenerateRoomsJsonLoad(string filename, string layoutname)
     {
-        LoadRoomDataFromJson(filename, layoutname);//从json文件中加载房间数组的数据
-        CreateRoomBinary(roomList);//在场景中生成房间
+       
+        // 1. 加载并解析一次
+        TextAsset jsonFile = Resources.Load<TextAsset>(filename);
+        if (jsonFile == null) return;
 
-        GetMaxXZofLayout(roomList);//得到该场景所在矩形的右上角坐标，用于后续训练时的观测量归一化
-
-        Room[][] CN = LoadDoorDataFromJson(filename, layoutname);//生成的不再是严格的对称矩阵，可能是锯齿形的，只存储了需要的信息
-                                                                 // print("roomList中的房间为：" + roomList);
-        CreateDoorBetweenRooms(CN); //根据连通图CN生成门
-        AddExitDoors(filename, layoutname);
-    }
-
-    public void LoadRoomDataFromJson(string filename, string layoutname)
-    {
-        //Debug.Log("从json文件中加载房间数组的数据");
-        TextAsset jsonFile = Resources.Load<TextAsset>(filename); //加载json数据到jsonFile当中
-        if (jsonFile == null)
-        {
-            Debug.LogError("JSON 文件未找到！请检查：\n" +
-                         "- 文件是否在 Assets/Resources 内\n" +
-                         "- 文件名是否完全匹配（包括大小写）\n" +
-                         "- 文件扩展名是否为 .json");
-            return;
-        }
-        // Debug.Log("原始JSON内容:\n" + jsonFile.text);
-        // 2. 使用 Newtonsoft.Json 解析，读取json文件这一步没问题。那应该就是解析的时候出错了
-        try
-        {
-            LayoutList data = JsonConvert.DeserializeObject<LayoutList>(jsonFile.text);
-            if (data == null || data.Layouts == null)
-            {
-                Debug.LogError("JSON解析失败，请检查格式是否正确");
-                return;
-            }
-
-            // 查找指定的 Layout
-            Layout targetLayout = data.Layouts.Find(layouts => layouts.name == layoutname);
-            if (targetLayout == null)
-            {
-                Debug.LogError("没有找到目标布局，请检查提供的布局名称是否正确");
-                return;
-            }
-            foreach (Room room in targetLayout.rooms)
-            {
-                roomList.Add(room);
-            }
-
-            //!!!!!!!!!!!调试用，看各个房间是否加入roomlist
-            /*foreach (Room room in roomList)
-            {
-                print("!!!!!!!!!!!!!!!!!!!!!");
-                Debug.Log("房间名称为："+room.roomName);
-                Debug.Log("房间左下角坐标为："+room.xzPosition);
-                Debug.Log("房间长宽分别为："+room.width+","+room.height);
-            }*/
-            //!!!!!!!!!!!调试用，看各个房间是否加入roomlist
-        }
-
-        catch (System.Exception e)
-        {
-            Debug.LogError($"解析失败: {e.Message}\nJSON 内容:\n{jsonFile.text}");
-        }
-
-
-    }
-    public Room[][] LoadDoorDataFromJson(string filename, string layoutname)
-    {
-        //这一步是没问题的，已经检查过了，那应该就是下面的算法出现问题了
-        /* Debug.Log("加载门的数据 ");*/
-        // 1. 加载并解析JSON文件
-        TextAsset jsonFile = Resources.Load<TextAsset>(filename); //加载json数据到jsonFile当中
-        if (jsonFile == null)
-        {
-            Debug.LogError("JSON 文件未找到！请检查：\n" +
-                         "- 文件是否在 Assets/Resources 内\n" +
-                         "- 文件名是否完全匹配（包括大小写）\n" +
-                         "- 文件扩展名是否为 .json");
-            return null;
-        }
         LayoutList data = JsonConvert.DeserializeObject<LayoutList>(jsonFile.text);
-        if (data == null || data.Layouts == null)
-        {
-            Debug.LogError("JSON解析失败，请检查格式是否正确");
-            return null;
-        }
+        Layout targetLayout = data.Layouts.Find(l => l.name == layoutname);
 
-        // 2. 查找目标布局
-        Layout targetLayout = data.Layouts.Find(layouts => layouts.name == layoutname);
-        if (targetLayout == null)
-        {
-            Debug.LogError("没有找到目标布局，请检查提供的布局名称是否正确");
-            return null;
-        }
+        if (targetLayout == null) return;
 
-        // 3. 建立房间名到Room对象的字典。
-        // 字典的使用，新知识！！！！！，好像也不是新知识？？？这个是java里面的map映射
+
+        // 2. 清理并填充房间列表
+        roomList.Clear();
+
+        foreach (Room room in targetLayout.rooms)
+        {
+            roomList.Add(room);
+        }
+    
+        // 3. 生成实体
+        CreateRoomBinary(roomList);  
+        GetMaxXZofLayout(roomList);
+
+        // 4. 处理门（传递已解析的数据）
+        Room[][] CN = BuildConnectionMatrix(targetLayout);
+        CreateDoorBetweenRooms(CN);
+
+        // 5. 处理出口（使用修正后的数据结构）
+        AddExitDoorsFromLayout(targetLayout);
+    }
+
+    // 提取出的解析逻辑
+    private Room[][] BuildConnectionMatrix(Layout layout)
+    {
         Dictionary<string, Room> nameToRoom = new Dictionary<string, Room>();
-        foreach (Room room in roomList)
-        {
-            nameToRoom[room.roomName] = room;
-            //print("正在建立名字到类的字典："+room.roomName+"对应的实体是"+room);
-        }
+        foreach (Room room in roomList) nameToRoom[room.roomName] = room;
 
-        // 4. 初始化二维连接数组
         Room[][] connection = new Room[roomList.Count][];
-        for (int i = 0; i < roomList.Count; i++)//挨个添加邻接房间
+        for (int i = 0; i < roomList.Count; i++)
         {
             Room currentRoom = roomList[i];
-
-            if (currentRoom.ConnectedRoom == null || currentRoom.ConnectedRoom.Length == 0)// 无邻接房间，一般不存在这个情况，否则这个房间就是个孤立点
-            {
-                connection[i] = new Room[0]; // 无邻接房间
-                continue;
-            }
-
-            // 5. 转换邻接房间名列表为Room对象数组
             List<Room> connectedRooms = new List<Room>();
-            foreach (string connectedName in currentRoom.ConnectedRoom)
+
+            if (currentRoom.ConnectedRoom != null)
             {
-                //当前的房间是
-                if (nameToRoom.TryGetValue(connectedName, out Room connectedRoom))
+                foreach (string connectedName in currentRoom.ConnectedRoom)
                 {
-                    // Debug.Log("当前房间是："+currentRoom.roomName+",其邻接房间为"+connectedRoom.roomName);
-                    connectedRooms.Add(connectedRoom);
-                }
-                else
-                {
-                    Debug.LogWarning($"房间 '{currentRoom.roomName}' 的邻接房间 '{connectedName}' 不存在");
+                    if (nameToRoom.TryGetValue(connectedName, out Room r))
+                        connectedRooms.Add(r);
                 }
             }
-
             connection[i] = connectedRooms.ToArray();
         }
-
         return connection;
     }
+
+    private void AddExitDoorsFromLayout(Layout layout)
+    {
+        if (layout.EmergencyExits == null) return;
+
+        // 缓存一个由所有房间名组成的“全名列表”用于报错时打印，避免重复循环
+        // 同时也方便我们肉眼检查
+        string allRoomNamesForDebug = "";
+        if (roomList.Count > 0)
+        {
+            // 简单拼接一下，方便Debug看
+            var names = new System.Collections.Generic.List<string>();
+            foreach (var r in roomList) names.Add(r.roomName);
+            allRoomNamesForDebug = string.Join(", ", names);
+        }
+
+        Debug.Log($"============== 开始匹配出口 (房间总数: {roomList.Count}) ==============");
+        //Debug.LogError($"[关键检查] 当前 roomList 的数量是: {roomList.Count}");
+
+        if (roomList.Count > 0)
+        {
+            Debug.Log($"[关键检查] 列表第4个房间是: '{roomList[3].roomName}'");
+        }
+
+        foreach (var exitData in layout.EmergencyExits)
+        {
+            // 步骤 1: 暴力清洗目标字符串 (只保留字母和数字)
+
+            Room escapeRoom=new Room();
+            foreach (Room a in roomList)
+            {
+                if (a.roomName.Equals(exitData.ExitRoom))
+                {
+                    print("找到了出口房间：" + a.roomName);
+                    escapeRoom = a;
+
+                    Vector3 pos = GetDoorPosition(escapeRoom, exitData.position);
+                    bool isVerticalWall = (exitData.position == "left" || exitData.position == "right");
+                    CreateDoor(pos, 0.1f, isVerticalWall, "Exit");
+                    break;
+                }
+                }
+            }
+    }
+
     private void CreateDoorBetweenRooms(Room[][] cN)
     {
         float distanceThreshold = 0.1f;
@@ -229,79 +201,6 @@ public partial class BuildingControl : MonoBehaviour
     }
 
 
-    private void AddExitDoors(string filename, string layoutname)
-    {
-        Room EscapeRoom = null;
-
-        TextAsset jsonFile = Resources.Load<TextAsset>(filename); //加载json数据到jsonFile当中
-        if (jsonFile == null)
-        {
-            Debug.LogError("JSON 文件未找到！请检查：\n" +
-                         "- 文件是否在 Assets/Resources 内\n" +
-                         "- 文件名是否完全匹配（包括大小写）\n" +
-                         "- 文件扩展名是否为 .json");
-            return;
-        }
-        // Debug.Log("原始JSON内容:\n" + jsonFile.text);
-        // 2. 使用 Newtonsoft.Json 解析，读取json文件这一步没问题。那应该就是解析的时候出错了
-        try
-        {
-            LayoutList data = JsonConvert.DeserializeObject<LayoutList>(jsonFile.text);
-            if (data == null || data.Layouts == null)
-            {
-                Debug.LogError("JSON解析失败，请检查格式是否正确");
-                return;
-            }
-
-            // 查找指定的 Layout
-            Layout targetLayout = data.Layouts.Find(layouts => layouts.name == layoutname);
-            if (targetLayout == null)
-            {
-                Debug.LogError("没有找到目标布局，请检查提供的布局名称是否正确");
-                return;
-            }
-            //Debug.Log(targetLayout.ExitRoom);
-            //Debug.Log(targetLayout.ExitDoorPosition);
-
-            // 查找目标逃生房间
-            foreach (Room room in roomList)
-            {
-                if (room.roomName == targetLayout.ExitRoom)
-                {
-                    EscapeRoom = room;
-                    break;
-                }
-            }
-            //查找门在该房间的位置，right left forward backward
-
-            Vector3 DoorPosition = GetDoorPosition(EscapeRoom, targetLayout.ExitDoorPosition);
-            string DoorPOS = targetLayout.ExitDoorPosition;
-
-            if (DoorPOS == "right")
-            {
-                CreateDoor(DoorPosition, 0.1f, true, "Exit");
-            }
-
-            else if (DoorPOS == "left")
-            {
-                CreateDoor(DoorPosition, 0.1f, true, "Exit");
-            }
-            else if (DoorPOS == "forward")
-            {
-                CreateDoor(DoorPosition, 0.1f, false, "Exit");
-            }
-            else if (DoorPOS == "backward")
-            {
-                CreateDoor(DoorPosition, 0.1f, false, "Exit");
-            }
-            return;
-        }
-        catch (Exception e)
-        {
-            Debug.LogError($"解析失败: {e.Message}\nJSON 内容:\n{jsonFile.text}");
-            return;
-        }
-    }
 
     private Vector3 GetDoorPosition(Room escapeRoom, string doorPosition)
     {

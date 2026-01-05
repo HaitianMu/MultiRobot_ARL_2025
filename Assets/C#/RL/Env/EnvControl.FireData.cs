@@ -40,10 +40,7 @@ public partial class EnvControl : MonoBehaviour
     // 当前这一帧的数据引用
     public SmokeFrame CurrentFrameData;
 
-    private void Awake()
-    {
-        LoadFireData();
-    }
+   
     public void LoadFireData()
     {
         if (fireBinaryFile == null) return;

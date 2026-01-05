@@ -60,7 +60,8 @@ public class Room : MonoBehaviour//Îª·¿¼äÔö¼ÓÒ»Ğ©ÊôĞÔ£¬±ÈÈç·¿¼äµÄ×ø±ê¡¢´óĞ¡£¬ÒÔ¼
             }
             if (other.xzPosition.z <= xzPosition.z || other.xzPosition.z + other.height >= xzPosition.z + height || height >= 0.2)
             {
-
+                isAdjacent = true;
+                return isAdjacent;
             }
             else { return isAdjacent; }
 

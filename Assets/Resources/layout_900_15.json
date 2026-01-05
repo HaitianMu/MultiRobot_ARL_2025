@@ -165,7 +165,137 @@
         {"roomName": "Security", "xzPosition": {"x":0,"z":25}, "width":6,"height":6, "ConnectedRoom": ["MallEntrance","Storage"]},
         {"roomName": "Storage", "xzPosition": {"x":0,"z":31}, "width":6,"height":6, "ConnectedRoom": ["MallEntrance"]}
       ]
-    }
+    },
+    
+    {
+      "name": "liwenzheng5floor",
+      "EmergencyExits": [
+          {"room": "top", "position": "top"},
+          {"room": "left", "position": "left"},
+          {"room": "right", "position": "right"}
+      ],
+      "rooms": [
+          {
+              "roomName": "WC1", "xzPosition": {"x": -9, "z": 0}, "width": 15, "height": 30,
+              "ConnectedRoom": ["lianlang2"]
+          },
+          {
+              "roomName": "left", "xzPosition": {"x": -39, "z": 30}, "width": 45, "height": 45,
+              "ConnectedRoom": ["lianlang2"]
+          },
+          {
+              "roomName": "WC2", "xzPosition": {"x": -9, "z": 75}, "width": 15, "height": 30,
+              "ConnectedRoom": ["lianlang2"]
+          },
+
+
+          {
+              "roomName": "top", "xzPosition": {"x": 15, "z": 90}, "width": 90, "height": 45,
+              "ConnectedRoom": ["yandu1", "500", "yandu2"]
+          },
+
+ 
+
+          {
+              "roomName": "lianlang2", "xzPosition": {"x": 6, "z": 0}, "width": 9, "height": 105,
+              "ConnectedRoom": ["WC1", "left", "WC2", "yandu1", "lianlang1"]
+          },
+
+
+          {
+              "roomName": "WC3", "xzPosition": {"x": 114, "z": 75}, "width": 15, "height": 30,
+              "ConnectedRoom": ["lianlang3"]
+          },
+          {
+              "roomName": "right", "xzPosition": {"x": 114, "z": 30}, "width": 45, "height": 45,
+              "ConnectedRoom": ["lianlang3"]
+          },
+          {
+              "roomName": "509", "xzPosition": {"x": 114, "z": 12}, "width": 15, "height": 18,
+              "ConnectedRoom": ["lianlang3"]
+          },
+          {
+              "roomName": "WC4", "xzPosition": {"x": 114, "z": 0}, "width": 15, "height": 12,
+              "ConnectedRoom": ["lianlang3"]
+          },
+
+
+          {
+              "roomName": "yandu1", "xzPosition": {"x": 15, "z": 39}, "width": 36, "height": 51,
+              "ConnectedRoom": ["lianlang2", "top", "500", "B502"]
+          },
+
+          {
+              "roomName": "500", "xzPosition": {"x": 51, "z": 45}, "width": 18, "height": 45,
+              "ConnectedRoom": ["yandu1", "top", "yandu2", "A502"]
+          },
+
+          {
+              "roomName": "yandu2", "xzPosition": {"x": 69, "z": 21}, "width": 36, "height": 69,
+              "ConnectedRoom": ["500", "top", "lianlang3", "A502", "lianlang1"]
+          },
+
+          {
+              "roomName": "B502", "xzPosition": {"x": 15, "z": 21}, "width": 36, "height": 18,
+              "ConnectedRoom": ["yandu1", "A502", "lianlang1"]
+          },
+
+          {
+              "roomName": "A502", "xzPosition": {"x": 51, "z": 21}, "width": 18, "height": 24,
+              "ConnectedRoom": ["500", "B502", "yandu2", "lianlang1"]
+          },
+
+
+          {
+              "roomName": "B504", "xzPosition": {"x": 15, "z": 0}, "width": 9, "height": 12,
+              "ConnectedRoom": ["lianlang1"]
+          },
+          {
+              "roomName": "B503", "xzPosition": {"x": 24, "z": 0}, "width": 9, "height": 12,
+              "ConnectedRoom": ["lianlang1"]
+          },
+          {
+              "roomName": "B501", "xzPosition": {"x": 33, "z": 0}, "width": 12, "height": 12,
+              "ConnectedRoom": ["lianlang1"]
+          },
+          {
+              "roomName": "A501", "xzPosition": {"x": 45, "z": 0}, "width": 15, "height": 12,
+              "ConnectedRoom": ["lianlang1"]
+          },
+          {
+              "roomName": "A503", "xzPosition": {"x": 60, "z": 0}, "width": 9, "height": 12,
+              "ConnectedRoom": ["lianlang1"]
+          },
+          {
+              "roomName": "A504", "xzPosition": {"x": 69, "z": 0}, "width": 9, "height": 12,
+              "ConnectedRoom": ["lianlang1"]
+          },
+          {
+              "roomName": "A505", "xzPosition": {"x": 78, "z": 0}, "width": 9, "height": 12,
+              "ConnectedRoom": ["lianlang1"]
+          },
+          {
+              "roomName": "A506", "xzPosition": {"x": 87, "z": 0}, "width": 18, "height": 12,
+              "ConnectedRoom": ["lianlang1"]
+          },
+
+        
+          {
+              "roomName": "lianlang1", "xzPosition": {"x": 15, "z": 12}, "width": 90, "height": 9,
+              "ConnectedRoom": [
+                  "lianlang2", "lianlang3",
+                  "B502", "A502", "yandu2",
+                  "B504", "B503", "B501", "A501", "A503", "A504", "A505", "A506"
+              ]
+          },
+
+
+          {
+              "roomName": "lianlang3", "xzPosition": {"x": 105, "z": 0}, "width": 9, "height": 105,
+              "ConnectedRoom": ["WC4", "509", "right", "WC3", "yandu2", "lianlang1"]
+          },
+      ]
+  }
     
     
     

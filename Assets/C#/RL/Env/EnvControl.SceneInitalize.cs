@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.AI.Navigation;
@@ -11,7 +11,7 @@ using UnityEngine.AI;
 public partial class EnvControl : MonoBehaviour
 {
     // ---------------------------------------------------------
-    // 1. Í¨ÓÃÇåÀí·½·¨£º´ó·ù¼õÉÙÖØ¸´´úÂë
+    // 1. é€šç”¨æ¸…ç†æ–¹æ³•ï¼šå¤§å¹…å‡å°‘é‡å¤ä»£ç 
     // ---------------------------------------------------------
     private void ClearAndDestroyList<T>(List<T> list) where T : Component
     {
@@ -19,7 +19,7 @@ public partial class EnvControl : MonoBehaviour
 
         foreach (var item in list)
         {
-            // Unity ÖØÔØÁË == ÔËËã·û£¬¼ì²é item ÊÇ·ñ´æÔÚ
+            // Unity é‡è½½äº† == è¿ç®—ç¬¦ï¼Œæ£€æŸ¥ item æ˜¯å¦å­˜åœ¨
             if (item != null && item.gameObject != null)
             {
                 Destroy(item.gameObject);
@@ -30,12 +30,12 @@ public partial class EnvControl : MonoBehaviour
 
     private void ResetAgentandClearList()
     {
-        // Ê¹ÓÃÍ¨ÓÃ·½·¨ÇåÀíÁĞ±í
+        // ä½¿ç”¨é€šç”¨æ–¹æ³•æ¸…ç†åˆ—è¡¨
         ClearAndDestroyList(personList);
         ClearAndDestroyList(RobotList);
 
-        // ³ö¿ÚÍ¨³£´øÓĞ Collider »òÆäËû×é¼ş£¬Èç¹û List<GameObject> ÔòĞèÒªµ¥¶À´¦Àí
-        // ½¨Òé½« Exits ¸ÄÎª List<Transform> »ò List<GameObject> µÄÍ¨ÓÃ´¦Àí
+        // å‡ºå£é€šå¸¸å¸¦æœ‰ Collider æˆ–å…¶ä»–ç»„ä»¶ï¼Œå¦‚æœ List<GameObject> åˆ™éœ€è¦å•ç‹¬å¤„ç†
+        // å»ºè®®å°† Exits æ”¹ä¸º List<Transform> æˆ– List<GameObject> çš„é€šç”¨å¤„ç†
         if (Exits.Count > 0)
         {
             foreach (var exit in Exits)
@@ -45,14 +45,13 @@ public partial class EnvControl : MonoBehaviour
             Exits.Clear();
         }
 
-        // ÖÇÄÜÌå´óÄÔÍ¨³£²»Ïú»Ù(Èç¹ûÊÇ³¡¾°¹Ì¶¨ÎïÌå)£¬Ö»Çå¿ÕÁĞ±íÒıÓÃ
-        // Èç¹û´óÄÔÒ²ÊÇÉú³ÉµÄ£¬ÇëÊ¹ÓÃ ClearAndDestroyList
-        RobotBrainList.Clear();
+        // æ™ºèƒ½ä½“å¤§è„‘é€šå¸¸ä¸é”€æ¯(å¦‚æœæ˜¯åœºæ™¯å›ºå®šç‰©ä½“)ï¼Œåªæ¸…ç©ºåˆ—è¡¨å¼•ç”¨
+        // å¦‚æœå¤§è„‘ä¹Ÿæ˜¯ç”Ÿæˆçš„ï¼Œè¯·ä½¿ç”¨ ClearAndDestroyList
         HumanBrainList.Clear();
 
         cachedRoomPositions.Clear();
 
-        // ÇåÀí»ğÑæ£ºĞèÒªÏÈÍ£Ö¹Ğ­³Ì
+        // æ¸…ç†ç«ç„°ï¼šéœ€è¦å…ˆåœæ­¢åç¨‹
         if (FireList.Count > 0)
         {
             foreach (FireControl fire in FireList)
@@ -66,7 +65,7 @@ public partial class EnvControl : MonoBehaviour
             FireList.Clear();
         }
 
-        // ÖØÖÃ¶ÔÏó³Ø
+        // é‡ç½®å¯¹è±¡æ± 
         if (FirePoolManager.Instance != null)
         {
             FirePoolManager.Instance.ClearPool();
@@ -74,19 +73,19 @@ public partial class EnvControl : MonoBehaviour
     }
 
     // ---------------------------------------------------------
-    // 2. »úÆ÷ÈËÉú³ÉÓÅ»¯£ºÖ§³Ö¶à»úÆ÷ÈË
+    // 2. æœºå™¨äººç”Ÿæˆä¼˜åŒ–ï¼šæ”¯æŒå¤šæœºå™¨äºº
     // ---------------------------------------------------------
     public void AddRobot()
     {
-        // ½¨Òé¸ÄÎª±äÁ¿¿ØÖÆ£¬·½±ãºóĞøÍØÕ¹
+        // å»ºè®®æ”¹ä¸ºå˜é‡æ§åˆ¶ï¼Œæ–¹ä¾¿åç»­æ‹“å±•
 
         for (int i = 0; i < robotCount; i++)
         {
             Vector3 spawnPosition;
             if (isTest && Exits.Count > 0)
             {
-                // ²âÊÔÄ£Ê½£ºÔÚ³ö¿ÚÅÔÅÅ¿ª£¬·ÀÖ¹ÖØµş
-                spawnPosition = Exits[0].transform.position + new Vector3(1 + i, 0, 0);
+                // æµ‹è¯•æ¨¡å¼ï¼šåœ¨å‡ºå£æ—æ’å¼€ï¼Œé˜²æ­¢é‡å 
+                spawnPosition = Exits[i].transform.position + new Vector3(1 + i, 0, 0);
             }
             else
             {
@@ -95,7 +94,7 @@ public partial class EnvControl : MonoBehaviour
 
             GameObject robotObj = Instantiate(RobotPrefab, spawnPosition, Quaternion.identity);
 
-            // ÓÅ»¯£ºÖ»»ñÈ¡Ò»´Î Component
+            // ä¼˜åŒ–ï¼šåªè·å–ä¸€æ¬¡ Component
             RobotControl robotCtrl = robotObj.GetComponent<RobotControl>();
             RobotList.Add(robotCtrl);
 
@@ -104,71 +103,52 @@ public partial class EnvControl : MonoBehaviour
     }
 
     // ---------------------------------------------------------
-    // 3. ´óÄÔ×é×°ÓÅ»¯£º×Ô¶¯Æ¥Åä¶à¸ö´óÄÔ
+    // 3. å¤§è„‘ç»„è£…ä¼˜åŒ–ï¼šè‡ªåŠ¨åŒ¹é…å¤šä¸ªå¤§è„‘
     // ---------------------------------------------------------
     public void AddRobotBrain()
     {
-        // ¡¾ĞŞ¸´1¡¿±ØĞëÏÈÇå¿ÕÁĞ±í£¬·ÀÖ¹»ØºÏÖØÖÃÊ±ÖØ¸´Ìí¼Ó
-        RobotBrainList.Clear();
+        // å®‰å…¨æ£€æŸ¥ï¼šç¡®ä¿èº«ä½“å’Œè„‘å­æ•°é‡ä¸€è‡´
+        int count = Mathf.Min(RobotList.Count, RobotBrainList.Count);
 
-        // ×¢Òâ£ºFindGameObjectsWithTag ÕÒ²»µ½ SetActive(false) µÄÎïÌå
-        GameObject[] brainObjs = GameObject.FindGameObjectsWithTag("RobotBrain");
-
-        if (brainObjs.Length == 0)
+        if (count == 0)
         {
-            Debug.LogError("Î´ÕÒµ½ Tag Îª 'RobotBrain' µÄÎïÌå£¡Çë¼ì²é Tag ÉèÖÃ»òÎïÌåÊÇ·ñ±»Òş²Ø¡£");
+            Debug.LogError("æ²¡æœ‰æ‰¾åˆ°æœºå™¨äººèº«ä½“æˆ–å¤§è„‘ï¼Œæ— æ³•ç»‘å®šï¼");
             return;
         }
 
-        // ÅÅĞòÒÔ±£Ö¤È·¶¨ĞÔ
-        brainObjs = brainObjs.OrderBy(g => g.name).ToArray();
-
-        int count = Mathf.Min(RobotList.Count, brainObjs.Length);
-
         for (int i = 0; i < count; i++)
         {
-            RobotBrain brain = brainObjs[i].GetComponent<RobotBrain>();
-            RobotControl robot = RobotList[i];
+            RobotBrain brain = RobotBrainList[i];
+            RobotControl robotBody = RobotList[i];
 
-            // ¼ÓÈëÁĞ±í
-            RobotBrainList.Add(brain);
+            // ã€æ ¸å¿ƒä¿®æ”¹ 4ã€‘ åªç»‘å®šï¼Œä¸æ³¨å†Œï¼
+            // å› ä¸º Awake é‡Œå·²ç»æ³¨å†Œè¿‡äº†ï¼ŒAgent ä¼šä¸€ç›´æ´»åœ¨è¿™ä¸ª Group é‡Œ
+            brain.BindRobotBody(robotBody.gameObject);
 
-            // ¡¾ĞŞ¸´2¡¿ÀûÓÃ RobotBrain ÄÚ²¿µÄ·½·¨½øĞĞ°ó¶¨£¬´úÂë¸üÕû½à
-            // ÕâĞĞ´úÂëÌæ´úÁËÄãÔ­±¾ÊÖĞ´µÄ 7-8 ĞĞ¸³Öµ´úÂë
-            brain.BindRobotBody(robot.gameObject);
+            // å¦‚æœéœ€è¦é‡ç½® Agent çš„å†…éƒ¨çŠ¶æ€ï¼ˆæ¯”å¦‚å¥–åŠ±å½’é›¶ï¼‰ï¼Œå¯ä»¥æ‰‹åŠ¨è°ƒç”¨
+            // brain.EndEpisode(); // é€šå¸¸ HandleEpisodeReset é‡Œå·²ç»è°ƒäº†ï¼Œè¿™é‡Œä¸ç”¨åŠ¨
         }
 
-        // ¡¾¹Ø¼ü¡¿×¢²áµ½ MA-POCA ×é
+        Debug.Log($"[EnvControl] æ–°å›åˆï¼šå·²å°† {count} ä¸ªæ–°èº«ä½“ç»‘å®šç»™å¤§è„‘ã€‚");
+    }
 
-         m_AgentGroup = new SimpleMultiAgentGroup();
-        if (!isAgentGroupInitialized)
-        {
-            foreach (var brain in RobotBrainList)
-            {
-                // Ö»ÓĞ°ó¶¨ÁËÉíÌåµÄ´óÄÔ²Å×¢²á£¬·ÀÖ¹¿ÕÒıÓÃ
-                if (brain.RobotIsInitialized)
-                {
-                    m_AgentGroup.RegisterAgent(brain);
-                }
-            }
-
-            Debug.Log($"ÒÑ×¢²á {RobotBrainList.Count} ¸ö»úÆ÷ÈË´óÄÔµ½ÖÇÄÜÌå×é¡£");
-            isAgentGroupInitialized = true;
-        }
-        }
-
-        // ---------------------------------------------------------
-        // 4. ÈËÀàÉú³ÉÓÅ»¯£ºÒÆ³ıÊÖ¶¯ Start ºÍ À¬»øÄÚ´æ·ÖÅä
-        // ---------------------------------------------------------
-        public void AddPerson(int num)
+    // ---------------------------------------------------------
+    // 4. äººç±»ç”Ÿæˆä¼˜åŒ–ï¼šç§»é™¤æ‰‹åŠ¨ Start å’Œ åƒåœ¾å†…å­˜åˆ†é…
+    // ---------------------------------------------------------
+    // ---------------------------------------------------------
+    // 4. äººç±»ç”Ÿæˆä¼˜åŒ–ï¼šæ”¯æŒè¯¾ç¨‹å­¦ä¹  (Curriculum Learning)
+    // ---------------------------------------------------------
+    public void AddPerson(int num)
     {
-        // ÒÆ³ı£ºVector3[] RoomPosition = new Vector3[10]; // ´ÓÎ´Ê¹ÓÃµÄÄÚ´æ·ÖÅä
+        // 1. è·å–è¯¾ç¨‹å­¦ä¹ å‚æ•° (é»˜è®¤ 1000f ä»£è¡¨å…¨å›¾)
+        float spawnRadius = Academy.Instance.EnvironmentParameters.GetWithDefault("spawn_distance_limit", 1000f);
 
         for (int i = 0; i < num; i++)
         {
-            Vector3 spawnPosition;
+            Vector3 spawnPosition = Vector3.zero;
+            bool positionFound = false;
 
-            // ²âÊÔÄ£Ê½£º°²È«¼ì²é·ÀÖ¹Ë÷ÒıÔ½½ç
+            // --- ç­–ç•¥ A: æµ‹è¯•æ¨¡å¼ (æŒ‡å®šæˆ¿é—´ï¼Œæœ€é«˜ä¼˜å…ˆçº§) ---
             if (isTest && complexityControl.buildingGeneration.roomList.Count > i)
             {
                 var room = complexityControl.buildingGeneration.roomList[i];
@@ -176,32 +156,77 @@ public partial class EnvControl : MonoBehaviour
                     room.xzPosition.x + room.width / 2,
                     1.5f,
                     room.xzPosition.z + room.height / 2);
+                positionFound = true;
             }
-            else
+            // --- ç­–ç•¥ B: è¯¾ç¨‹å­¦ä¹ æ¨¡å¼ (é™åˆ¶è·ç¦») ---
+            // åªæœ‰å½“å‚æ•°å°äº 999 (å³å¤„äºè¯¾ç¨‹æ—©æœŸ) ä¸”æœ‰å‡ºå£æ—¶æ‰å¯ç”¨
+            else if (spawnRadius < 999f && Exits.Count > 0)
+            {
+                spawnPosition = GetRandomPosNearExit(spawnRadius);
+                // å¦‚æœè¿”å›ä¸æ˜¯é›¶å‘é‡ï¼Œè¯´æ˜æ‰¾åˆ°äº†æœ‰æ•ˆä½ç½®
+                if (spawnPosition != Vector3.zero)
+                {
+                    positionFound = true;
+                }
+            }
+
+            // --- ç­–ç•¥ C: å…¨å›¾éšæœº (ä¿åº•é€»è¾‘) ---
+            // å¦‚æœä¸æ˜¯æµ‹è¯•æ¨¡å¼ï¼Œä¸”è¯¾ç¨‹æ¨¡å¼æ‰¾ä½ç½®å¤±è´¥(æ¯”å¦‚å¡å¢™é‡Œäº†)ï¼Œå°±é€€åŒ–ä¸ºå…¨å›¾éšæœº
+            if (!positionFound)
             {
                 spawnPosition = GetRandomPosInLayout();
             }
 
+            // å®ä¾‹åŒ–äººç±»
             GameObject personObj = Instantiate(HumanPrefab, spawnPosition, Quaternion.identity);
 
-            // ÓÅ»¯£ºTryGetComponent ÉÔÎ¢¿ìÒ»µã£¬ÇÒ½á¹¹¸üÇåÎú
             if (personObj.TryGetComponent<HumanControl>(out var humanCtrl))
             {
                 personList.Add(humanCtrl);
                 humanCtrl.myEnv = this;
-                // ÒÆ³ı£ºhumanCtrl.Start(); -> Unity »á×Ô¶¯µ÷ÓÃ£¬ÊÖ¶¯µ÷ÓÃ»áµ¼ÖÂ³õÊ¼»¯Á½´Î£¡
+                // Unity ML-Agents çš„ Agent é€šå¸¸åœ¨ OnEnable æˆ– Initialize ä¸­åˆå§‹åŒ–
             }
 
             personObj.transform.SetParent(humanParent.transform);
         }
     }
 
+    /// <summary>
+    /// è¾…åŠ©å‡½æ•°ï¼šåœ¨ä»»æ„ä¸€ä¸ªå‡ºå£çš„æŒ‡å®šåŠå¾„å†…å¯»æ‰¾ NavMesh ä¸Šçš„ç‚¹
+    /// </summary>
+    private Vector3 GetRandomPosNearExit(float radius)
+    {
+        if (Exits == null || Exits.Count == 0) return Vector3.zero;
+
+        // å°è¯• 10 æ¬¡å¯»æ‰¾æœ‰æ•ˆä½ç½®ï¼Œé¿å…æ­»å¾ªç¯
+        for (int i = 0; i < 10; i++)
+        {
+            // 1. éšæœºé€‰ä¸€ä¸ªå‡ºå£
+            GameObject targetExit = Exits[UnityEngine.Random.Range(0, Exits.Count)];
+
+            // 2. åœ¨åœ†å†…éšæœºå–ç‚¹
+            Vector2 randomCircle = UnityEngine.Random.insideUnitCircle * radius;
+            Vector3 candidatePos = targetExit.transform.position + new Vector3(randomCircle.x, 0, randomCircle.y);
+
+            // 3. é‡‡æ · NavMesh (é˜²æ­¢ç”Ÿæˆåœ¨å¢™é‡Œæˆ–é—¨å¤–è™šç©º)
+            NavMeshHit hit;
+            // 2.0f æ˜¯å…è®¸çš„å‚ç›´è¯¯å·®ï¼ŒNavMesh.AllAreas å…è®¸æ‰€æœ‰å¯è¡Œèµ°åŒºåŸŸ
+            if (NavMesh.SamplePosition(candidatePos, out hit, 2.0f, NavMesh.AllAreas))
+            {
+                return hit.position;
+            }
+        }
+
+        // å¦‚æœ 10 æ¬¡éƒ½æ²¡æ‰¾åˆ°ï¼ˆå¤ªæ‹¥æŒ¤æˆ–åŠå¾„å¤ªå°å…¨æ˜¯å¢™ï¼‰ï¼Œè¿”å›é›¶å‘é‡ï¼Œå¤–å±‚ä¼šé™çº§å¤„ç†
+        return Vector3.zero;
+    }
+
     public void AddHumanBrain(int num)
     {
-        // ÓÅ»¯£ºÊ¹ÓÃ Tag ²éÕÒ´úÌæ Find Ãû×Ö
+        // ä¼˜åŒ–ï¼šä½¿ç”¨ Tag æŸ¥æ‰¾ä»£æ›¿ Find åå­—
         GameObject[] humanBrainObjs = GameObject.FindGameObjectsWithTag("HumanBrain");
 
-        // °²È«¼ì²é
+        // å®‰å…¨æ£€æŸ¥
         int count = Mathf.Min(num, humanBrainObjs.Length, personList.Count);
 
         for (int i = 0; i < count; i++)
@@ -212,16 +237,16 @@ public partial class EnvControl : MonoBehaviour
             HumanBrainList.Add(brain);
             brain.myHuman = human;
             human.myHumanBrain = brain;
-            brain.HumanIsInitialized = true;
+          
         }
     }
 
     // ---------------------------------------------------------
-    // 5. ³ö¿Ú²éÕÒÓÅ»¯
+    // 5. å‡ºå£æŸ¥æ‰¾ä¼˜åŒ–
     // ---------------------------------------------------------
     public void AddExits()
     {
-        // ÓÅ»¯£º²éÕÒËùÓĞ Tag Îª Exit µÄÎïÌå£¬¶ø²»½ö½öÊÇÃûÎª "Exit" µÄÄÇÒ»¸ö
+        // ä¼˜åŒ–ï¼šæŸ¥æ‰¾æ‰€æœ‰ Tag ä¸º Exit çš„ç‰©ä½“ï¼Œè€Œä¸ä»…ä»…æ˜¯åä¸º "Exit" çš„é‚£ä¸€ä¸ª
         GameObject[] exitsFound = GameObject.FindGameObjectsWithTag("Exit");
 
         if (exitsFound != null && exitsFound.Length > 0)
@@ -230,7 +255,7 @@ public partial class EnvControl : MonoBehaviour
         }
         else
         {
-            // ¼æÈİ¾ÉÂß¼­
+            // å…¼å®¹æ—§é€»è¾‘
             GameObject singleExit = GameObject.Find("Exit");
             if (singleExit != null) Exits.Add(singleExit);
         }
@@ -238,8 +263,8 @@ public partial class EnvControl : MonoBehaviour
 
     public void AddFire(Vector3 FirePosition)
     {
-        // ÓÅ»¯£ºÊ¹ÓÃ TryGetComponent ·ÀÖ¹¿ÕÒıÓÃÒì³£
-        // YÖáÎ¢µ÷·ÀÖ¹ Z-Fighting
+        // ä¼˜åŒ–ï¼šä½¿ç”¨ TryGetComponent é˜²æ­¢ç©ºå¼•ç”¨å¼‚å¸¸
+        // Yè½´å¾®è°ƒé˜²æ­¢ Z-Fighting
         GameObject fire = FirePoolManager.Instance.GetFire(FirePosition + new Vector3(0, 0.5f, 0), Quaternion.identity, this);
 
         if (fire != null)
@@ -250,21 +275,21 @@ public partial class EnvControl : MonoBehaviour
             }
             else
             {
-                Debug.LogError("»ğÑæÈ±ÉÙ FireControl ×é¼ş£¬»ØÊÕ¶ÔÏó");
+                Debug.LogError("ç«ç„°ç¼ºå°‘ FireControl ç»„ä»¶ï¼Œå›æ”¶å¯¹è±¡");
                 FirePoolManager.Instance.ReturnFire(fire);
             }
         }
     }
 
     // ---------------------------------------------------------
-    // 6. Ëæ»úËã·¨ºËĞÄĞŞ¸´
+    // 6. éšæœºç®—æ³•æ ¸å¿ƒä¿®å¤
     // ---------------------------------------------------------
     public Vector3 GetRandomPosInLayout()
     {
         var rooms = complexityControl.buildingGeneration.roomList;
         if (rooms == null || rooms.Count == 0) return Vector3.zero;
 
-        // ĞŞ¸´£ºÊ¹ÓÃ UnityEngine.Random£¬±ÜÃâ System.Random ÔÚÑ­»·ÖĞÉú³ÉÏàÍ¬ÖÖ×Ó
+        // ä¿®å¤ï¼šä½¿ç”¨ UnityEngine.Randomï¼Œé¿å… System.Random åœ¨å¾ªç¯ä¸­ç”Ÿæˆç›¸åŒç§å­
         int index = UnityEngine.Random.Range(0, rooms.Count);
         Room room = rooms[index];
 
@@ -273,7 +298,7 @@ public partial class EnvControl : MonoBehaviour
         float zMin = room.xzPosition.z + room.height / 4;
         float zMax = room.xzPosition.z + room.height * 3 / 4;
 
-        // UnityEngine.Random.Range ¶Ô float ÊÇ°üº¬ min ºÍ max µÄ
+        // UnityEngine.Random.Range å¯¹ float æ˜¯åŒ…å« min å’Œ max çš„
         float x = UnityEngine.Random.Range(xMin, xMax);
         float z = UnityEngine.Random.Range(zMin, zMax);
 
@@ -282,7 +307,7 @@ public partial class EnvControl : MonoBehaviour
 
     public void AddFirePosition()
     {
-        // Ê¹ÓÃ List ³õÊ¼»¯Æ÷¸üÕû½à
+        // ä½¿ç”¨ List åˆå§‹åŒ–å™¨æ›´æ•´æ´
         FirePosition = new List<Vector3>
         {
             new Vector3(27, 0, -6),

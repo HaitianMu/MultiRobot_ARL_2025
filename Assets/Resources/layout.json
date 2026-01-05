@@ -1,677 +1,115 @@
 {
-  "layouts": [
+  "Layouts": [
     {
-      "name": "layout_1",
-      "ExitRoom": "EntranceHall",
-      "ExitDoorPosition": "left",
-      "rooms": [
+      "name": "Layout9",
+      "EmergencyExits": [
         {
-          "roomName": "EntranceHall",
-          "xzPosition": {"x": 0, "y": 0, "z": 0},
-          "width": 12,
-          "height": 8,
-          "roomSize": 96,
-          "ConnectedRoom": ["MainCorridor", "ReceptionDesk"]
-        },
-        {
-          "roomName": "ReceptionDesk",
-          "xzPosition": {"x": 0, "y": 0, "z": 8},
-          "width": 6,
-          "height": 5,
-          "roomSize": 30,
-          "ConnectedRoom": ["EntranceHall"]
-        },
-        {
-          "roomName": "MainCorridor",
-          "xzPosition": {"x": 12, "y": 0, "z": 0},
-          "width": 3,
-          "height": 20,
-          "roomSize": 60,
-          "ConnectedRoom": ["EntranceHall", "DevOffice1", "DevOffice2", "Lounge", "SecondaryCorridor"]
-        },
-        {
-          "roomName": "DevOffice1",
-          "xzPosition": {"x": 15, "y": 0, "z": 0},
-          "width": 6,
-          "height": 7,
-          "roomSize": 42,
-          "ConnectedRoom": ["MainCorridor"]
-        },
-        {
-          "roomName": "DevOffice2",
-          "xzPosition": {"x": 15, "y": 0, "z": 7},
-          "width": 6,
-          "height": 7,
-          "roomSize": 42,
-          "ConnectedRoom": ["MainCorridor"]
-        },
-        {
-          "roomName": "Lounge",
-          "xzPosition": {"x": 15, "y": 0, "z": 14},
-          "width": 8,
-          "height": 6,
-          "roomSize": 48,
-          "ConnectedRoom": ["MainCorridor", "SecondaryCorridor"]
-        },
-        {
-          "roomName": "SecondaryCorridor",
-          "xzPosition": {"x": 12, "y": 0, "z": 20},
-          "width": 11,
-          "height": 3,
-          "roomSize": 33,
-          "ConnectedRoom": ["MainCorridor", "Lounge", "MeetingRoom", "ManagerSuite", "ServerRoom"]
-        },
-        {
-          "roomName": "MeetingRoom",
-          "xzPosition": {"x": 23, "y": 0, "z": 20},
-          "width": 10,
-          "height": 8,
-          "roomSize": 80,
-          "ConnectedRoom": ["SecondaryCorridor","ManagerSuite"]
-        },
-        {
-          "roomName": "ManagerSuite",
-          "xzPosition": {"x": 23, "y": 0, "z": 28},
-          "width": 8,
-          "height": 6,
-          "roomSize": 48,
-          "ConnectedRoom": ["SecondaryCorridor"]
-        },
-        {
-          "roomName": "ServerRoom",
-          "xzPosition": {"x": 12, "y": 0, "z": 23},
-          "width": 6,
-          "height": 5,
-          "roomSize": 30,
-          "ConnectedRoom": ["SecondaryCorridor"]
+          "ExitRoom": "NeuralNetwork",
+          "position": "left"
         }
-      ]
-    },{
-      "name": "layout_2",
-      "ExitRoom": "MainEntrance",
-      "ExitDoorPosition": "backward",
-      "rooms": [
-        {"roomName": "MainEntrance", "xzPosition": {"x":5,"z":0}, "width":6,"height":6, "ConnectedRoom": ["Corridor1"]},
-        {"roomName": "Corridor1", "xzPosition": {"x":5,"z":6}, "width":3,"height":20, "ConnectedRoom": ["MainEntrance","Class1A","Class1B","Corridor2"]},
-        {"roomName": "Class1A", "xzPosition": {"x":8,"z":6}, "width":6,"height":6, "ConnectedRoom": ["Corridor1"]},
-        {"roomName": "Class1B", "xzPosition": {"x":8,"z":12}, "width":6,"height":6, "ConnectedRoom": ["Corridor1"]},
-        {"roomName": "Corridor2", "xzPosition": {"x":0,"z":26}, "width":14,"height":3, "ConnectedRoom": ["Corridor1","Library","Gym"]},
-        {"roomName": "Library", "xzPosition": {"x":0,"z":29}, "width":8,"height":8, "ConnectedRoom": ["Corridor2"]},
-        {"roomName": "Gym", "xzPosition": {"x":8,"z":29}, "width":8,"height":10, "ConnectedRoom": ["Corridor2"]},
-        {"roomName": "TeachersLounge", "xzPosition": {"x":0,"z":6}, "width":5,"height":8, "ConnectedRoom": ["MainEntrance","Corridor1"]},
-        {"roomName": "Bathroom", "xzPosition": {"x":14,"z":6}, "width":4,"height":4, "ConnectedRoom": ["Corridor1","Class1A"]},
-        {"roomName": "Storage", "xzPosition": {"x":14,"z":10}, "width":4,"height":4, "ConnectedRoom": ["Corridor1","Bathroom"]}
-      ]
-    },{
-      "name": "layout_3",
-      "ExitRoom": "MainEntrance",
-      "ExitDoorPosition": "left",
-      "rooms": [
-          {
-              "roomName": "MainEntrance",
-              "xzPosition": {"x": 0, "z": 10},
-              "width": 6,
-              "height": 4,
-              "ConnectedRoom": ["Reception", "MainHallway"]
-          },
-          {
-              "roomName": "Reception",
-              "xzPosition": {"x": 6, "z": 10},
-              "width": 6,
-              "height": 6,
-              "ConnectedRoom": ["MainEntrance", "MainHallway"]
-          },
-          {
-              "roomName": "MainHallway",
-              "xzPosition": {"x": 12, "z": 8},
-              "width": 24,
-              "height": 4,
-              "ConnectedRoom": ["Reception", "Office1", "Office2", "MeetingRoom", "BreakRoom"]
-          },
-          {
-              "roomName": "Office1",
-              "xzPosition": {"x": 12, "z": 12},
-              "width": 6,
-              "height": 6,
-              "ConnectedRoom": ["MainHallway"]
-          },
-          {
-              "roomName": "Office2",
-              "xzPosition": {"x": 18, "z": 12},
-              "width": 6,
-              "height": 6,
-              "ConnectedRoom": ["MainHallway"]
-          },
-          {
-              "roomName": "MeetingRoom",
-              "xzPosition": {"x": 24, "z": 12},
-              "width": 8,
-              "height": 6,
-              "ConnectedRoom": ["MainHallway"]
-          },
-          {
-              "roomName": "BreakRoom",
-              "xzPosition": {"x": 24, "z": 4},
-              "width": 8,
-              "height": 4,
-              "ConnectedRoom": ["MainHallway", "Kitchen"]
-          },
-          {
-              "roomName": "Kitchen",
-              "xzPosition": {"x": 32, "z": 4},
-              "width": 4,
-              "height": 4,
-              "ConnectedRoom": ["BreakRoom"]
-          },
-          {
-              "roomName": "Bathroom",
-              "xzPosition": {"x": 32, "z": 8},
-              "width": 4,
-              "height": 4,
-              "ConnectedRoom": ["MainHallway"]
-          },
-          {
-              "roomName": "Storage",
-              "xzPosition": {"x": 32, "z": 12},
-              "width": 4,
-              "height": 6,
-              "ConnectedRoom": ["MainHallway"]
-          }
-      ]
-  },{
-  "name": "layout_4",
-  "ExitRoom": "MainEntrance",
-  "ExitDoorPosition": "left",
-  "rooms": [
-      {
-          "roomName": "MainEntrance",
-          "xzPosition": {"x": 0, "z": 10},
-          "width": 6,
-          "height": 4,
-          "ConnectedRoom": ["Reception", "Hallway1"]
-      },
-      {
-          "roomName": "Reception",
-          "xzPosition": {"x": 6, "z": 8},
-          "width": 8,
-          "height": 8,
-          "ConnectedRoom": ["MainEntrance", "Hallway1"]
-      },
-      {
-          "roomName": "Hallway1",
-          "xzPosition": {"x": 14, "z": 10},
-          "width": 4,
-          "height": 16,
-          "ConnectedRoom": ["Reception", "WorkArea1", "WorkArea2", "Hallway2"]
-      },
-      {
-          "roomName": "WorkArea1",
-          "xzPosition": {"x": 18, "z": 18},
-          "width": 12,
-          "height": 8,
-          "ConnectedRoom": ["Hallway1", "Office1", "Office2"]
-      },
-      {
-          "roomName": "Office1",
-          "xzPosition": {"x": 30, "z": 18},
-          "width": 6,
-          "height": 6,
-          "ConnectedRoom": ["WorkArea1","Office2"]
-      },
-      {
-          "roomName": "Office2",
-          "xzPosition": {"x": 30, "z": 12},
-          "width": 6,
-          "height": 6,
-          "ConnectedRoom": ["WorkArea1"]
-      },
-      {
-          "roomName": "WorkArea2",
-          "xzPosition": {"x": 18, "z": 0},
-          "width": 12,
-          "height": 8,
-          "ConnectedRoom": ["Hallway1", "MeetingRoom", "BreakRoom"]
-      },
-      {
-          "roomName": "MeetingRoom",
-          "xzPosition": {"x": 30, "z": 0},
-          "width": 8,
-          "height": 6,
-          "ConnectedRoom": ["WorkArea2"]
-      },
-      {
-          "roomName": "BreakRoom",
-          "xzPosition": {"x": 30, "z": 6},
-          "width": 6,
-          "height": 6,
-          "ConnectedRoom": ["Kitchen","Office2"]
-      },
-      {
-          "roomName": "Kitchen",
-          "xzPosition": {"x": 36, "z": 6},
-          "width": 4,
-          "height": 4,
-          "ConnectedRoom": ["BreakRoom"]
-      }
-  ]
-},{
-  "name": "layout_5",
-  "ExitRoom": "Office4",
-  "ExitDoorPosition": "left",
-  "rooms": [
-      {
-          "roomName": "MainEntrance",
-          "xzPosition": {"x": 24, "z": 6},
-          "width": 6,
-          "height": 5,
-          "ConnectedRoom": ["RingHallway"]
-      },
-      {
-          "roomName": "RingHallway",
-          "xzPosition": {"x": 0, "z": 6},
-          "width": 24,
-          "height": 16,
-          "ConnectedRoom": ["MainEntrance", "Office1", "Office2", "Office3", "Office4", "MeetingRoom", "BreakRoom", "CentralCore"]
-      },
-      {
-          "roomName": "CentralCore",
-          "xzPosition": {"x": 24, "z": 11},
-          "width": 6,
-          "height": 6,
-          "ConnectedRoom": ["RingHallway", "Bathroom", "Storage"]
-      },
-      {
-          "roomName": "Office1",
-          "xzPosition": {"x": 0, "z": 22},
-          "width": 6,
-          "height": 6,
-          "ConnectedRoom": ["RingHallway"]
-      },
-      {
-          "roomName": "Office2",
-          "xzPosition": {"x": 18, "z": 22},
-          "width": 6,
-          "height": 6,
-          "ConnectedRoom": ["RingHallway"]
-      },
-      {
-          "roomName": "Office3",
-          "xzPosition": {"x": 18, "z": 0},
-          "width": 6,
-          "height": 6,
-          "ConnectedRoom": ["RingHallway"]
-      },
-      {
-          "roomName": "Office4",
-          "xzPosition": {"x": 0, "z": 0},
-          "width": 6,
-          "height": 6,
-          "ConnectedRoom": ["RingHallway"]
-      },
-      {
-          "roomName": "MeetingRoom",
-          "xzPosition": {"x": 6, "z": 22},
-          "width": 12,
-          "height": 6,
-          "ConnectedRoom": ["RingHallway"]
-      },
-      {
-          "roomName": "BreakRoom",
-          "xzPosition": {"x": 6, "z": 0},
-          "width": 12,
-          "height": 6,
-          "ConnectedRoom": ["RingHallway"]
-      },
-      {
-          "roomName": "Bathroom",
-          "xzPosition": {"x": 24, "z": 17},
-          "width": 6,
-          "height": 5,
-          "ConnectedRoom": ["CentralCore"]
-      }
-  ]
-},{
-  "name": "layout_6",
-  "ExitRoom": "Bathroom",
-  "ExitDoorPosition": "left",
-  "rooms": [
-    {
-      "roomName": "MainEntrance",
-      "xzPosition": {"x": 0, "z": 12},
-      "width": 9,
-      "height": 18,
-      "ConnectedRoom": ["Hub"]
-    },
-    {
-      "roomName": "Hub",
-      "xzPosition": {"x": 9, "z": 12},
-      "width": 12,
-      "height": 18,
-      "ConnectedRoom": ["MainEntrance", "Cluster1", "Cluster2", "ServiceArea"]
-    },
-    {
-      "roomName": "Cluster1",
-      "xzPosition": {"x": 21, "z": 24},
-      "width": 24,
-      "height": 6,
-      "ConnectedRoom": ["Hub"]
-    },
-    {
-      "roomName": "Office1",
-      "xzPosition": {"x": 21, "z": 18},
-      "width": 9,
-      "height": 6,
-      "ConnectedRoom": ["Hub", "Office2"]
-    },
-    {
-      "roomName": "Office2",
-      "xzPosition": {"x": 30, "z": 18},
-      "width": 9,
-      "height": 6,
-      "ConnectedRoom": ["Office3"]
-    },
-    {
-      "roomName": "Office3",
-      "xzPosition": {"x": 39, "z": 18},
-      "width": 6,
-      "height": 6,
-      "ConnectedRoom": []
-    },
-    {
-      "roomName": "Cluster2",
-      "xzPosition": {"x": 21, "z": 12},
-      "width": 24,
-      "height": 6,
-      "ConnectedRoom": ["Hub", "MeetingRoom", "BreakRoom", "Office4"]
-    },
-    {
-      "roomName": "MeetingRoom",
-      "xzPosition": {"x": 21, "z": 0},
-      "width": 12,
-      "height": 12,
-      "ConnectedRoom": ["Cluster2", "BreakRoom"]
-    },
-    {
-      "roomName": "BreakRoom",
-      "xzPosition": {"x": 33, "z": 0},
-      "width": 12,
-      "height": 12,
-      "ConnectedRoom": ["Cluster2"]
-    },
-    {
-      "roomName": "ServiceArea",
-      "xzPosition": {"x": 9, "z": 0},
-      "width": 12,
-      "height": 12,
-      "ConnectedRoom": ["Hub", "Bathroom", "Storage"]
-    },
-    {
-      "roomName": "Bathroom",
-      "xzPosition": {"x": 0, "z": 0},
-      "width": 9,
-      "height": 12,
-      "ConnectedRoom": ["ServiceArea"]
-    }
-  ]
-}
-
-,{
-  "name": "layout_7",
-  "ExitRoom": "MainEntrance",
-  "ExitDoorPosition": "left",
-  "rooms": [
-    {
-      "roomName": "MainEntrance",
-      "xzPosition": {"x": 0, "z": 0},
-      "width": 6,
-      "height": 4,
-      "ConnectedRoom": ["CentralCorridor"]
-    },
-    {
-      "roomName": "CentralCorridor",
-      "xzPosition": {"x": 6, "z": 0},
-      "width": 3,
-      "height": 22,
-      "ConnectedRoom": ["MainEntrance", "DevZone1", "MeetingHub", "ServiceCore"]
-    },
-    {
-      "roomName": "DevZone1",
-      "xzPosition": {"x": 9, "z": 0},
-      "width": 6,
-      "height": 8,
-      "ConnectedRoom": ["CentralCorridor", "DevZone2"]
-    },
-    {
-      "roomName": "DevZone2",
-      "xzPosition": {"x": 15, "z": 0},
-      "width": 6,
-      "height": 8,
-      "ConnectedRoom": ["DevZone1"]
-    },
-    {
-      "roomName": "MeetingHub",
-      "xzPosition": {"x": 9, "z": 8},
-      "width": 8,
-      "height": 6,
-      "ConnectedRoom": ["CentralCorridor", "BreakRoom"]
-    },
-    {
-      "roomName": "BreakRoom",
-      "xzPosition": {"x": 17, "z": 8},
-      "width": 6,
-      "height": 6,
-      "ConnectedRoom": ["MeetingHub"]
-    },
-    {
-      "roomName": "ServiceCore",
-      "xzPosition": {"x": 6, "z": 22},
-      "width": 12,
-      "height": 3,
-      "ConnectedRoom": ["CentralCorridor", "ServerFarm", "ArchiveVault"]
-    },
-    {
-      "roomName": "ServerFarm",
-      "xzPosition": {"x": 18, "z": 22},
-      "width": 6,
-      "height": 5,
-      "ConnectedRoom": ["ServiceCore"]
-    },
-    {
-      "roomName": "ArchiveVault",
-      "xzPosition": {"x": 6, "z": 25},
-      "width": 6,
-      "height": 6,
-      "ConnectedRoom": ["ServiceCore"]
-    },
-    {
-      "roomName": "ExecutiveSuite",
-      "xzPosition": {"x": 0, "z": 4},
-      "width": 6,
-      "height": 8,
-      "ConnectedRoom": ["MainEntrance"]
-    }]},
-    {
-      "name": "layout_8",
-      "ExitRoom": "InnovationHub",
-      "ExitDoorPosition": "left",
-      "rooms": [
-        {
-          "roomName": "InnovationHub",
-          "xzPosition": {"x": 0, "z": 0},
-          "width": 8,
-          "height": 6,
-          "ConnectedRoom": ["BrainstormZone", "TechCorridor"]
-        },
-        {
-          "roomName": "TechCorridor",
-          "xzPosition": {"x": 8, "z": 0},
-          "width": 3,
-          "height": 24,
-          "ConnectedRoom": ["InnovationHub", "CodeLab", "VRStudio", "MakerSpace"]
-        },
-        {
-          "roomName": "CodeLab",
-          "xzPosition": {"x": 11, "z": 0},
-          "width": 8,
-          "height": 8,
-          "ConnectedRoom": ["TechCorridor", "ServerCluster"]
-        },
-        {
-          "roomName": "VRStudio",
-          "xzPosition": {"x": 11, "z": 8},
-          "width": 8,
-          "height": 8,
-          "ConnectedRoom": ["TechCorridor"]
-        },
-        {
-          "roomName": "MakerSpace",
-          "xzPosition": {"x": 11, "z": 16},
-          "width": 10,
-          "height": 8,
-          "ConnectedRoom": ["TechCorridor", "PrototypeStorage"]
-        },
-        {
-          "roomName": "ServerCluster",
-          "xzPosition": {"x": 19, "z": 0},
-          "width": 6,
-          "height": 6,
-          "ConnectedRoom": ["CodeLab"]
-        },
-        {
-          "roomName": "PrototypeStorage",
-          "xzPosition": {"x": 21, "z": 16},
-          "width": 6,
-          "height": 6,
-          "ConnectedRoom": ["MakerSpace"]
-        },
-        {
-          "roomName": "BrainstormZone",
-          "xzPosition": {"x": 0, "z": 6},
-          "width": 8,
-          "height": 8,
-          "ConnectedRoom": ["InnovationHub"]
-        },
-        {
-          "roomName": "EnergyStation",
-          "xzPosition": {"x": 0, "z": 14},
-          "width": 8,
-          "height": 6,
-          "ConnectedRoom": ["BrainstormZone"]
-        },
-        {
-          "roomName": "BioBreak",
-          "xzPosition": {"x": 0, "z": 20},
-          "width": 8,
-          "height": 4,
-          "ConnectedRoom": ["EnergyStation"]
-        }
-      ]
-    },{
-      "name": "layout_9",
-      "ExitRoom": "NeuralNetwork",
-      "ExitDoorPosition": "left",
+      ],
       "rooms": [
         {
           "roomName": "BioScanChamber",
-          "xzPosition": {"x": 12, "z": 24},
+          "xzPosition": { "x": 12, "z": 24 },
           "width": 8,
           "height": 6,
           "ConnectedRoom": ["SecurityHub"]
         },
         {
           "roomName": "SecurityHub",
-          "xzPosition": {"x": 8, "z": 12},
+          "xzPosition": { "x": 8, "z": 12 },
           "width": 16,
           "height": 12,
-          "ConnectedRoom": [ "QuantumCore", "NeuralNetwork", "ExoLab"]
+          "ConnectedRoom": ["QuantumCore", "NeuralNetwork", "ExoLab"]
         },
         {
           "roomName": "QuantumCore",
-          "xzPosition": {"x": 24, "z": 12},
+          "xzPosition": { "x": 24, "z": 12 },
           "width": 12,
           "height": 18,
-          "ConnectedRoom": [ "GravityChamber", "TemporalLab"]
+          "ConnectedRoom": ["GravityChamber", "TemporalLab"]
         },
         {
           "roomName": "GravityChamber",
-          "xzPosition": {"x": 36, "z": 12},
+          "xzPosition": { "x": 36, "z": 12 },
           "width": 8,
           "height": 8,
           "ConnectedRoom": []
         },
         {
           "roomName": "TemporalLab",
-          "xzPosition": {"x": 36, "z": 20},
+          "xzPosition": { "x": 36, "z": 20 },
           "width": 8,
           "height": 10,
           "ConnectedRoom": ["ChronoVault"]
         },
         {
           "roomName": "ChronoVault",
-          "xzPosition": {"x": 44, "z": 20},
+          "xzPosition": { "x": 44, "z": 20 },
           "width": 6,
           "height": 6,
           "ConnectedRoom": []
         },
         {
           "roomName": "NeuralNetwork",
-          "xzPosition": {"x": 0, "z": 12},
+          "xzPosition": { "x": 0, "z": 12 },
           "width": 8,
           "height": 18,
           "ConnectedRoom": ["AIIntegration", "CyberMedBay"]
         },
         {
           "roomName": "AIIntegration",
-          "xzPosition": {"x": 0, "z": 30},
+          "xzPosition": { "x": 0, "z": 30 },
           "width": 8,
           "height": 6,
           "ConnectedRoom": []
         },
         {
           "roomName": "CyberMedBay",
-          "xzPosition": {"x": 0, "z": 0},
+          "xzPosition": { "x": 0, "z": 0 },
           "width": 8,
           "height": 12,
           "ConnectedRoom": ["NaniteClinic"]
         },
         {
           "roomName": "NaniteClinic",
-          "xzPosition": {"x": -6, "z": 0},
+          "xzPosition": { "x": -6, "z": 0 },
           "width": 6,
           "height": 8,
           "ConnectedRoom": []
         },
         {
           "roomName": "ExoLab",
-          "xzPosition": {"x": 8, "z": 0},
+          "xzPosition": { "x": 8, "z": 0 },
           "width": 16,
           "height": 12,
-          "ConnectedRoom": [ "HoloTraining", "DroneWorkshop"]
+          "ConnectedRoom": ["HoloTraining", "DroneWorkshop"]
         },
         {
           "roomName": "HoloTraining",
-          "xzPosition": {"x": 8, "z": -8},
+          "xzPosition": { "x": 8, "z": -8 },
           "width": 10,
           "height": 8,
           "ConnectedRoom": []
         },
         {
           "roomName": "DroneWorkshop",
-          "xzPosition": {"x": 18, "z": -8},
+          "xzPosition": { "x": 18, "z": -8 },
           "width": 6,
           "height": 8,
           "ConnectedRoom": ["RechargeBay"]
         },
         {
           "roomName": "RechargeBay",
-          "xzPosition": {"x": 24, "z": -8},
+          "xzPosition": { "x": 24, "z": -8 },
           "width": 6,
           "height": 4,
           "ConnectedRoom": []
         },
         {
           "roomName": "PsiChamber",
-          "xzPosition": {"x": 24, "z": 30},
+          "xzPosition": { "x": 24, "z": 30 },
           "width": 8,
           "height": 6,
           "ConnectedRoom": ["QuantumCore"]
@@ -679,751 +117,577 @@
       ]
     },
     {
-      "name": "layout_10",
-      "ExitRoom": "LoadingDock",
-      "ExitDoorPosition": "left",
-      "rooms": [
+      "name": "Layout50",
+      "EmergencyExits": [
         {
-          "roomName": "LoadingDock",
-          "xzPosition": {"x": 0, "z": 0},
-          "width": 10,
-          "height": 8,
-          "ConnectedRoom": ["AssemblyLine"]
-        },
-        {
-          "roomName": "AssemblyLine",
-          "xzPosition": {"x": 10, "z": 0},
-          "width": 3,
-          "height": 24,
-          "ConnectedRoom": ["LoadingDock", "RoboticCell", "QAStation"]
-        },
-        {
-          "roomName": "RoboticCell",
-          "xzPosition": {"x": 13, "z": 0},
-          "width": 8,
-          "height": 12,
-          "ConnectedRoom": ["AssemblyLine", "PartsDepot"]
-        },
-        {
-          "roomName": "PartsDepot",
-          "xzPosition": {"x": 21, "z": 0},
-          "width": 6,
-          "height": 12,
-          "ConnectedRoom": ["RoboticCell"]
-        },
-        {
-          "roomName": "QAStation",
-          "xzPosition": {"x": 13, "z": 12},
-          "width": 10,
-          "height": 8,
-          "ConnectedRoom": ["AssemblyLine", "PackagingZone"]
-        },
-        {
-          "roomName": "PackagingZone",
-          "xzPosition": {"x": 23, "z": 12},
-          "width": 6,
-          "height": 8,
-          "ConnectedRoom": ["QAStation"]
-        },
-        {
-          "roomName": "ControlTower",
-          "xzPosition": {"x": 0, "z": 8},
-          "width": 10,
-          "height": 8,
-          "ConnectedRoom": ["LoadingDock"]
-        },
-        {
-          "roomName": "EngineerNest",
-          "xzPosition": {"x": 0, "z": 16},
-          "width": 10,
-          "height": 6,
-          "ConnectedRoom": ["ControlTower"]
-        },
-        {
-          "roomName": "EnergyCore",
-          "xzPosition": {"x": 0, "z": 22},
-          "width": 10,
-          "height": 6,
-          "ConnectedRoom": ["EngineerNest"]
-        },
-        {
-          "roomName": "DronePort",
-          "xzPosition": {"x": 10, "z": 24},
-          "width": 8,
-          "height": 4,
-          "ConnectedRoom": ["AssemblyLine"]
+          "ExitRoom": "CrewDormsA",
+          "position": "left"
         }
-      ]
-    },{
-      "name": "layout_11",
-      "ExitRoom": "SmartLobby",
-      "ExitDoorPosition": "left",
+      ],
       "rooms": [
-        {"roomName": "SmartLobby","xzPosition": {"x":0,"z":0},"width":8,"height":6,"ConnectedRoom":["EduCorridor"]},
-        {"roomName": "EduCorridor","xzPosition": {"x":8,"z":0},"width":3,"height":28,"ConnectedRoom":["SmartLobby","VRClass","AIStudio"]},
-        {"roomName": "VRClass","xzPosition": {"x":11,"z":0},"width":8,"height":10,"ConnectedRoom":["EduCorridor","HoloLab"]},
-        {"roomName": "HoloLab","xzPosition": {"x":19,"z":0},"width":6,"height":10,"ConnectedRoom":["VRClass"]},
-        {"roomName": "AIStudio","xzPosition": {"x":11,"z":10},"width":12,"height":8,"ConnectedRoom":["EduCorridor","DataVault"]},
-        {"roomName": "DataVault","xzPosition": {"x":23,"z":10},"width":6,"height":8,"ConnectedRoom":["AIStudio"]},
-        {"roomName": "TeacherHub","xzPosition": {"x":0,"z":6},"width":8,"height":8,"ConnectedRoom":["SmartLobby"]},
-        {"roomName": "EcoGarden","xzPosition": {"x":0,"z":14},"width":8,"height":8,"ConnectedRoom":["TeacherHub"]},
-        {"roomName": "EnergyCore","xzPosition": {"x":0,"z":22},"width":8,"height":6,"ConnectedRoom":["EcoGarden"]},
-        {"roomName": "DronePort","xzPosition": {"x":8,"z":28},"width":6,"height":4,"ConnectedRoom":["EduCorridor"]}
-      ]
-    },{
-      "name": "layout_12",
-      "ExitRoom": "MainEntrance",
-      "ExitDoorPosition": "left",
-      "rooms": [
-          {
-              "roomName": "MainEntrance",
-              "xzPosition": {"x": 0, "z": 0},
-              "width": 8,
-              "height": 6,
-              "ConnectedRoom": ["CentralCorridor"]
-          },
-          {
-              "roomName": "CentralCorridor",
-              "xzPosition": {"x": 8, "z": 0},
-              "width": 4,
-              "height": 32,
-              "ConnectedRoom": ["MainEntrance","DevZone","AIHub","CloudLab","NexusHall"]
-          },
-          {
-              "roomName": "DevZone",
-              "xzPosition": {"x": 12, "z": 0},
-              "width": 8,
-              "height": 10,
-              "ConnectedRoom": ["CentralCorridor","CodeCave"]
-          },
-          {
-              "roomName": "CodeCave",
-              "xzPosition": {"x": 20, "z": 0},
-              "width": 6,
-              "height": 10,
-              "ConnectedRoom": ["DevZone"]
-          },
-          {
-              "roomName": "AIHub",
-              "xzPosition": {"x": 12, "z": 10},
-              "width": 12,
-              "height": 8,
-              "ConnectedRoom": ["CentralCorridor","QuantumRoom"]
-          },
-          {
-              "roomName": "QuantumRoom",
-              "xzPosition": {"x": 24, "z": 10},
-              "width": 6,
-              "height": 8,
-              "ConnectedRoom": ["AIHub"]
-          },
-          {
-              "roomName": "CloudLab",
-              "xzPosition": {"x": 12, "z": 18},
-              "width": 10,
-              "height": 8,
-              "ConnectedRoom": ["CentralCorridor","DataCore"]
-          },
-          {
-              "roomName": "DataCore",
-              "xzPosition": {"x": 22, "z": 18},
-              "width": 8,
-              "height": 8,
-              "ConnectedRoom": ["CloudLab"]
-          },
-          {
-              "roomName": "NexusHall",
-              "xzPosition": {"x": 8, "z": 32},
-              "width": 6,
-              "height": 4,
-              "ConnectedRoom": ["CentralCorridor"]
-          },
-          {
-              "roomName": "ThinkTank",
-              "xzPosition": {"x": 0, "z": 6},
-              "width": 8,
-              "height": 8,
-              "ConnectedRoom": ["MainEntrance","GreenZone"]
-          },
-          {
-              "roomName": "GreenZone",
-              "xzPosition": {"x": 0, "z": 14},
-              "width": 8,
-              "height": 8,
-              "ConnectedRoom": ["ThinkTank","PowerHub"]
-          },
-          {
-              "roomName": "PowerHub",
-              "xzPosition": {"x": 0, "z": 22},
-              "width": 8,
-              "height": 6,
-              "ConnectedRoom": ["GreenZone"]
-          },
-          {
-              "roomName": "VRDome",
-              "xzPosition": {"x": 12, "z": 26},
-              "width": 8,
-              "height": 6,
-              "ConnectedRoom": ["CentralCorridor"]
-          },
-          {
-              "roomName": "NeuroLounge",
-              "xzPosition": {"x": 20, "z": 26},
-              "width": 8,
-              "height": 6,
-              "ConnectedRoom": ["VRDome"]
-          },
-          {
-              "roomName": "BioPod",
-              "xzPosition": {"x": 0, "z": 28},
-              "width": 8,
-              "height": 8,
-              "ConnectedRoom": ["PowerHub","NexusHall"]
-          }
-      ]
-  },{
-    "name": "layout_13",
-    "ExitRoom": "MainEntrance",
-    "ExitDoorPosition": "left",
-    "rooms": [
         {
-            "roomName": "MainEntrance",
-            "xzPosition": {"x": 0, "z": 0},
-            "width": 8,
-            "height": 6,
-            "ConnectedRoom": ["CentralCorridor", "Reception"]
-        },
-        {
-            "roomName": "CentralCorridor",
-            "xzPosition": {"x": 8, "z": 0},
-            "width": 4,
-            "height": 32,
-            "ConnectedRoom": ["MainEntrance", "DevZone1", "MeetingHub", "LabCluster", "FocusRooms"]
-        },
-        {
-            "roomName": "Reception",
-            "xzPosition": {"x": 0, "z": 6},
-            "width": 8,
-            "height": 8,
-            "ConnectedRoom": ["MainEntrance", "StaffLounge"]
-        },
-        {
-            "roomName": "DevZone1",
-            "xzPosition": {"x": 12, "z": 0},
-            "width": 8,
-            "height": 8,
-            "ConnectedRoom": ["CentralCorridor", "DevZone2"]
-        },
-        {
-            "roomName": "DevZone2",
-            "xzPosition": {"x": 20, "z": 0},
-            "width": 8,
-            "height": 8,
-            "ConnectedRoom": ["DevZone1", "ServerRoom"]
-        },
-        {
-            "roomName": "ServerRoom",
-            "xzPosition": {"x": 28, "z": 0},
-            "width": 6,
-            "height": 8,
-            "ConnectedRoom": ["DevZone2"]
-        },
-        {
-            "roomName": "MeetingHub",
-            "xzPosition": {"x": 12, "z": 10},
-            "width": 12,
-            "height": 8,
-            "ConnectedRoom": ["CentralCorridor", "BrainstormRoom"]
-        },
-        {
-            "roomName": "BrainstormRoom",
-            "xzPosition": {"x": 24, "z": 10},
-            "width": 8,
-            "height": 8,
-            "ConnectedRoom": ["MeetingHub"]
-        },
-        {
-            "roomName": "LabCluster",
-            "xzPosition": {"x": 12, "z": 20},
-            "width": 12,
-            "height": 10,
-            "ConnectedRoom": ["CentralCorridor", "TestingLab"]
-        },
-        {
-            "roomName": "TestingLab",
-            "xzPosition": {"x": 24, "z": 20},
-            "width": 8,
-            "height": 10,
-            "ConnectedRoom": ["LabCluster"]
-        },
-        {
-            "roomName": "FocusRooms",
-            "xzPosition": {"x": 12, "z": 30},
-            "width": 4,
-            "height": 16,
-            "ConnectedRoom": ["CentralCorridor", "Focus1", "Focus2"]
-        },
-        {
-            "roomName": "Focus1",
-            "xzPosition": {"x": 16, "z": 30},
-            "width": 6,
-            "height": 8,
-            "ConnectedRoom": ["FocusRooms"]
-        },
-        {
-            "roomName": "Focus2",
-            "xzPosition": {"x": 16, "z": 38},
-            "width": 6,
-            "height": 8,
-            "ConnectedRoom": ["FocusRooms"]
-        },
-        {
-            "roomName": "StaffLounge",
-            "xzPosition": {"x": 0, "z": 14},
-            "width": 8,
-            "height": 10,
-            "ConnectedRoom": ["Reception", "Pantry"]
-        },
-        {
-            "roomName": "Pantry",
-            "xzPosition": {"x": 0, "z": 24},
-            "width": 8,
-            "height": 8,
-            "ConnectedRoom": ["StaffLounge"]
-        }
-    ]
-}, {
-  "name": "layout_14",
-  "ExitRoom": "MainEntrance",
-  "ExitDoorPosition": "left",
-  "rooms": [
-      {"roomName": "MainEntrance","xzPosition": {"x":0,"z":0},"width":8,"height":6,"ConnectedRoom":["Hub1"]},
-      {"roomName": "Hub1","xzPosition": {"x":8,"z":0},"width":4,"height":32,"ConnectedRoom":["MainEntrance","VRZone","AIHub","SkyBridge"]},
-      {"roomName": "VRZone","xzPosition": {"x":12,"z":0},"width":8,"height":10,"ConnectedRoom":["Hub1","SimulationRoom"]},
-      {"roomName": "SimulationRoom","xzPosition": {"x":20,"z":0},"width":6,"height":10,"ConnectedRoom":["VRZone"]},
-      {"roomName": "AIHub","xzPosition": {"x":12,"z":10},"width":10,"height":8,"ConnectedRoom":["Hub1","DataCenter"]},
-      {"roomName": "DataCenter","xzPosition": {"x":22,"z":10},"width":4,"height":8,"ConnectedRoom":["AIHub"]},
-      {"roomName": "DesignLab","xzPosition": {"x":0,"z":6},"width":8,"height":8,"ConnectedRoom":["MainEntrance"]},
-      {"roomName": "Cafeteria","xzPosition": {"x":0,"z":14},"width":8,"height":10,"ConnectedRoom":["DesignLab"]},
-      {"roomName": "ServerFarm","xzPosition": {"x":0,"z":24},"width":8,"height":8,"ConnectedRoom":["Cafeteria"]},
-      {"roomName": "SkyBridge","xzPosition": {"x":8,"z":32},"width":6,"height":4,"ConnectedRoom":["Hub1","EastWing"]},
-      {"roomName": "EastWing","xzPosition": {"x":14,"z":18},"width":12,"height":4,"ConnectedRoom":["AIHub","SkyBridge","MeetingPod1","MeetingPod2"]},
-      {"roomName": "MeetingPod1","xzPosition": {"x":14,"z":22},"width":6,"height":6,"ConnectedRoom":["EastWing"]},
-      {"roomName": "MeetingPod2","xzPosition": {"x":20,"z":22},"width":6,"height":6,"ConnectedRoom":["EastWing"]},
-      {"roomName": "QuietZone","xzPosition": {"x":26,"z":0},"width":8,"height":12,"ConnectedRoom":["VRZone"]},
-      {"roomName": "InnovationHub","xzPosition": {"x":26,"z":12},"width":8,"height":8,"ConnectedRoom":["QuietZone","DataCenter"]}
-  ]
-},{
-  "name": "layout_15",
-  "ExitRoom": "MainEntrance",
-  "ExitDoorPosition": "left",
-  "rooms": [
-    {
-      "roomName": "MainEntrance",
-      "xzPosition": {"x": 0, "z": 12},
-      "width": 9,
-      "height": 18,
-      "ConnectedRoom": ["Hub"]
-    },
-    {
-      "roomName": "Hub",
-      "xzPosition": {"x": 9, "z": 12},
-      "width": 12,
-      "height": 18,
-      "ConnectedRoom": ["MainEntrance", "Cluster1", "Cluster2", "ServiceArea", "Cluster3"]
-    },
-    {
-      "roomName": "Cluster1",
-      "xzPosition": {"x": 21, "z": 24},
-      "width": 24,
-      "height": 6,
-      "ConnectedRoom": ["Hub", "Office1", "Office2", "Office3"]
-    },
-    {
-      "roomName": "Office1",
-      "xzPosition": {"x": 21, "z": 18},
-      "width": 9,
-      "height": 6,
-      "ConnectedRoom": ["Hub", "Office2"]
-    },
-    {
-      "roomName": "Office2",
-      "xzPosition": {"x": 30, "z": 18},
-      "width": 9,
-      "height": 6,
-      "ConnectedRoom": ["Office3", "PrintRoom"]
-    },
-    {
-      "roomName": "Office3",
-      "xzPosition": {"x": 39, "z": 18},
-      "width": 6,
-      "height": 6,
-      "ConnectedRoom": ["Cluster1"]
-    },
-    {
-      "roomName": "Cluster2",
-      "xzPosition": {"x": 21, "z": 12},
-      "width": 24,
-      "height": 6,
-      "ConnectedRoom": ["Hub", "MeetingRoom", "BreakRoom", "Office4"]
-    },
-    {
-      "roomName": "MeetingRoom",
-      "xzPosition": {"x": 21, "z": 0},
-      "width": 12,
-      "height": 12,
-      "ConnectedRoom": ["Cluster2", "BreakRoom"]
-    },
-    {
-      "roomName": "BreakRoom",
-      "xzPosition": {"x": 33, "z": 0},
-      "width": 12,
-      "height": 12,
-      "ConnectedRoom": ["Cluster2", "Pantry"]
-    },
-    {
-      "roomName": "ServiceArea",
-      "xzPosition": {"x": 9, "z": 0},
-      "width": 12,
-      "height": 12,
-      "ConnectedRoom": ["Hub", "Bathroom", "Storage"]
-    },
-    {
-      "roomName": "Bathroom",
-      "xzPosition": {"x": 0, "z": 0},
-      "width": 9,
-      "height": 12,
-      "ConnectedRoom": ["ServiceArea"]
-    },
-    {
-      "roomName": "Cluster3",
-      "xzPosition": {"x": 9, "z": 30},
-      "width": 24,
-      "height": 6,
-      "ConnectedRoom": ["Hub", "Office5", "Office6"]
-    },
-    {
-      "roomName": "Office4",
-      "xzPosition": {"x": 45, "z": 12},
-      "width": 6,
-      "height": 6,
-      "ConnectedRoom": ["Cluster2"]
-    },
-    {
-      "roomName": "Office5",
-      "xzPosition": {"x": 9, "z": 36},
-      "width": 12,
-      "height": 6,
-      "ConnectedRoom": ["Cluster3"]
-    },
-    {
-      "roomName": "Office6",
-      "xzPosition": {"x": 21, "z": 36},
-      "width": 12,
-      "height": 6,
-      "ConnectedRoom": ["Cluster3"]
-    },
-   
-    {
-      "roomName": "Pantry",
-      "xzPosition": {"x": 45, "z": 0},
-      "width": 6,
-      "height": 6,
-      "ConnectedRoom": ["BreakRoom"]
-    }
-   
-  ]
-},{
-  "name": "layout_16",
-  "ExitRoom": "Restrooms",
-  "ExitDoorPosition": "left",
-  "rooms": [
-    {"roomName": "MainEntrance", "xzPosition": {"x": 0, "z": 12}, "width": 8, "height": 16, "ConnectedRoom": ["Hub"]},
-    {"roomName": "Hub", "xzPosition": {"x": 8, "z": 12}, "width": 14, "height": 16, "ConnectedRoom": ["MainEntrance", "NorthWing", "EastWing", "ServiceCore"]},
-    {"roomName": "NorthWing", "xzPosition": {"x": 22, "z": 20}, "width": 24, "height": 8, "ConnectedRoom": ["Hub", "Dev1", "Dev2", "Dev3"]},
-    {"roomName": "Dev1", "xzPosition": {"x": 22, "z": 12}, "width": 8, "height": 8, "ConnectedRoom": ["NorthWing"]},
-    {"roomName": "Dev2", "xzPosition": {"x": 30, "z": 12}, "width": 8, "height": 8, "ConnectedRoom": ["NorthWing", "Dev3"]},
-    {"roomName": "Dev3", "xzPosition": {"x": 38, "z": 12}, "width": 8, "height": 8, "ConnectedRoom": ["NorthWing"]},
-    {"roomName": "EastWing", "xzPosition": {"x": 22, "z": 0}, "width": 24, "height": 12, "ConnectedRoom": ["Hub", "Conference", "Lounge", "FocusRoom","ServiceCore"]},
-    {"roomName": "Conference", "xzPosition": {"x": 22, "z": -8}, "width": 12, "height": 8, "ConnectedRoom": ["EastWing"]},
-    {"roomName": "Lounge", "xzPosition": {"x": 34, "z": -8}, "width": 12, "height": 8, "ConnectedRoom": ["EastWing", "Pantry"]},
-    {"roomName": "ServiceCore", "xzPosition": {"x": 8, "z": 0}, "width": 14, "height": 12, "ConnectedRoom": ["Hub", "Restrooms", "Storage"]},
-    {"roomName": "Restrooms", "xzPosition": {"x": 0, "z": 0}, "width": 8, "height": 12, "ConnectedRoom": ["ServiceCore"]},
-    {"roomName": "FocusRoom", "xzPosition": {"x": 46, "z": 0}, "width": 6, "height": 6, "ConnectedRoom": ["EastWing"]},
-    {"roomName": "Pantry", "xzPosition": {"x": 46, "z": -8}, "width": 6, "height": 6, "ConnectedRoom": ["Lounge"]},
-    {"roomName": "Storage", "xzPosition": {"x": 8, "z": -6}, "width": 8, "height": 6, "ConnectedRoom": ["ServiceCore"]}
-  ]
-},
-{
-  "name": "layout_17",
-  "ExitRoom": "WestOffice",
-  "ExitDoorPosition": "left",
-  "rooms": [
-    {"roomName": "Lobby", "xzPosition": {"x": 12, "z": 24}, "width": 12, "height": 8, "ConnectedRoom": ["Reception", "CentralHall"]},
-    {"roomName": "Reception", "xzPosition": {"x": 12, "z": 32}, "width": 12, "height": 6, "ConnectedRoom": ["Lobby"]},
-    {"roomName": "CentralHall", "xzPosition": {"x": 12, "z": 12}, "width": 12, "height": 12, "ConnectedRoom": ["Lobby", "WestOffice", "EastOffice", "SupportZone"]},
-    {"roomName": "WestOffice", "xzPosition": {"x": 0, "z": 12}, "width": 12, "height": 24, "ConnectedRoom": ["CentralHall", "WorkroomA", "WorkroomB"]},
-    {"roomName": "WorkroomA", "xzPosition": {"x": 0, "z": 0}, "width": 6, "height": 12, "ConnectedRoom": ["WestOffice"]},
-    {"roomName": "WorkroomB", "xzPosition": {"x": 6, "z": 0}, "width": 6, "height": 12, "ConnectedRoom": ["WestOffice"]},
-    {"roomName": "EastOffice", "xzPosition": {"x": 24, "z": 12}, "width": 12, "height": 24, "ConnectedRoom": ["CentralHall", "MeetingSuite", "QuietRoom"]},
-    {"roomName": "MeetingSuite", "xzPosition": {"x": 24, "z": 0}, "width": 12, "height": 12, "ConnectedRoom": ["EastOffice", "Boardroom"]},
-    {"roomName": "Boardroom", "xzPosition": {"x": 36, "z": 0}, "width": 8, "height": 8, "ConnectedRoom": ["MeetingSuite"]},
-    {"roomName": "SupportZone", "xzPosition": {"x": 12, "z": 0}, "width": 12, "height": 12, "ConnectedRoom": ["CentralHall", "Kitchenette", "Restroom"]},
-    {"roomName": "Kitchenette", "xzPosition": {"x": 12, "z": -6}, "width": 6, "height": 6, "ConnectedRoom": ["SupportZone"]},
-    {"roomName": "Restroom", "xzPosition": {"x": 18, "z": -6}, "width": 6, "height": 6, "ConnectedRoom": ["SupportZone"]},
-    {"roomName": "QuietRoom", "xzPosition": {"x": 36, "z": 12}, "width": 8, "height": 8, "ConnectedRoom": ["EastOffice"]}
-  ]
-},
-{
-  "name": "layout_18",
-  "ExitRoom": "SouthCluster",
-  "ExitDoorPosition": "left",
-  "rooms": [
-    {"roomName": "Entrance", "xzPosition": {"x": 16, "z": 20}, "width": 10, "height": 6, "ConnectedRoom": ["Atrium"]},
-    {"roomName": "Atrium", "xzPosition": {"x": 10, "z": 10}, "width": 20, "height": 10, "ConnectedRoom": ["Entrance", "NorthCluster", "SouthCluster", "Utilities"]},
-    {"roomName": "NorthCluster", "xzPosition": {"x": 30, "z": 10}, "width": 15, "height": 15, "ConnectedRoom": ["Atrium", "DesignStudio", "TechLab", "Collaboration"]},
-    {"roomName": "DesignStudio", "xzPosition": {"x": 30, "z": 25}, "width": 8, "height": 8, "ConnectedRoom": ["NorthCluster"]},
-    {"roomName": "TechLab", "xzPosition": {"x": 38, "z": 25}, "width": 7, "height": 8, "ConnectedRoom": ["NorthCluster"]},
-    {"roomName": "Collaboration", "xzPosition": {"x": 30, "z": 0}, "width": 15, "height": 10, "ConnectedRoom": ["NorthCluster", "Huddle1", "Huddle2"]},
-    {"roomName": "Huddle1", "xzPosition": {"x": 45, "z": 0}, "width": 6, "height": 6, "ConnectedRoom": ["Collaboration"]},
-    {"roomName": "Huddle2", "xzPosition": {"x": 45, "z": 6}, "width": 6, "height": 4, "ConnectedRoom": ["Collaboration"]},
-    {"roomName": "SouthCluster", "xzPosition": {"x": 0, "z": 10}, "width": 10, "height": 15, "ConnectedRoom": ["Atrium", "AdminOffice", "Finance"]},
-    {"roomName": "AdminOffice", "xzPosition": {"x": 0, "z": 25}, "width": 10, "height": 8, "ConnectedRoom": ["SouthCluster"]},
-    {"roomName": "Finance", "xzPosition": {"x": 0, "z": 0}, "width": 10, "height": 10, "ConnectedRoom": ["SouthCluster", "Vault"]},
-    {"roomName": "Vault", "xzPosition": {"x": -6, "z": 0}, "width": 6, "height": 6, "ConnectedRoom": ["Finance"]},
-    {"roomName": "Utilities", "xzPosition": {"x": 10, "z": 0}, "width": 20, "height": 10, "ConnectedRoom": ["Atrium", "Breakroom", "Restrooms", "ServerRoom"]},
-    {"roomName": "Breakroom", "xzPosition": {"x": 10, "z": -8}, "width": 8, "height": 8, "ConnectedRoom": ["Utilities"]},
-    {"roomName": "Restrooms", "xzPosition": {"x": 18, "z": -8}, "width": 8, "height": 8, "ConnectedRoom": ["Utilities"]},
-    {"roomName": "ServerRoom", "xzPosition": {"x": 26, "z": -8}, "width": 4, "height": 8, "ConnectedRoom": ["Utilities"]}
-  ]
-},
-{
-  "name": "layout_19",
-  "ExitRoom": "Foyer",
-  "ExitDoorPosition": "left",
-  "rooms": [
-    {"roomName": "Foyer", "xzPosition": {"x": 18, "z": 24}, "width": 6, "height": 12, "ConnectedRoom": ["GrandHall"]},
-    {"roomName": "GrandHall", "xzPosition": {"x": 0, "z": 12}, "width": 24, "height": 12, "ConnectedRoom": ["Foyer", "CreativeZone", "ExecutiveWing", "ServiceHub"]},
-    {"roomName": "CreativeZone", "xzPosition": {"x": 24, "z": 24}, "width": 18, "height": 12, "ConnectedRoom": ["GrandHall", "Design1", "Design2", "MediaRoom"]},
-    {"roomName": "Design1", "xzPosition": {"x": 24, "z": 36}, "width": 9, "height": 8, "ConnectedRoom": ["CreativeZone"]},
-    {"roomName": "Design2", "xzPosition": {"x": 33, "z": 36}, "width": 9, "height": 8, "ConnectedRoom": ["CreativeZone"]},
-    {"roomName": "MediaRoom", "xzPosition": {"x": 42, "z": 24}, "width": 6, "height": 12, "ConnectedRoom": ["CreativeZone"]},
-    {"roomName": "ExecutiveWing", "xzPosition": {"x": 24, "z": 0}, "width": 18, "height": 12, "ConnectedRoom": ["GrandHall", "CEO", "CFO", "Conference"]},
-    {"roomName": "CEO", "xzPosition": {"x": 24, "z": -8}, "width": 8, "height": 8, "ConnectedRoom": ["ExecutiveWing"]},
-    {"roomName": "CFO", "xzPosition": {"x": 32, "z": -8}, "width": 8, "height": 8, "ConnectedRoom": ["ExecutiveWing"]},
-    {"roomName": "Conference", "xzPosition": {"x": 40, "z": -8}, "width": 8, "height": 8, "ConnectedRoom": ["ExecutiveWing"]},
-    {"roomName": "ServiceHub", "xzPosition": {"x": 0, "z": 0}, "width": 24, "height": 12, "ConnectedRoom": ["GrandHall", "IT", "Cafeteria", "Facilities","ExecutiveWing"]},
-    {"roomName": "IT", "xzPosition": {"x": 0, "z": -8}, "width": 8, "height": 8, "ConnectedRoom": ["ServiceHub"]},
-    {"roomName": "Cafeteria", "xzPosition": {"x": 8, "z": -8}, "width": 8, "height": 8, "ConnectedRoom": ["ServiceHub"]},
-    {"roomName": "Facilities", "xzPosition": {"x": 16, "z": -8}, "width": 8, "height": 8, "ConnectedRoom": ["ServiceHub"]}
-  ]
-},
-{
-  "name": "layout_20",
-  "ExitRoom": "Amenities",
-  "ExitDoorPosition": "left",
-  "rooms": [
-    {"roomName": "MainDoor", "xzPosition": {"x": 0, "z": 15}, "width": 8, "height": 10, "ConnectedRoom": ["Nexus"]},
-    {"roomName": "Nexus", "xzPosition": {"x": 8, "z": 10}, "width": 16, "height": 20, "ConnectedRoom": ["MainDoor", "Production", "Management", "Amenities"]},
-    {"roomName": "Production", "xzPosition": {"x": 24, "z": 20}, "width": 20, "height": 15, "ConnectedRoom": ["Nexus", "Workshop", "QA", "Shipping"]},
-    {"roomName": "Workshop", "xzPosition": {"x": 24, "z": 35}, "width": 10, "height": 8, "ConnectedRoom": ["Production"]},
-    {"roomName": "QA", "xzPosition": {"x": 34, "z": 35}, "width": 10, "height": 8, "ConnectedRoom": ["Production"]},
-    {"roomName": "Shipping", "xzPosition": {"x": 44, "z": 20}, "width": 6, "height": 15, "ConnectedRoom": ["Production"]},
-    {"roomName": "Management", "xzPosition": {"x": 24, "z": 5}, "width": 20, "height": 15, "ConnectedRoom": ["Nexus", "HR", "Accounting", "Directors"]},
-    {"roomName": "HR", "xzPosition": {"x": 24, "z": -10}, "width": 8, "height": 15, "ConnectedRoom": ["Management"]},
-    {"roomName": "Accounting", "xzPosition": {"x": 32, "z": -10}, "width": 8, "height": 15, "ConnectedRoom": ["Management"]},
-    {"roomName": "Directors", "xzPosition": {"x": 40, "z": -10}, "width": 8, "height": 15, "ConnectedRoom": ["Management"]},
-    {"roomName": "Amenities", "xzPosition": {"x": 8, "z": -10}, "width": 16, "height": 20, "ConnectedRoom": ["Nexus", "Lounge", "Lockers", "Meditation"]}
-   
-  ]
-},{
-  "name": "layout_50",
-  "ExitRoom": "CrewDorms_A",
-  "ExitDoorPosition": "left",
-  "rooms": [
-      {
           "roomName": "CentralLobby",
-          "xzPosition": {"x": 0, "z": 0},
+          "xzPosition": { "x": 0, "z": 0 },
           "width": 16,
           "height": 16,
           "ConnectedRoom": ["CyberMedBay", "SecurityHub", "ExoLab", "MessHall"]
-      },
-      {
+        },
+        {
           "roomName": "MessHall",
-          "xzPosition": {"x": -16, "z": 0},
+          "xzPosition": { "x": -16, "z": 0 },
           "width": 16,
           "height": 16,
-          "ConnectedRoom": ["CrewDorms_A", "CrewDorms_B", "CentralLobby"]
-      },
-      {
-          "roomName": "CrewDorms_A",
-          "xzPosition": {"x": -32, "z": 0},
+          "ConnectedRoom": ["CrewDormsA", "CrewDormsB", "CentralLobby"]
+        },
+        {
+          "roomName": "CrewDormsA",
+          "xzPosition": { "x": -32, "z": 0 },
           "width": 16,
           "height": 24,
           "ConnectedRoom": ["MessHall", "RecLounge"]
-      },
-      {
-          "roomName": "CrewDorms_B",
-          "xzPosition": {"x": -16, "z": 16},
+        },
+        {
+          "roomName": "CrewDormsB",
+          "xzPosition": { "x": -16, "z": 16 },
           "width": 16,
           "height": 24,
           "ConnectedRoom": ["MessHall", "RecLounge"]
-      },
-      {
+        },
+        {
           "roomName": "RecLounge",
-          "xzPosition": {"x": -32, "z": 24},
+          "xzPosition": { "x": -32, "z": 24 },
           "width": 16,
           "height": 16,
-          "ConnectedRoom": ["CrewDorms_A", "CrewDorms_B"]
-      },
-      {
+          "ConnectedRoom": ["CrewDormsA", "CrewDormsB"]
+        },
+        {
           "roomName": "CyberMedBay",
-          "xzPosition": {"x": 0, "z": -14},
+          "xzPosition": { "x": 0, "z": -14 },
           "width": 12,
           "height": 14,
           "ConnectedRoom": ["CentralLobby", "NaniteClinic", "TraumaCenter"]
-      },
-      {
+        },
+        {
           "roomName": "NaniteClinic",
-          "xzPosition": {"x": -10, "z": -14},
+          "xzPosition": { "x": -10, "z": -14 },
           "width": 10,
           "height": 10,
           "ConnectedRoom": ["CyberMedBay"]
-      },
-      {
+        },
+        {
           "roomName": "TraumaCenter",
-          "xzPosition": {"x": 12, "z": -14},
+          "xzPosition": { "x": 12, "z": -14 },
           "width": 12,
           "height": 14,
           "ConnectedRoom": ["CyberMedBay", "BioScanChamber"]
-      },
-      {
+        },
+        {
           "roomName": "BioScanChamber",
-          "xzPosition": {"x": 24, "z": -14},
+          "xzPosition": { "x": 24, "z": -14 },
           "width": 10,
           "height": 10,
           "ConnectedRoom": ["TraumaCenter", "ExoLab"]
-      },
-      {
+        },
+        {
           "roomName": "ExoLab",
-          "xzPosition": {"x": 16, "z": 0},
+          "xzPosition": { "x": 16, "z": 0 },
           "width": 20,
           "height": 16,
           "ConnectedRoom": ["CentralLobby", "HoloTraining", "DroneWorkshop", "BioScanChamber"]
-      },
-      {
+        },
+        {
           "roomName": "HoloTraining",
-          "xzPosition": {"x": 16, "z": -24},
+          "xzPosition": { "x": 16, "z": -24 },
           "width": 14,
           "height": 10,
           "ConnectedRoom": ["ExoLab", "TraumaCenter"]
-      },
-      {
+        },
+        {
           "roomName": "DroneWorkshop",
-          "xzPosition": {"x": 36, "z": 0},
+          "xzPosition": { "x": 36, "z": 0 },
           "width": 14,
           "height": 16,
           "ConnectedRoom": ["ExoLab", "RechargeBay", "FabricationPlant"]
-      },
-      {
+        },
+        {
           "roomName": "RechargeBay",
-          "xzPosition": {"x": 50, "z": 0},
+          "xzPosition": { "x": 50, "z": 0 },
           "width": 10,
           "height": 10,
           "ConnectedRoom": ["DroneWorkshop"]
-      },
-      {
+        },
+        {
           "roomName": "FabricationPlant",
-          "xzPosition": {"x": 36, "z": 16},
+          "xzPosition": { "x": 36, "z": 16 },
           "width": 14,
           "height": 14,
           "ConnectedRoom": ["DroneWorkshop", "QuantumCore"]
-      },
-      {
+        },
+        {
           "roomName": "SecurityHub",
-          "xzPosition": {"x": 0, "z": 16},
+          "xzPosition": { "x": 0, "z": 16 },
           "width": 20,
           "height": 20,
           "ConnectedRoom": ["CentralLobby", "NeuralNetwork", "Armory", "QuantumCore"]
-      },
-      {
+        },
+        {
           "roomName": "Armory",
-          "xzPosition": {"x": -10, "z": 16},
+          "xzPosition": { "x": -10, "z": 16 },
           "width": 10,
           "height": 12,
           "ConnectedRoom": ["SecurityHub"]
-      },
-      {
+        },
+        {
           "roomName": "NeuralNetwork",
-          "xzPosition": {"x": 0, "z": 36},
+          "xzPosition": { "x": 0, "z": 36 },
           "width": 16,
           "height": 24,
           "ConnectedRoom": ["SecurityHub", "AIIntegration", "ServerFarm"]
-      },
-      {
+        },
+        {
           "roomName": "AIIntegration",
-          "xzPosition": {"x": -16, "z": 40},
+          "xzPosition": { "x": -16, "z": 40 },
           "width": 16,
           "height": 12,
           "ConnectedRoom": ["NeuralNetwork"]
-      },
-      {
+        },
+        {
           "roomName": "ServerFarm",
-          "xzPosition": {"x": 2, "z": 60},
+          "xzPosition": { "x": 2, "z": 60 },
           "width": 12,
           "height": 16,
           "ConnectedRoom": ["NeuralNetwork", "CoolingSystem"]
-      },
-      {
+        },
+        {
           "roomName": "CoolingSystem",
-          "xzPosition": {"x": 2, "z": 76},
+          "xzPosition": { "x": 2, "z": 76 },
           "width": 12,
           "height": 10,
           "ConnectedRoom": ["ServerFarm"]
-      },
-      {
+        },
+        {
           "roomName": "QuantumCore",
-          "xzPosition": {"x": 20, "z": 16},
+          "xzPosition": { "x": 20, "z": 16 },
           "width": 16,
           "height": 24,
           "ConnectedRoom": ["SecurityHub", "FabricationPlant", "TemporalLab", "GravityChamber"]
-      },
-      {
+        },
+        {
           "roomName": "GravityChamber",
-          "xzPosition": {"x": 36, "z": 30},
+          "xzPosition": { "x": 36, "z": 30 },
           "width": 12,
           "height": 10,
           "ConnectedRoom": ["QuantumCore"]
-      },
-      {
+        },
+        {
           "roomName": "TemporalLab",
-          "xzPosition": {"x": 20, "z": 40},
+          "xzPosition": { "x": 20, "z": 40 },
           "width": 16,
           "height": 14,
           "ConnectedRoom": ["QuantumCore", "ChronoVault", "PsiChamber"]
-      },
-      {
+        },
+        {
           "roomName": "ChronoVault",
-          "xzPosition": {"x": 36, "z": 44},
+          "xzPosition": { "x": 36, "z": 44 },
           "width": 10,
           "height": 10,
           "ConnectedRoom": ["TemporalLab"]
-      },
-      {
+        },
+        {
           "roomName": "PsiChamber",
-          "xzPosition": {"x": 20, "z": 54},
+          "xzPosition": { "x": 20, "z": 54 },
           "width": 12,
           "height": 10,
           "ConnectedRoom": ["TemporalLab"]
-      },
-      {
+        },
+        {
           "roomName": "ObservationDeck",
-          "xzPosition": {"x": 48, "z": 30},
+          "xzPosition": { "x": 48, "z": 30 },
           "width": 14,
           "height": 24,
           "ConnectedRoom": ["GravityChamber"]
-      }
-  ]
-}
+        }
+      ]
+    },
+    {
+      "name": "LayoutComplex50FinalPhysicalGap",
+      "EmergencyExits": [
+        {
+          "ExitRoom": "NeuralNetwork",
+          "position": "forward"
+        },
+        {
+          "ExitRoom": "BypassNWVert",
+          "position": "left"
+        },
+        {
+          "ExitRoom": "BypassSEHoriz",
+          "position": "backward"
+        }
+      ],
+      "rooms": [
+        {
+          "roomName": "CentralLobby",
+          "xzPosition": { "x": 0, "z": 0 },
+          "width": 20,
+          "height": 20,
+          "ConnectedRoom": ["CorridorNorth", "CorridorSouth", "CorridorEast", "CorridorWest"]
+        },
+        {
+          "roomName": "CorridorNorth",
+          "xzPosition": { "x": 7, "z": 20 },
+          "width": 6,
+          "height": 50,
+          "ConnectedRoom": ["CentralLobby", "SecurityHub", "ServiceDuct01"]
+        },
+        {
+          "roomName": "SecurityHub",
+          "xzPosition": { "x": -1, "z": 70 },
+          "width": 22,
+          "height": 18,
+          "ConnectedRoom": ["CorridorNorth", "Armory", "NeuralNetworkAirlock", "QuantumCoreAccess"]
+        },
+        {
+          "roomName": "Armory",
+          "xzPosition": { "x": -13, "z": 70 },
+          "width": 12,
+          "height": 12,
+          "ConnectedRoom": ["SecurityHub", "BypassNWHoriz"]
+        },
+        {
+          "roomName": "NeuralNetworkAirlock",
+          "xzPosition": { "x": 7, "z": 88 },
+          "width": 6,
+          "height": 6,
+          "ConnectedRoom": ["SecurityHub", "NeuralNetwork"]
+        },
+        {
+          "roomName": "NeuralNetwork",
+          "xzPosition": { "x": -2, "z": 94 },
+          "width": 24,
+          "height": 30,
+          "ConnectedRoom": ["NeuralNetworkAirlock", "AIIntegration", "ServerFarm"]
+        },
+        {
+          "roomName": "AIIntegration",
+          "xzPosition": { "x": -16, "z": 94 },
+          "width": 14,
+          "height": 14,
+          "ConnectedRoom": ["NeuralNetwork"]
+        },
+        {
+          "roomName": "ServerFarm",
+          "xzPosition": { "x": 22, "z": 94 },
+          "width": 18, "height": 24,
+          "ConnectedRoom": ["NeuralNetwork", "CoolingSystem", "ObservationDeck"]
+        },
+        {
+          "roomName": "CoolingSystem",
+          "xzPosition": { "x": 24, "z": 118 },
+          "width": 14, "height": 10,
+          "ConnectedRoom": ["ServerFarm"]
+        },
+        {
+          "roomName": "QuantumCoreAccess",
+          "xzPosition": { "x": 21, "z": 70 },
+          "width": 12, "height": 6,
+          "ConnectedRoom": ["SecurityHub", "QuantumCore"]
+        },
+        {
+          "roomName": "QuantumCore",
+          "xzPosition": { "x": 33, "z": 60 },
+          "width": 26, "height": 26,
+          "ConnectedRoom": ["QuantumCoreAccess", "GravityChamber", "TemporalLab", "ObservationDeck"]
+        },
+        {
+          "roomName": "GravityChamber",
+          "xzPosition": { "x": 40, "z": 48 },
+          "width": 12,
+          "height": 12,
+          "ConnectedRoom": ["QuantumCore"]
+        },
+        {
+          "roomName": "ObservationDeck",
+          "xzPosition": { "x": 35, "z": 86 },
+          "width": 18, "height": 8,
+          "ConnectedRoom": ["QuantumCore", "ServerFarm"]
+        },
+        {
+          "roomName": "TemporalLab",
+          "xzPosition": { "x": 59, "z": 65 },
+          "width": 20, "height": 16,
+          "ConnectedRoom": ["QuantumCore", "ChronoVault", "PsiChamber"]
+        },
+        {
+          "roomName": "ChronoVault",
+          "xzPosition": { "x": 64, "z": 81 },
+          "width": 10, "height": 10,
+          "ConnectedRoom": ["TemporalLab"]
+        },
+        {
+          "roomName": "PsiChamber",
+          "xzPosition": { "x": 79, "z": 65 },
+          "width": 12, "height": 12,
+          "ConnectedRoom": ["TemporalLab"]
+        },
+        {
+          "roomName": "CorridorWest",
+          "xzPosition": { "x": -40, "z": 7 },
+          "width": 40, "height": 6,
+          "ConnectedRoom": ["CentralLobby", "MessHall", "CommonLounge", "PowerSubstation"]
+        },
+        {
+          "roomName": "MessHall",
+          "xzPosition": { "x": -20, "z": -7 },
+          "width": 16, "height": 14,
+          "ConnectedRoom": ["CorridorWest"]
+        },
+        {
+          "roomName": "PowerSubstation",
+          "xzPosition": { "x": -20, "z": 13 },
+          "width": 10, "height": 10,
+          "ConnectedRoom": ["CorridorWest"]
+        },
+        {
+          "roomName": "CommonLounge",
+          "xzPosition": { "x": -52, "z": 2 },
+          "width": 12, "height": 16,
+          "ConnectedRoom": ["CorridorWest", "CrewDormsA", "CrewDormsB", "RecLounge"]
+        },
+        {
+          "roomName": "CrewDormsA",
+          "xzPosition": { "x": -62, "z": 8 },
+          "width": 10, "height": 14,
+          "ConnectedRoom": ["CommonLounge"]
+        },
+        {
+          "roomName": "CrewDormsB",
+          "xzPosition": { "x": -62, "z": -6 },
+          "width": 10, "height": 14,
+          "ConnectedRoom": ["CommonLounge"]
+        },
+        {
+          "roomName": "RecLounge",
+          "xzPosition": { "x": -48, "z": 18 },
+          "width": 16, "height": 12,
+          "ConnectedRoom": ["CommonLounge", "BypassNWVert"]
+        },
+        {
+          "roomName": "CorridorSouth",
+          "xzPosition": { "x": 7, "z": -20 },
+          "width": 6, "height": 20,
+          "ConnectedRoom": ["CentralLobby", "CyberMedBay"]
+        },
+        {
+          "roomName": "CyberMedBay",
+          "xzPosition": { "x": 0, "z": -36 },
+          "width": 20,
+          "height": 16,
+          "ConnectedRoom": ["CorridorSouth", "NaniteClinic", "TraumaCenter", "MedStorage"]
+        },
+        {
+          "roomName": "NaniteClinic",
+          "xzPosition": { "x": -10, "z": -36 },
+          "width": 10,
+          "height": 10,
+          "ConnectedRoom": ["CyberMedBay"]
+        },
+        {
+          "roomName": "TraumaCenter",
+          "xzPosition": { "x": 20, "z": -36 },
+          "width": 12,
+          "height": 14,
+          "ConnectedRoom": ["CyberMedBay", "BioScanChamber"]
+        },
+        {
+          "roomName": "BioScanChamber",
+          "xzPosition": { "x": 32, "z": -36 },
+          "width": 10,
+          "height": 10,
+          "ConnectedRoom": ["TraumaCenter", "BypassSEHoriz"]
+        },
+        {
+          "roomName": "MedStorage",
+          "xzPosition": { "x": 6, "z": -44 },
+          "width": 8, "height": 8,
+          "ConnectedRoom": ["CyberMedBay"]
+        },
+        {
+          "roomName": "CorridorEast",
+          "xzPosition": { "x": 20, "z": 7 },
+          "width": 40, "height": 6,
+          "ConnectedRoom": ["CentralLobby", "AirlockExo", "DroneWorkshop"]
+        },
+        {
+          "roomName": "AirlockExo",
+          "xzPosition": { "x": 30, "z": 13 },
+          "width": 6, "height": 6,
+          "ConnectedRoom": ["CorridorEast", "ExoLab"]
+        },
+        {
+          "roomName": "ExoLab",
+          "xzPosition": { "x": 23, "z": 19 },
+          "width": 20, "height": 18,
+          "ConnectedRoom": ["AirlockExo", "HoloTraining"]
+        },
+        {
+          "roomName": "HoloTraining",
+          "xzPosition": { "x": 43, "z": 19 },
+          "width": 14, "height": 14,
+          "ConnectedRoom": ["ExoLab"]
+        },
+        {
+          "roomName": "DroneWorkshop",
+          "xzPosition": { "x": 60, "z": 2 },
+          "width": 18, "height": 16,
+          "ConnectedRoom": ["CorridorEast", "RechargeBay", "FabricationPlant"]
+        },
+        {
+          "roomName": "RechargeBay",
+          "xzPosition": { "x": 78, "z": 2 },
+          "width": 10, "height": 10,
+          "ConnectedRoom": ["DroneWorkshop"]
+        },
+        {
+          "roomName": "FabricationPlant",
+          "xzPosition": { "x": 62, "z": -12 },
+          "width": 14, "height": 14,
+          "ConnectedRoom": ["DroneWorkshop", "BypassSEVert"]
+        },
+        {
+          "roomName": "BypassNWVert",
+          "xzPosition": { "x": -40, "z": 30 },
+          "width": 6, "height": 46,
+          "ConnectedRoom": ["RecLounge", "BypassNWHoriz"]
+        },
+        {
+          "roomName": "BypassNWHoriz",
+          "xzPosition": { "x": -34, "z": 70 },
+          "width": 21, "height": 6,
+          "ConnectedRoom": ["BypassNWVert", "Armory"]
+        },
+        {
+          "roomName": "BypassSEHoriz",
+          "xzPosition": { "x": 42, "z": -36 },
+          "width": 26, "height": 6,
+          "ConnectedRoom": ["BioScanChamber", "BypassSEVert"]
+        },
+        {
+          "roomName": "BypassSEVert",
+          "xzPosition": { "x": 62, "z": -30 },
+          "width": 6, "height": 18,
+          "ConnectedRoom": ["BypassSEHoriz", "FabricationPlant"]
+        }
+      ]
+    },
+    {
+      "name": "liwenzheng5floor",
+      "EmergencyExits": [
+        { "ExitRoom": "top", "position": "forward" },
+        { "ExitRoom": "left", "position": "left" },
+        { "ExitRoom": "right", "position": "right" }
+      ],
+      "rooms": [
+        {
+          "roomName": "WC1", "xzPosition": { "x": -5.4, "z": 0.0 }, "width": 9.0, "height": 15.0,
+          "ConnectedRoom": ["lianlang2"]
+        },
+        {
+          "roomName": "left", "xzPosition": { "x": -23.4, "z": 15.0 }, "width": 27.0, "height": 22.5,
+          "ConnectedRoom": ["lianlang2"]
+        },
+        {
+          "roomName": "WC2", "xzPosition": { "x": -5.4, "z": 37.5 }, "width": 9.0, "height": 15.0,
+          "ConnectedRoom": ["lianlang2"]
+        },
+        {
+          "roomName": "top", "xzPosition": { "x": 9.0, "z": 45.0 }, "width": 54.0, "height": 22.5,
+          "ConnectedRoom": ["yandu1", "500", "yandu2"]
+        },
+        {
+          "roomName": "lianlang2", "xzPosition": { "x": 3.6, "z": 0.0 }, "width": 5.4, "height": 52.5,
+          "ConnectedRoom": ["WC1", "left", "WC2", "yandu1", "lianlang1"]
+        },
+        {
+          "roomName": "WC3", "xzPosition": { "x": 68.4, "z": 37.5 }, "width": 9.0, "height": 15.0,
+          "ConnectedRoom": ["lianlang3"]
+        },
+        {
+          "roomName": "right", "xzPosition": { "x": 68.4, "z": 15.0 }, "width": 27.0, "height": 22.5,
+          "ConnectedRoom": ["lianlang3"]
+        },
+        {
+          "roomName": "509", "xzPosition": { "x": 68.4, "z": 6.0 }, "width": 9.0, "height": 9.0,
+          "ConnectedRoom": ["lianlang3"]
+        },
+        {
+          "roomName": "WC4", "xzPosition": { "x": 68.4, "z": 0.0 }, "width": 9.0, "height": 6.0,
+          "ConnectedRoom": ["lianlang3"]
+        },
+        {
+          "roomName": "yandu1", "xzPosition": { "x": 9.0, "z": 19.5 }, "width": 21.6, "height": 25.5,
+          "ConnectedRoom": ["lianlang2", "top", "500", "B502"]
+        },
+        {
+          "roomName": "500", "xzPosition": { "x": 30.6, "z": 22.5 }, "width": 10.8, "height": 22.5,
+          "ConnectedRoom": ["yandu1", "top", "yandu2", "A502"]
+        },
+        {
+          "roomName": "yandu2", "xzPosition": { "x": 41.4, "z": 10.5 }, "width": 21.6, "height": 34.5,
+          "ConnectedRoom": ["500", "top", "lianlang3", "A502", "lianlang1"]
+        },
+        {
+          "roomName": "B502", "xzPosition": { "x": 9.0, "z": 10.5 }, "width": 21.6, "height": 9.0,
+          "ConnectedRoom": ["yandu1", "A502", "lianlang1"]
+        },
+        {
+          "roomName": "A502", "xzPosition": { "x": 30.6, "z": 10.5 }, "width": 10.8, "height": 12.0,
+          "ConnectedRoom": ["500", "B502", "yandu2", "lianlang1"]
+        },
+        {
+          "roomName": "B504", "xzPosition": { "x": 9.0, "z": 0.0 }, "width": 5.4, "height": 6.0,
+          "ConnectedRoom": ["lianlang1"]
+        },
+        {
+          "roomName": "B503", "xzPosition": { "x": 14.4, "z": 0.0 }, "width": 5.4, "height": 6.0,
+          "ConnectedRoom": ["lianlang1"]
+        },
+        {
+          "roomName": "B501", "xzPosition": { "x": 19.8, "z": 0.0 }, "width": 7.2, "height": 6.0,
+          "ConnectedRoom": ["lianlang1"]
+        },
+        {
+          "roomName": "A501", "xzPosition": { "x": 27.0, "z": 0.0 }, "width": 9.0, "height": 6.0,
+          "ConnectedRoom": ["lianlang1"]
+        },
+        {
+          "roomName": "A503", "xzPosition": { "x": 36.0, "z": 0.0 }, "width": 5.4, "height": 6.0,
+          "ConnectedRoom": ["lianlang1"]
+        },
+        {
+          "roomName": "A504", "xzPosition": { "x": 41.4, "z": 0.0 }, "width": 5.4, "height": 6.0,
+          "ConnectedRoom": ["lianlang1"]
+        },
+        {
+          "roomName": "A505", "xzPosition": { "x": 46.8, "z": 0.0 }, "width": 5.4, "height": 6.0,
+          "ConnectedRoom": ["lianlang1"]
+        },
+        {
+          "roomName": "A506", "xzPosition": { "x": 52.2, "z": 0.0 }, "width": 10.8, "height": 6.0,
+          "ConnectedRoom": ["lianlang1"]
+        },
+        {
+          "roomName": "lianlang1", "xzPosition": { "x": 9.0, "z": 6.0 }, "width": 54.0, "height": 4.5,
+          "ConnectedRoom": [
+            "lianlang2", "lianlang3", "B502", "A502", "yandu2",
+            "B504", "B503", "B501", "A501", "A503", "A504", "A505", "A506"
+          ]
+        },
+        {
+          "roomName": "lianlang3", "xzPosition": { "x": 63.0, "z": 0.0 }, "width": 5.4, "height": 52.5,
+          "ConnectedRoom": ["WC4", "509", "right", "WC3", "yandu2", "lianlang1"]
+        }
+      ]
+    }
   ]
 }

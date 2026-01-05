@@ -73,7 +73,7 @@ public class RobotControl : MonoBehaviour
             myAgent.stuckCounter += 10;
 
             // 给予惩罚
-            myAgent.AddReward(-5f);
+            myAgent.AddReward(-0.8f);
 
             // 如果你在 Brain 里实现了日志系统，可以调用，但要注意判空
             // myAgent.LogReward("机器人触碰火焰惩罚", -5);
