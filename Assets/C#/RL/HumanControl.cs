@@ -9,6 +9,10 @@ using Random = UnityEngine.Random;
 
 public partial class HumanControl : MonoBehaviour
 {
+    [Header("Test Debug")]
+    public bool IsStateFixed = false; // 是否固定状态
+    public int FixedStateValue = 0;   // 固定的状态值 (0, 1, 2)
+
     [Header("References")]
     public EnvControl myEnv;
     public HumanBrain myHumanBrain;
@@ -55,6 +59,10 @@ public partial class HumanControl : MonoBehaviour
     public float dazingCountDown; // 补充缺失
     public float robotDetectTime; // 补充缺失
 
+    public void Awake()
+    {
+        _doorMemoryQueue = new Queue<GameObject>();
+    }
     public void Start()
     {
         isFounded = false;
@@ -75,41 +83,52 @@ public partial class HumanControl : MonoBehaviour
     {
         stateTime += Time.deltaTime;
 
-        // 1. 全局状态更新 (无论是否使用AI，都要算恐慌值和扣血)
+        // 1. 全局状态更新 (恐慌值和扣血计算)
         if (myEnv.usePanic)
         {
             UpdatePanicLevelAndHealth();
         }
 
-        // 2. 行为控制逻辑
-        if (!myEnv.useHumanAgent)
+        // =========================================================
+        // [修复核心] 状态确定的优先级逻辑
+        // =========================================================
+
+        // 优先级 A: 测试模式强制锁定
+        if (myEnv.isTest && IsStateFixed)
         {
-            // === 传统算法模式 ===
+            CurrentState = FixedStateValue;
+            // 注意：这里删除了 return，代码继续向下执行移动逻辑
+        }
+        // 优先级 B: 非AI控制 (传统算法计算状态)
+        else if (!myEnv.useHumanAgent)
+        {
             // 依据 panicLevel 计算 CurrentState
             UpdateBehaviorModel();
         }
+        // 优先级 C: AI控制 (状态由 Brain 在 OnActionReceived 中设定，此处不需干预)
         else
         {
-            // === AI 强化学习模式 ===
-            // 关键修改：
-            // 1. 删除了 myHumanBrain.RequestDecision() -> 这里的请求权交给 Brain 的计时器
-            // 2. 删除了 AddReward -> 奖励权交给 Brain 的 OnActionReceived
-            // 3. 删除了 stateTime 判断 -> 只要 Brain 更新了 State，身体立刻执行
-
-            // 额外规则：即使是AI控制，如果血量过低，强制进入焦虑/恐慌状态 (可选)
-            // 这属于"规则覆盖"(Rule Override)，可以保留作为最后防线
+            // 额外规则：即使是AI控制，如果血量过低，强制进入焦虑/恐慌状态 (可选规则)
             if (this.health < 30 && CurrentState == 0)
             {
-                // CurrentState = 1; // 如果你想让AI完全接管，就把这行注释掉
+                // CurrentState = 1; 
             }
+        }
 
-            // 执行移动逻辑
-            switch (CurrentState)
-            {
-                case 0: MoveModel0(); break; // 理性
-                case 1: MoveModel1(); break; // 焦虑
-                case 2: MoveModel2(); break; // 恐慌
-            }
+        // =========================================================
+        // 2. 执行移动逻辑 (根据上面确定的 CurrentState)
+        // =========================================================
+
+        // 只要不是 AI 控制，或者 (是AI控制但处于测试锁定模式)，都执行本地移动逻辑
+        // 注意：如果是纯训练模式(useHumanAgent=true)，移动通常由Brain驱动，
+        // 但根据你的代码，Brain只是设置了State，具体的 MoveModelX 还是在这里调用的。
+        // 所以这里的 switch case 必须被执行。
+
+        switch (CurrentState)
+        {
+            case 0: MoveModel0(); break; // 理性
+            case 1: MoveModel1(); break; // 焦虑
+            case 2: MoveModel2(); break; // 恐慌
         }
 
         // 3. 死亡判定

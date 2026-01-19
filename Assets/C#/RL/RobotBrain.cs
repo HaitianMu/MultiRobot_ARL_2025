@@ -25,6 +25,11 @@ public class RobotBrain : Agent
     public int stuckCounter;
     public Vector3 targetPosition;
 
+    [Header("Decision Frequency")]
+    [Tooltip("决策间隔(秒)。建议设为 0.2~0.5s，让机器人能实时根据火势和人群调整路径")]
+    public float decisionInterval = 0.5f;
+    private float _decisionTimer = 0f;
+
     // ---------------------------------------------------------
     // 1. 观测空间配置 (Total Size: 110)
     // ---------------------------------------------------------
@@ -89,16 +94,28 @@ public class RobotBrain : Agent
         // 【关键保护】如果还没绑定身体，直接跳过
         if (!RobotIsInitialized || robot == null) { return; }
 
-        // 决策请求逻辑 (训练模式)
         if (myEnv.isTraining)
         {
+            // 1. 计时器累加
+            _decisionTimer += Time.fixedDeltaTime;
+
+            // 2. 检查触发条件
+
+            // A. 时间到了 (保证最小采样频率)
+            bool timeUp = _decisionTimer >= decisionInterval;
+
+            // B. 确实到达了目的地 (虽然时间没到，但任务完成了，立即请求下一个)
             float dist = Vector3.Distance(robot.transform.position, robotDestinationCache);
-            // 距离小于 2m 或卡住时请求决策
-            //print("s333333333333333333");
-            if (dist < 2.0f || stuckCounter > 50)
+            bool reached = dist < 1.5f;
+
+            // C. 卡住了 (急救)
+            bool stuck = stuckCounter > 30;
+
+            // 满足任一条件即请求决策
+            if (timeUp || reached || stuck)
             {
-               // print("sadas");
                 RequestDecision();
+                _decisionTimer = 0f; // 重置计时器
             }
         }
     }

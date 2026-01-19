@@ -1,0 +1,90 @@
+{
+    "spawn_distance_limit": {
+        "lesson_num": 2
+    },
+    "HumanBehavior": {
+        "checkpoints": [
+            {
+                "steps": 499960,
+                "file_path": "results\\MARL_1.19V1\\HumanBehavior\\HumanBehavior-499960.onnx",
+                "reward": 2.3661090667274864,
+                "creation_time": 1768811482.3704245,
+                "auxillary_file_paths": [
+                    "results\\MARL_1.19V1\\HumanBehavior\\HumanBehavior-499960.pt"
+                ]
+            },
+            {
+                "steps": 999974,
+                "file_path": "results\\MARL_1.19V1\\HumanBehavior\\HumanBehavior-999974.onnx",
+                "reward": 1.9581999452784657,
+                "creation_time": 1768812235.3236372,
+                "auxillary_file_paths": [
+                    "results\\MARL_1.19V1\\HumanBehavior\\HumanBehavior-999974.pt"
+                ]
+            },
+            {
+                "steps": 1499986,
+                "file_path": "results\\MARL_1.19V1\\HumanBehavior\\HumanBehavior-1499986.onnx",
+                "reward": null,
+                "creation_time": 1768813030.2565808,
+                "auxillary_file_paths": [
+                    "results\\MARL_1.19V1\\HumanBehavior\\HumanBehavior-1499986.pt"
+                ]
+            },
+            {
+                "steps": 1861233,
+                "file_path": "results\\MARL_1.19V1\\HumanBehavior\\HumanBehavior-1861233.onnx",
+                "reward": null,
+                "creation_time": 1768813606.2635617,
+                "auxillary_file_paths": [
+                    "results\\MARL_1.19V1\\HumanBehavior\\HumanBehavior-1861233.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 1861233,
+            "file_path": "results\\MARL_1.19V1\\HumanBehavior.onnx",
+            "reward": null,
+            "creation_time": 1768813606.2635617,
+            "auxillary_file_paths": [
+                "results\\MARL_1.19V1\\HumanBehavior\\HumanBehavior-1861233.pt"
+            ]
+        }
+    },
+    "RobotBrain": {
+        "checkpoints": [
+            {
+                "steps": 99926,
+                "file_path": "results\\MARL_1.19V1\\RobotBrain\\RobotBrain-99926.onnx",
+                "reward": 0.0,
+                "creation_time": 1768813076.6622896,
+                "auxillary_file_paths": [
+                    "results\\MARL_1.19V1\\RobotBrain\\RobotBrain-99926.pt"
+                ]
+            },
+            {
+                "steps": 122130,
+                "file_path": "results\\MARL_1.19V1\\RobotBrain\\RobotBrain-122130.onnx",
+                "reward": 0.0,
+                "creation_time": 1768813606.360125,
+                "auxillary_file_paths": [
+                    "results\\MARL_1.19V1\\RobotBrain\\RobotBrain-122130.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 122130,
+            "file_path": "results\\MARL_1.19V1\\RobotBrain.onnx",
+            "reward": 0.0,
+            "creation_time": 1768813606.360125,
+            "auxillary_file_paths": [
+                "results\\MARL_1.19V1\\RobotBrain\\RobotBrain-122130.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "1.8.2+cu111"
+    }
+}

@@ -58,10 +58,7 @@ public class HumanBrain : Agent
         if (!myEnv.useHumanAgent || myHuman == null) return;
 
         // 1. 基础生存奖励：时间惩罚（鼓励尽快逃生，而不是在原地刷分）
-        if (myEnv.isTraining)
-        {
-            AddReward(timePenalty);
-        }
+   
 
         // 2. 决策计时器
         _decisionTimer += Time.fixedDeltaTime;
@@ -142,11 +139,11 @@ public class HumanBrain : Agent
 
         // 致命错误：极度危险却选择冷静
         if (envData.SmokeDensity > 800f && actionState == 0)
-            AddReward(-0.05f);
+            AddReward(-0.0005f);
 
         // 效率错误：完全安全却选择极度恐慌
         if (envData.SmokeDensity < 50f && actionState == 2)
-            AddReward(-0.02f);
+            AddReward(-0.0002f);
     }
 
     // ---------------------------------------------------------

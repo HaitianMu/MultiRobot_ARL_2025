@@ -72,8 +72,26 @@ public partial class EnvControl : MonoBehaviour
     public float startTime;
     public int robotCount = 3;
 
+    // [新增] 统计累加器
+    private float totalEscapedCount = 0;
+    private float totalTimeCost = 0;
+    private float totalHealthSum = 0;
+
+    // [配置] 目标测试回合数 (跑完这么多局后自动停止并保存)
+    private const int TEST_EPISODE_COUNT = 100;
+
     private void Awake()
     {
+        // 计算缩放比例： 30 / 150 = 0.2
+        // 意味着真实时间每过 1秒，数据时间只走 0.2秒
+        if (targetRunDuration > 0)
+        {
+            _timeScaleRatio = originalDataDuration / targetRunDuration;
+        }
+        else
+        {
+            _timeScaleRatio = 1f; // 防止除以0
+        }
         LoadFireData();
         // 【核心修改 1】在 Awake 里只创建一次组
         // 以后无论重置多少次回合，都用这个组，不要再 new 了
@@ -107,6 +125,15 @@ public partial class EnvControl : MonoBehaviour
         // 无论是训练还是非训练，Start时的逻辑基本一致，这里进行简化
         Debug.Log("Env的start函数");
 
+        // 如果是测试模式，初始化计数器
+        if (isTest)
+        {
+            EpisodeNum = 0;
+            totalEscapedCount = 0;
+            totalTimeCost = 0;
+            totalHealthSum = 0;
+        }
+
         // 初始化场景
         StartNewEpisode(true);
     }
@@ -115,6 +142,7 @@ public partial class EnvControl : MonoBehaviour
     {
         float dt = Time.fixedDeltaTime; // 缓存一下，微小优化
         runtime += dt;
+        UpdateSmokeFrame();
         EnpisodeTime += dt;
 
         // 1. 更新环境数据 (烟雾、全局状态)
@@ -123,9 +151,9 @@ public partial class EnvControl : MonoBehaviour
 
 
         // ----------- 2. 训练/测试 逻辑循环 -----------
-        if (isTraining)
+        if (isTraining||isTest)
         {
-            bool timeOut = runtime > 300.0f; // 300秒超时
+            bool timeOut = runtime > 150.0f; // 150秒超时
             bool allDead = CachedAliveHumans == 0;
 
             // 触发重置的条件
@@ -151,7 +179,59 @@ public partial class EnvControl : MonoBehaviour
     /// </summary>
     private void HandleEpisodeReset(bool isTimeout)
     {
-        EpisodeNum++;
+        // =========================================================
+        // [新增] 1. 累加数据 (仅在测试模式下)
+        // =========================================================
+        if (isTest)
+        {
+            totalEscapedCount += EscapeHuman; // 累加这一局跑出去的人数
+            totalTimeCost += EnpisodeTime;    // 累加这一局花的时间
+            totalHealthSum += sumhealth;      // 累加这一局所有人的剩余血量 (注意 sumhealth 需要在每局开始前清零)
+
+            EpisodeNum++; // 当前回合数 +1
+            print("当前回合数：" + EpisodeNum);
+            // =========================================================
+            // [新增] 2. 检查是否达到测试目标 (结算点)
+            // =========================================================
+            if (EpisodeNum >= TEST_EPISODE_COUNT)
+            {
+                // --- 计算最终平均值 ---
+                // 成功率 = (总逃生人数 / (总局数 * 每局总人数)) * 100%
+                // 假设每局固定 50 人，如果你的 HumanNum 是变量，请替换 50f 为实际变量
+                float finalSuccessRate = (totalEscapedCount / (TEST_EPISODE_COUNT * 50f)) * 100f;
+
+                // 平均时间 = 总时间 / 总局数
+                float finalAvgTime = totalTimeCost / TEST_EPISODE_COUNT;
+
+                // 平均血量 = 总血量 / (总局数 * 每局总人数) -> 单人平均血量
+                float finalAvgHealth = totalHealthSum / (TEST_EPISODE_COUNT * 50f);
+
+                // 获取当前模式名称 (用于生成文件名)
+                string stateName = (TestFixedPanicState == -1) ? "Dynamic" :
+                                   (TestFixedPanicState == 3) ? "Mixed" :
+                                   TestFixedPanicState.ToString();
+
+                // --- 控制台打印最终结果 ---
+                Debug.Log($"<color=green>=== 测试完成 ({TEST_EPISODE_COUNT}局) ===</color>\n" +
+                          $"模式: {stateName} | 成功率: {finalSuccessRate:F2}% | 平均耗时: {finalAvgTime:F2}s | 平均血量: {finalAvgHealth:F2}");
+
+                // --- 调用 CSVLogger 保存文件 ---
+                CSVLogger.LogFinalResult(stateName, TEST_EPISODE_COUNT, finalSuccessRate, finalAvgTime, finalAvgHealth);
+
+                // --- 停止运行 ---
+                #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+                #else
+                Application.Quit();
+                 #endif
+
+                return; // 停止后直接返回
+            }
+        }
+        else
+        {
+            EpisodeNum++;
+        }
 
         // 如果是测试模式且超过100回合，停止测试
         if (isTest && EpisodeNum > 100)
@@ -189,9 +269,11 @@ public partial class EnvControl : MonoBehaviour
         // 重置时间
         runtime = 0;
         EnpisodeTime = 0;
-
+        // [重要] 确保 sumhealth 在新回合开始前归零，否则平均血量会算错
+        sumhealth = 0;
         // --- 开始新回合 ---
         StartNewEpisode(false);
+       
     }
 
     /// <summary>

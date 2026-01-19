@@ -91,7 +91,7 @@ environment_parameters:
           behavior: HumanBehavior
           signal_smoothing: true
           min_lesson_length: 500
-          threshold: 0.85        
+          threshold: 1.0        
         value: 15.0
 
 
@@ -101,7 +101,7 @@ environment_parameters:
           behavior: HumanBehavior
           signal_smoothing: true
           min_lesson_length: 1000
-          threshold: 0.8         
+          threshold: 1.2        
         value: 30.0
 
 

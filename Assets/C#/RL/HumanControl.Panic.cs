@@ -41,12 +41,12 @@ public partial class HumanControl : MonoBehaviour
         // -----------------------------------------------------
         // 这里的 GetEnvironmentData 返回 struct，没有任何 GC
         var envData = myEnv.GetEnvironmentData(transform.position, myEnv.runtime);
-
+       
         // 获取解析好的数据
         float smokeDensity = envData.SmokeDensity; // 对应 mol/mol * 10^6
         float tempC = envData.ValueC;              // 对应 CSV 第4列 (Temperature/C)
         float visibilityM = envData.ValueM;        // 对应 CSV 第5列 (Visibility/m)
-
+        //print($"环境数据为：烟雾浓度: {smokeDensity} mol/mol, 温度: {tempC} °C, 能见度: {visibilityM} m");
         // -----------------------------------------------------
         // 2. 健康值计算 (每帧执行)
         // -----------------------------------------------------
@@ -107,9 +107,9 @@ public partial class HumanControl : MonoBehaviour
     /// </summary>
     private void CalculateHealthDecay(float coPPM, float temp)
     {
-        const float BASE_DAMAGE = 0.5f;
-        const float CO_DMG_MULT = 2.0f;
-        const float TEMP_DMG_MULT = 1.0f;
+        const float BASE_DAMAGE = 0.8f;
+        const float CO_DMG_MULT = 5.0f;
+        const float TEMP_DMG_MULT = 3.0f;
 
         // 只有当环境参数超过安全阈值时才开始扣血
         // 这里假设 CSV 中的 mol/mol * 10^6 即为 CO PPM
@@ -118,16 +118,9 @@ public partial class HumanControl : MonoBehaviour
         float tempDanger = Mathf.InverseLerp(20f, MAX_TEMP, temp);
 
         // 如果环境很安全，不扣血或者只扣很少
-        if (coDanger <= 0.05f && tempDanger <= 0.05f)
-        {
-            damagePerSecond = 0f;
-        }
-        else
-        {
             damagePerSecond = BASE_DAMAGE
                               + (coDanger * CO_DMG_MULT)
                               + (tempDanger * TEMP_DMG_MULT);
-        }
     }
 
     // 在 UpdateBehaviorModel 中优化

@@ -10,6 +10,9 @@ using UnityEngine.AI;
 
 public partial class EnvControl : MonoBehaviour
 {
+    [Tooltip("测试模式下强制设定的人类状态 (-1: 动态/不固定, 0: 理性, 1: 焦虑, 2: 恐慌, 3: 混合均分)")]
+    public int TestFixedPanicState = 3;
+
     // ---------------------------------------------------------
     // 1. 通用清理方法：大幅减少重复代码
     // ---------------------------------------------------------
@@ -185,6 +188,27 @@ public partial class EnvControl : MonoBehaviour
                 personList.Add(humanCtrl);
                 humanCtrl.myEnv = this;
                 // Unity ML-Agents 的 Agent 通常在 OnEnable 或 Initialize 中初始化
+                // [新增] 测试模式下，强制锁定恐慌状态
+                if (isTest && TestFixedPanicState != -1)
+                {
+                    // 需要在 HumanControl 中添加这两个变量 (见下方 HumanControl 修改)
+                    humanCtrl.IsStateFixed = true;
+
+                    if (TestFixedPanicState == 3)
+                    {
+                        // 混合模式：利用循环取模实现均分 (0, 1, 2, 0, 1, 2...)
+                        humanCtrl.FixedStateValue = i % 3;
+                    }
+                    else
+                    {
+                        // 单一固定模式
+                        humanCtrl.FixedStateValue = TestFixedPanicState;
+                    }
+                }
+                else
+                {
+                    humanCtrl.IsStateFixed = false;
+                }
             }
 
             personObj.transform.SetParent(humanParent.transform);

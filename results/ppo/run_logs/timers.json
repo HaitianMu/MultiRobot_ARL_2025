@@ -1,0 +1,47 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1768658624",
+        "python_version": "3.8.20 (default, Oct  3 2024, 15:19:54) [MSC v.1929 64 bit (AMD64)]",
+        "command_line_arguments": "C:\\Users\\forab\\.conda\\envs\\EvacARL\\Scripts\\mlagents-learn MARL_config.yaml --",
+        "mlagents_version": "0.30.0",
+        "mlagents_envs_version": "0.30.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "1.8.2+cu111",
+        "numpy_version": "1.21.2",
+        "end_time_seconds": "1768658634"
+    },
+    "total": 9.6693286,
+    "count": 1,
+    "self": 0.009116200000001129,
+    "children": {
+        "run_training.setup": {
+            "total": 0.1422604999999999,
+            "count": 1,
+            "self": 0.1422604999999999
+        },
+        "TrainerController.start_learning": {
+            "total": 9.5179519,
+            "count": 1,
+            "self": 0.0003897999999988855,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 9.5175535,
+                    "count": 1,
+                    "self": 9.5175535
+                },
+                "trainer_threads": {
+                    "total": 1.1000000004202093e-06,
+                    "count": 1,
+                    "self": 1.1000000004202093e-06
+                },
+                "TrainerController._save_models": {
+                    "total": 7.5000000006042455e-06,
+                    "count": 1,
+                    "self": 7.5000000006042455e-06
+                }
+            }
+        }
+    }
+}

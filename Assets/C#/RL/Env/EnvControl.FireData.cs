@@ -26,21 +26,33 @@ public struct FireEnvData
 public partial class EnvControl : MonoBehaviour
 {
     [Header("Fire Data Settings")]
-    public TextAsset fireBinaryFile; // 把 FireData1.csv 拖到这里
+    public TextAsset fireBinaryFile;
     private Dictionary<int, SmokeFrame> _smokeFramesByIndex = new Dictionary<int, SmokeFrame>();
-    public float gridStep = 0.5f; // CSV里的网格步长，你的是0.5
-    public float minX = -10f; // 根据你的CSV数据调整地图边界
+
+    [Header("Map Settings (时间映射设置)")]
+    public float originalDataDuration = 30f; // 原始数据只有30秒
+    public float targetRunDuration = 150f;   // 你希望它运行150秒
+    public bool clampTime = true;            // 如果超过150秒，是否卡在最后一帧
+
+    [Header("Grid Settings")]
+    public float gridStep = 0.5f;
+    public float minX = -10f;
     public float minZ = -10f;
-    public int widthX = 100;  // 网格宽
-    public int lengthZ = 100; // 网格长
+    public int widthX = 100;
+    public int lengthZ = 100;
 
-    // 存储所有时间步的数据：索引 = 时间 / 0.5
     private Dictionary<float, SmokeFrame> _allSmokeFrames = new Dictionary<float, SmokeFrame>();
+    // 【新增】简单的缓存变量，避免每帧都去查字典
+    private float _lastFoundTimeKey = -1f;
+    private SmokeFrame _cachedFrame = null;
 
-    // 当前这一帧的数据引用
+    // 【配置】根据您的CSV数据设定
+    private const float DATA_TIME_STEP = 0.5f; // 数据每0.5秒一行
+    private const float MIN_DATA_TIME = 0.5f;  // 数据起始时间
     public SmokeFrame CurrentFrameData;
 
-   
+    // 缓存时间缩放比例
+    private float _timeScaleRatio;
     public void LoadFireData()
     {
         if (fireBinaryFile == null) return;
@@ -101,48 +113,116 @@ public partial class EnvControl : MonoBehaviour
         }
         Debug.Log("二进制全量火灾数据(含C/m)加载完成！");
     }
+    // ---------------------------------------------------------
+    // 核心工具函数：将 真实运行时间 映射为 数据时间
+    // ---------------------------------------------------------
+    private float GetMappedDataTime(float realTime)
+    {
+        // 1. 缩放时间 (例如 realTime=75s -> dataTime=15s)
+        float mappedTime = realTime * _timeScaleRatio;
+
+        // 2. 限制范围 (防止超出30秒导致报错，或者让其停留在最后一帧)
+        if (clampTime)
+        {
+            mappedTime = Mathf.Clamp(mappedTime, 0f, originalDataDuration);
+        }
+
+        // 3. 对齐到最近的 0.5 (你的数据Key步长)
+        // 比如 15.1s 应该取 15.0s 的数据，15.4s 应该取 15.5s 的数据
+        float snappedTime = Mathf.Round(mappedTime * 2f) / 2f;
+
+        return snappedTime;
+    }
 
     // ---------------------------------------------------------
     // 新的查询接口：供 HumanControl 调用
     // ---------------------------------------------------------
-    public FireEnvData GetEnvironmentData(Vector3 pos, float time)
+    // ---------------------------------------------------------
+    // 修改后的查询接口：HumanControl 调用时传入当前游戏时间
+    // ---------------------------------------------------------
+    // 【配置】根据您的CSV数据设定
+    public FireEnvData GetEnvironmentData(Vector3 pos, float realTime)
     {
         FireEnvData data = new FireEnvData();
 
-        // 简单的时间映射
-        int frameIndex = Mathf.FloorToInt(time * 2f); // 假设是0.5s一步
-        // 如果你的时间是浮点数key，最好用 Mathf.Round 找最近的key，或者用 _smokeFramesByIndex 优化
-        // 这里假设 _allSmokeFrames 的 key 已经是 0.0, 0.5, 1.0...
-        float timeKey = Mathf.Round(time * 2f) / 2f;
+        // ---------------------------------------------------------
+        // 1. 时间映射优化：数学取整替代搜索
+        // ---------------------------------------------------------
+        // 逻辑：将当前时间除以步长，四舍五入后再乘回来。
+        // 例如 realTime=1.2, Step=0.5 -> 1.2/0.5=2.4 -> Round=2 -> 2*0.5 = 1.0 (Key)
+        // 例如 realTime=1.3, Step=0.5 -> 1.3/0.5=2.6 -> Round=3 -> 3*0.5 = 1.5 (Key)
+        float timeKey = Mathf.Round(realTime / DATA_TIME_STEP) * DATA_TIME_STEP;
 
-        if (_allSmokeFrames.TryGetValue(timeKey, out SmokeFrame frame))
+        // 修正：如果算出来的时间小于数据的起始时间，就用起始时间
+        if (timeKey < MIN_DATA_TIME) timeKey = MIN_DATA_TIME;
+
+        // ---------------------------------------------------------
+        // 2. 缓存优化：如果时间 Key 没变，直接用上一帧的数据对象
+        // ---------------------------------------------------------
+        SmokeFrame frame = null;
+
+        // 判断当前 Key 是否和上次查的一样 (使用极小误差比较浮点数)
+        if (Mathf.Abs(timeKey - _lastFoundTimeKey) < 0.01f && _cachedFrame != null)
         {
-            int gridX = Mathf.RoundToInt((pos.x - minX) / gridStep);
-            int gridZ = Mathf.RoundToInt((pos.z - minZ) / gridStep);
-
-            if (gridX >= 0 && gridX < widthX && gridZ >= 0 && gridZ < lengthZ)
+            frame = _cachedFrame;
+        }
+        else
+        {
+            // 只有时间跨度变了，才真正去查字典
+            if (_allSmokeFrames.TryGetValue(timeKey, out frame))
             {
-                int index = gridZ * widthX + gridX;
-                data.SmokeDensity = frame.DensityGrid[index];
-                data.ValueC = frame.GridC[index];
-                data.ValueM = frame.GridM[index];
-                return data;
+                _cachedFrame = frame;
+                _lastFoundTimeKey = timeKey;
+            }
+            else
+            {
+                // 如果查不到（比如时间超出了 CSV 范围），保持使用最后一次缓存的帧
+                // 这样避免时间超限后数据归零
+                frame = _cachedFrame;
             }
         }
 
-        return data; // 返回空数据 (0,0,0)
+        // ---------------------------------------------------------
+        // 3. 空间取值
+        // ---------------------------------------------------------
+        if (frame != null)
+        {
+            // 因为您的数据是整数步进 (-24, -23...)，gridStep 应该是 1
+            // 直接 RoundToInt 即可，比除法快且准
+            int gridX = Mathf.RoundToInt(pos.x - minX);
+            int gridZ = Mathf.RoundToInt(pos.z - minZ);
+
+            // 范围检查
+            if (gridX >= 0 && gridX < widthX && gridZ >= 0 && gridZ < lengthZ)
+            {
+                int index = gridZ * widthX + gridX;
+
+                // 确保索引安全
+                if (index < frame.DensityGrid.Length)
+                {
+                    data.SmokeDensity = frame.DensityGrid[index];
+                    data.ValueC = frame.GridC[index];
+                    data.ValueM = frame.GridM[index];
+                }
+            }
+        }
+
+        return data;
     }
 
-    // 在 FixedUpdate 更新当前帧指针
-    private void UpdateSmokeFrame()
+
+// ---------------------------------------------------------
+// 修改后的渲染更新：FixedUpdate 中使用 runtime
+// ---------------------------------------------------------
+
+private void UpdateSmokeFrame()
     {
-        // 找到最近的时间点 (0.5的倍数)
-        float snapTime = Mathf.Round(runtime /10f) / 2f;
+        // 使用映射逻辑获取当前应该渲染哪一帧
+        float snapTime = GetMappedDataTime(runtime);
 
         if (_allSmokeFrames.ContainsKey(snapTime))
         {
             CurrentFrameData = _allSmokeFrames[snapTime];
-           // print("当前火焰数据为"+CurrentFrameData.ToString());
         }
     }
 }
