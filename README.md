@@ -1,5 +1,4 @@
 # BuildingGeneration
-毕设项目版本控制
 
 项目成果简介 (Project Summary)
 本研究提出并验证了一种基于**对抗强化学习（ARL）与多智能体协作框架（MA-POCA）**的智能机器人疏散引导系统。通过在 Unity ML-Agents 构建的高保真物理仿真环境及 Pyrosim 烟气动力学模型中进行实验，系统成功实现了在复杂火灾场景下对恐慌人群的有效引导。
