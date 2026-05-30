@@ -1,20 +1,330 @@
-# MARL—FSRS
+# FSRS: Fire Scenario Rescue System
 
-项目成果简介 (Project Summary)
+<p align="center">
 
-本研究提出并验证了一种基于**对抗强化学习（ARL）与多智能体协作框架（MA-POCA）**的智能机器人疏散引导系统。通过在 Unity ML-Agents 构建的高保真物理仿真环境及 Pyrosim 烟气动力学模型中进行实验，系统成功实现了在复杂火灾场景下对恐慌人群的有效引导。
+**Adversarial Reinforcement Learning for Multi-Robot Emergency Evacuation under Dynamic Fire Hazards and Boundedly Rational Human Behavior**
 
-实验结果表明，在微观交互层面，对抗训练使机器人能够识别并化解人类的非理性抵触行为，疏散成功率较传统强化学习（RL）提升了 4.54%，疏散效率提高 18.1%。在大规模宏观场景中，该系统展现了极强的可扩展性，通过实体中心注意力机制实现了从单机到多机（1-5台）的零样本迁移（Zero-Shot Transfer）。在拥有 26 个房间的复杂建筑设施内，多机器人协同显著改善了救援质量，使受灾人群的平均生存健康值提升了近 48%。
+</p>
 
-项目亮点 (Research Highlights)
-1. 协同进化的对抗训练范式 (Co-evolutionary Adversarial Training)
-不同于传统的静态启发式模型，本项目通过引入对抗性博弈机制，使机器人策略与恐慌人类模型在训练中共同进化。这种“博弈对垒”促使机器人涌现出诸如策略性阻挡（Strategic Blocking）和动态任务分配等高级行为，显著增强了策略在面对不可预测的人类行为时的稳健性。
+---
 
-2. 具备零样本迁移能力的注意力架构 (Attention-based Scalable Architecture)
-系统采用了基于 MA-POCA 的实体中心（Entity-Centric）观测框架，利用置换不变注意力机制处理变长的输入流。这一设计突破了状态空间爆炸的限制，使得在 3 台机器人规模下训练出的策略，无需任何微调即可直接部署于 1 至 5 台机器人的不同规模团队，展现了卓越的工程实用性与环境适应性。
+## Overview
 
-3. 混合驱动的协作奖励机制 (Hybrid Collaborative Reward Design)
-针对多智能体系统中的信用分配问题（Credit Assignment），本项目设计了一种融合全局任务目标与局部角色引导的混合奖励函数。通过引入凝聚力约束（Cohesion Constraint），有效解决了机器人与恐慌人群间的速度失配问题，杜绝了救援过程中的“抛弃跟随者”现象，确保了救援行为的全局一致性。
+EvacARL is a multi-robot evacuation guidance framework designed for emergency fire scenarios. The project integrates:
 
-4. 高保真的灾害环境闭环仿真 (High-Fidelity Hazard-in-the-loop Simulation)
-项目深度整合了 Pyrosim 烟气动力学数据（包括 CO 浓度、温度、能见度等）与 Unity 物理引擎。这种跨学科的仿真方法确保了实验结果具有极强的现实参考价值，证明了系统在物理受限（狭窄走廊、传感器遮挡）和生理受限（健康值衰减、空间迷失）的双重压力下，仍能实现高质量的疏散引导。
+* Adversarial Reinforcement Learning (ARL)
+* Multi-Agent Posthumous Credit Assignment (MA-POCA)
+* Attention-based Multi-Agent Coordination
+* Fire Dynamics Simulation (PyroSim/FDS)
+* Unity ML-Agents
+
+to enable autonomous robots to safely guide panic-prone civilians through complex and dynamically evolving fire environments.
+
+Unlike conventional evacuation systems that assume fully rational human behavior, EvacARL explicitly models:
+
+* Panic
+* Herding behavior
+* Resistance to guidance
+* Spatial disorientation
+* Health degradation caused by smoke exposure
+
+Through adversarial co-training, robots learn robust evacuation strategies capable of handling highly uncertain human responses and environmental hazards.
+
+---
+
+## Key Features
+
+### Co-evolutionary Adversarial Training
+
+Robots and human agents are trained simultaneously in an adversarial game.
+
+* Robots learn evacuation guidance strategies.
+* Human agents learn panic-driven behaviors.
+
+This co-evolution process enables robots to develop sophisticated behaviors such as:
+
+* Strategic blocking
+* Dynamic regrouping
+* Hazard avoidance
+* Adaptive task allocation
+
+resulting in significantly improved robustness against unpredictable crowd behaviors.
+
+---
+
+### Scalable Attention-Based Multi-Agent Architecture
+
+The framework adopts an entity-centric observation model based on MA-POCA.
+
+A permutation-invariant attention mechanism allows policies to process:
+
+* Variable numbers of robots
+* Variable numbers of civilians
+* Dynamic environmental entities
+
+without requiring a fixed observation size.
+
+As a result, policies trained with three robots can be directly deployed to teams containing one to five robots without retraining.
+
+---
+
+### Hybrid Collaborative Reward Design
+
+A hybrid reward function combines:
+
+#### Global Objectives
+
+* Successful evacuation
+* Casualty reduction
+* Rescue efficiency
+
+#### Local Objectives
+
+* Guidance quality
+* Human following behavior
+* Hazard avoidance
+
+Additionally, a cohesion constraint prevents robots from abandoning slower followers, improving group consistency and rescue reliability.
+
+---
+
+### High-Fidelity Hazard Simulation
+
+The simulation environment tightly integrates:
+
+#### Unity Physics Engine
+
+* Multi-floor buildings
+* Navigation constraints
+* Dynamic obstacles
+* Collision handling
+
+#### PyroSim/FDS Fire Dynamics
+
+* CO concentration
+* Temperature fields
+* Visibility degradation
+* Smoke propagation
+
+This hazard-in-the-loop design allows realistic evaluation under both environmental and physiological constraints.
+
+---
+
+## Experimental Results
+
+### Micro-Level Human–Robot Interaction
+
+Compared with standard reinforcement learning approaches:
+
+| Metric                  | Improvement |
+| ----------------------- | ----------- |
+| Evacuation Success Rate | +4.54%      |
+| Evacuation Efficiency   | +18.1%      |
+
+Adversarially trained robots learn to effectively handle irrational resistance and panic-induced behaviors.
+
+---
+
+### Large-Scale Building Evacuation
+
+Experiments were conducted in a complex building environment containing:
+
+* 26 rooms
+* Multiple floors
+* Dynamic fire hazards
+* Smoke propagation
+* Panic-driven civilians
+
+Results demonstrate:
+
+| Metric                  | Improvement |
+| ----------------------- | ----------- |
+| Average Survival Health | +48%        |
+| Team Scalability        | 1–5 Robots  |
+| Transfer Method         | Zero-Shot   |
+
+Multi-robot collaboration substantially improves evacuation quality and rescue effectiveness.
+
+---
+
+## System Architecture
+
+```text
+          PyroSim / FDS
+                 │
+                 ▼
+      Fire & Smoke Dynamics
+                 │
+                 ▼
+          Unity Environment
+                 │
+                 ▼
+      Human Agents (Panic Model)
+                 ▲
+                 │
+       Adversarial Training
+                 │
+                 ▼
+          Robot Agents
+                 │
+                 ▼
+      Attention-Based MA-POCA
+                 │
+                 ▼
+       Evacuation Actions
+```
+
+---
+
+## Project Structure
+
+```text
+Assets
+├── ML-Agents
+├── Onnx
+│   └── Trained Models
+├── Prefabs
+├── Resources
+├── Scenes
+├── Scripts
+│
+├── Env
+├── Fire
+├── FireAgent
+├── FloorAgent
+├── Human
+├── Robot
+└── StairsEntrance
+```
+
+### Core Components
+
+| Module         | Description                  |
+| -------------- | ---------------------------- |
+| Env            | Global environment manager   |
+| Fire           | Fire and smoke simulation    |
+| FireAgent      | Fire source generation agent |
+| FloorAgent     | Evacuation robot controller  |
+| Human          | Civilian behavior model      |
+| Robot          | Robot embodiment             |
+| StairsEntrance | Stairwell navigation module  |
+
+---
+
+## Installation
+
+### Requirements
+
+```text
+Python 3.8
+PyTorch 1.8.2
+Unity 2021 LTS
+ML-Agents Release 19
+```
+
+### Python Dependencies
+
+```bash
+conda install pytorch torchvision torchaudio cudatoolkit=11.1 -c pytorch-lts
+pip install mlagents
+```
+
+### Unity Packages
+
+```text
+com.unity.ml-agents
+com.unity.ml-agents.extensions
+```
+
+---
+
+## Training
+
+Enable training mode in the `Env` object:
+
+```text
+isTraining    = true
+useFireAgent  = true
+useFloorAgent = true
+useRobot      = true
+```
+
+Launch training:
+
+```bash
+mlagents-learn config-7.yaml \
+--run-id=0 \
+--env=Evac.exe \
+--num-envs=16 \
+--no-graphic \
+--force
+```
+
+Training results will be saved to:
+
+```text
+results/
+├── Evac/
+├── SetFire/
+├── run_logs/
+├── configuration.yaml
+├── Evac.onnx
+└── SetFire.onnx
+```
+
+---
+
+## Using Trained Models
+
+Place exported ONNX models into:
+
+```text
+Assets/Onnx/
+```
+
+Then assign the model to the corresponding agent through the Unity Inspector.
+
+For deployment, disable training mode:
+
+```text
+isTraining = false
+```
+
+---
+
+## Future Work
+
+* Sim-to-Real Transfer
+* Real Robot Deployment
+* Human Behavior Calibration using Real Evacuation Data
+* Large-Scale Urban Evacuation Scenarios
+* Multi-Hazard Emergency Response
+
+---
+
+## Citation
+
+If you find this project useful in your research, please cite:
+
+```bibtex
+@article{EvacARL2026,
+  title={Multi-Robot Coordination for Emergency Evacuation via Adversarial Reinforcement Learning under Dynamic Hazards and Boundedly Rational Humans},
+  author={Ma, Tianxing and others},
+  year={2026}
+}
+```
+
+---
+
+## Acknowledgements
+
+This project was built using:
+
+* Unity ML-Agents
+* PyTorch
+* MA-POCA
+* PyroSim
+* FDS
+* Unity Physics Engine
+
+for research on intelligent robot-assisted emergency evacuation under dynamic fire hazards.
