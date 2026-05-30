@@ -302,17 +302,7 @@ isTraining = false
 
 ---
 
-## Citation
 
-If you find this project useful in your research, please cite:
-
-```bibtex
-@article{EvacARL2026,
-  title={Multi-Robot Coordination for Emergency Evacuation via Adversarial Reinforcement Learning under Dynamic Hazards and Boundedly Rational Humans},
-  author={Ma, Tianxing and others},
-  year={2026}
-}
-```
 
 ---
 
