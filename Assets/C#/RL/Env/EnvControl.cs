@@ -8,6 +8,8 @@ using UnityEngine.AI;
 
 public partial class EnvControl : MonoBehaviour
 {
+ 
+
     [Header("MARL Global Stats (Cached per Frame)")]
     // 缓存的全局数据，供所有Agent读取，避免重复计算
     public int CachedAliveHumans;
@@ -70,7 +72,7 @@ public partial class EnvControl : MonoBehaviour
     public int humanBrainNum = 10;
     public float sumhealth;
     public float startTime;
-    public int robotCount = 3;
+    public int robotCount ;
 
     // [新增] 统计累加器
     private float totalEscapedCount = 0;
@@ -79,6 +81,21 @@ public partial class EnvControl : MonoBehaviour
 
     // [配置] 目标测试回合数 (跑完这么多局后自动停止并保存)
     private const int TEST_EPISODE_COUNT = 100;
+
+    // 更改实验模式
+    // [修改] 1. 更新枚举，添加 Scaling 实验模式
+    public enum ExperimentMode
+    {
+        Case1_RobotScaling       // [新增] 机器人数量扩展性测试 (1-5个)
+    }
+
+    [Header("Experiment Settings")]
+    public ExperimentMode currentExperimentMode = ExperimentMode.Case1_RobotScaling;
+
+    // [新增] 仅在 Case 4 下生效的配置
+    [Header("Scaling Study Settings")]
+    [Range(1, 10)]
+    public int scalingRobotCount = 3; // 在 Inspector 里手动修改这个值 (1, 2, 3, 4, 5)
 
     private void Awake()
     {
@@ -190,26 +207,40 @@ public partial class EnvControl : MonoBehaviour
 
             EpisodeNum++; // 当前回合数 +1
             print("当前回合数：" + EpisodeNum);
+
+            // 成功率 = (总逃生人数 / (总局数 * 每局总人数)) * 100%
+            float finalSuccessRate = (totalEscapedCount / (TEST_EPISODE_COUNT * 50f)) * 100f;
+
+            // 平均时间 = 总时间 / 总局数
+            float finalAvgTime = totalTimeCost / TEST_EPISODE_COUNT;
+
+            // 平均血量 = 总血量 / (总局数 * 每局总人数) -> 单人平均血量
+            float finalAvgHealth = totalHealthSum / (TEST_EPISODE_COUNT * 50f);
+
+            // 获取当前模式名称 (用于生成文件名)
+            string stateName = 
+                                "_RobotNum"+ ExperimentMode.Case1_RobotScaling;
+
             // =========================================================
-            // [新增] 2. 检查是否达到测试目标 (结算点)
+            // [新增] 2. 增加阶段保存点 (结算点)
+            // =========================================================
+            // 2. 每 10 回合保存一次阶段性数据 (可选)
+            if (EpisodeNum % 10 == 0)
+            {
+                // --- 控制台打印最终结果 ---
+                Debug.Log($"<color=green>=== 测试完成 ({EpisodeNum}局) ===</color>\n" +
+                          $"模式: {stateName} | 成功率: {finalSuccessRate:F2}% | 平均耗时: {finalAvgTime:F2}s | 平均血量: {finalAvgHealth:F2}");
+                CSVLogger.LogFinalResult(stateName, EpisodeNum, finalSuccessRate, finalAvgTime, finalAvgHealth);
+            }
+            // =========================================================
+            // [新增] 3. 检查是否达到测试目标 (结算点)
             // =========================================================
             if (EpisodeNum >= TEST_EPISODE_COUNT)
             {
                 // --- 计算最终平均值 ---
-                // 成功率 = (总逃生人数 / (总局数 * 每局总人数)) * 100%
+               
                 // 假设每局固定 50 人，如果你的 HumanNum 是变量，请替换 50f 为实际变量
-                float finalSuccessRate = (totalEscapedCount / (TEST_EPISODE_COUNT * 50f)) * 100f;
-
-                // 平均时间 = 总时间 / 总局数
-                float finalAvgTime = totalTimeCost / TEST_EPISODE_COUNT;
-
-                // 平均血量 = 总血量 / (总局数 * 每局总人数) -> 单人平均血量
-                float finalAvgHealth = totalHealthSum / (TEST_EPISODE_COUNT * 50f);
-
-                // 获取当前模式名称 (用于生成文件名)
-                string stateName = (TestFixedPanicState == -1) ? "Dynamic" :
-                                   (TestFixedPanicState == 3) ? "Mixed" :
-                                   TestFixedPanicState.ToString();
+               
 
                 // --- 控制台打印最终结果 ---
                 Debug.Log($"<color=green>=== 测试完成 ({TEST_EPISODE_COUNT}局) ===</color>\n" +
@@ -261,7 +292,7 @@ public partial class EnvControl : MonoBehaviour
 
         if (useRobotBrain)
         {
-            print("当前运行时间是：" + runtime + "回合终止");
+            print("当前运行时间是：" + runtime + "，回合终止");
             if (RobotBrainList.Count > 0)
                 RobotBrainList[0].LogReward("场景总运行时长", runtime);
         }
@@ -326,8 +357,18 @@ public partial class EnvControl : MonoBehaviour
         }
 
         // 重新统计人数 (避免下一帧 FixedUpdate 之前的空窗期)
-        CachedAliveHumans   = countToSpawn;
-            AddRobot();
+        CachedAliveHumans = countToSpawn;
+
+        // [修改] 机器人数量控制逻辑
+        // -------------------------------------------------
+        switch (currentExperimentMode)
+        {
+            case ExperimentMode.Case1_RobotScaling:
+                robotCount = scalingRobotCount; // 使用手动设置的数量
+                Debug.Log($"<color=cyan>[Experiment] Scaling Study: {robotCount} Robots</color>");
+                break;
+        }
+        AddRobot();
             AddRobotBrain();
 
         // 重置参数

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: -7233257467493401290}
   - component: {fileID: -1098295451977577150}
   - component: {fileID: 6435064176910719529}
+  - component: {fileID: -3544605417038850616}
   m_Layer: 10
   m_Name: RobotControl
   m_TagString: Robot
@@ -155,3 +156,15 @@ MonoBehaviour:
   robotFollowerCounter: 0
   myAgent: {fileID: 0}
   myDirectFollowers: []
+--- !u!114 &-3544605417038850616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4212430261449273798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 226f9cac07a5cf44998e96c10dd425c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

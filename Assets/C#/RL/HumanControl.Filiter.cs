@@ -4,29 +4,42 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
-public partial class HumanControl: MonoBehaviour
+
+public partial class HumanControl : MonoBehaviour
 {
-    // 碰撞检测计数器
-    public List<HumanControl> myDirectFollowers;
-    // Start is called before the first frame update
+    // [建议] 可以在这里限制一下最大跟随数量，防止贪吃蛇太长导致掉帧，但为了模拟恐慌拥挤，不限制也可以。
+    public List<HumanControl> myDirectFollowers = new List<HumanControl>();
 
-
-
-    //领导者模式。人物自己移动
-    private void LeaderUpdate_HF()   //Herd Following
+    // --- 领导者模式更新逻辑 ---
+    private void LeaderUpdate_HF()   // Herd Following
     {
         if (myTargetDoor is null)
         {
-            //print(this.gameObject.name+"我目前没有目标门");
-         
-            //目前不知道去哪，而且视线里没有找到机器人，开始自己乱逛
-            //print("当前没有计划前往的门，开始扫描，然后筛选");
-            (List<GameObject> doorCandidates, List<Vector3> unknownDirections) = GetCandidate(new List<string> { "Door", "Exit" }, 360,8);
+            // 1. 扫描周围的门和潜在的领导者
+            var scanResult = GetCandidate(new List<string> { "Door", "Exit", "Human", "Robot" }, 360, 8);
+            List<GameObject> allCandidates = scanResult.Item1;
+            List<Vector3> unknownDirections = scanResult.Item2;
 
+            // [优化] 在盲目找门之前，先看看有没有机器人或者能带路的人！
+            // 如果我是没头苍蝇（没有目标门），看到机器人应该直接贴上去，而不是继续找门。
+            List<GameObject> leaderCandidates = allCandidates.Where(c => c.CompareTag("Robot") || c.CompareTag("Human")).ToList();
+
+            // 过滤一下，只要机器人，或者有组织的人类
+            leaderCandidates = FilterValidLeaders(leaderCandidates);
+
+            if (leaderCandidates.Count > 0)
+            {
+                // 发现有人带路，果断放弃找门，切换为跟随者
+                SwitchBehaviourMode();
+                return;
+            }
+
+            // --- 下面是原本的找门逻辑 ---
+            List<GameObject> doorCandidates = allCandidates.Where(c => c.CompareTag("Door") || c.CompareTag("Exit")).ToList();
             GameObject exit = FilterTargetDoorCandidates(ref doorCandidates, unknownDirections.Count > 0 ? "Explore" : "Normal");
+
             if (exit is not null)
             {
-                // print("发现出口，直接选择出口作为目标");
                 myTargetDoor = exit;
                 myDestination = GetCrossDoorDestination(exit);
                 _myNavMeshAgent.SetDestination(myDestination);
@@ -42,10 +55,9 @@ public partial class HumanControl: MonoBehaviour
                         myDestination = GetCrossDoorDestination(lastDoorWentThrough);
                         _myNavMeshAgent.SetDestination(myDestination);
                     }
-
                     return;
                 }
-                else if (unknownDirections.Count > 0)
+                else
                 {
                     Vector3 exploreDirection = unknownDirections[Random.Range(0, unknownDirections.Count)];
                     _myNavMeshAgent.SetDestination(transform.position + exploreDirection * visionLimit);
@@ -54,163 +66,162 @@ public partial class HumanControl: MonoBehaviour
             }
             else if (doorCandidates.Count > 0)
             {
-                // print("候选的门中不存在出口，随机选择一扇可通过的门作为移动目标");
-                if (lastDoorWentThrough == null)//"自己从没有经历过门"
+                if (lastDoorWentThrough == null)
                 {
                     myTargetDoor = doorCandidates[Random.Range(0, doorCandidates.Count)];
                 }
-                // Case 2: 有记录门且存在其他候选门 -> 排除记录门后随机选择
-                else if (doorCandidates.Count >= 1)
+                else
                 {
-                    // 创建排除列表： 记忆队列中的所有门
                     var excludedDoors = new HashSet<GameObject>(_doorMemoryQueue);
                     var validDoors = doorCandidates.Where(door => !excludedDoors.Contains(door)).ToList();
-                    //door => !excludedDoors.Contains(door)，Lambda表达式 
 
-                    if (validDoors.Count > 0)//探索到了记忆中不存在的门，
-                    {//Debug.Log($"{this.name} 我搜索到的门有：{string.Join(", ", validDoors.Select(door => door.name))}");
+                    if (validDoors.Count > 0)
+                    {
                         myTargetDoor = validDoors[Random.Range(0, validDoors.Count)];
                     }
                     else
                     {
-                        // 如果所有门都被排除，则强制选择非历史门的随机门（fallback机制）
                         var fallbackDoors = doorCandidates.Where(door => door != lastDoorWentThrough).ToList();
-                        myTargetDoor = fallbackDoors.Count > 0 ? fallbackDoors[Random.Range(0, fallbackDoors.Count)] : doorCandidates[0]; // 最终回退
-
+                        myTargetDoor = fallbackDoors.Count > 0 ? fallbackDoors[Random.Range(0, fallbackDoors.Count)] : doorCandidates[0];
                     }
                 }
 
-
-                // print("选择的门是：" + myTargetDoor.transform.name);
                 myDestination = GetCrossDoorDestination(myTargetDoor);
-
-                if (_myNavMeshAgent.SetDestination(myDestination))
-                {
-                    // print("目的地是：" + myDestination);
-                }
+                if (_myNavMeshAgent.SetDestination(myDestination)) { }
                 else { print("设置目的地失败"); };
-
                 return;
             }
         }
         else
         {
-            if (myTargetDoor.tag.Contains("Exit"))//如果目标门是出口的话，直接滚蛋
+            // 已经有目标门了
+            if (myTargetDoor.tag.Contains("Exit"))
             {
                 return;
             }
             else
             {
-                //检查门是否被烧毁
+                // [优化] 即使正在去门的路上，如果看到了机器人，也应该立刻变节去跟机器人
+                // 原逻辑只检查了 null，这里建议加强检测频率，或者在上面的 GetCandidate 里做文章
+                if (myLeader == null)
+                {
+                    List<GameObject> leaderCandidates = GetCandidate(new List<string> { "Human", "Robot" }, 360, 8).Item1;
+
+                    // 只要看到机器人，无视当前去普通门的计划，直接切模式
+                    if (leaderCandidates.Any(c => c.CompareTag("Robot")))
+                    {
+                        SwitchBehaviourMode();
+                        return;
+                    }
+                }
+
                 if (myTargetDoor.GetComponent<DoorControl>().isBurnt == false)
                 {
-                    // print("当前存在计划前往的门，正在向门对面移动");
                     Vector3 myPosition = transform.position;
                     myPosition.y -= 0.5f;
                     float distanceRemain = Vector3.Distance(myPosition, myDestination);
-                    if (distanceRemain > 0.5f)
-                    {//print($"距离门对面还有{distanceRemain}米，扫描沿路是否有合适的领导者");
 
+                    if (distanceRemain > 0.5f)
+                    {
+                        // 路上顺便看看有没有领导
                         List<GameObject> leaderCandidates = GetCandidate(new List<string> { "Human", "Robot" }, 360, 8).Item1;
-                      
+                        // 过滤无效领导
+                        leaderCandidates = FilterValidLeaders(leaderCandidates);
 
                         if (leaderCandidates.Count > 0)
                         {
-                           // Debug.Log("附近有可以跟随的领导者，我已切换为跟随者模式");
-                                SwitchBehaviourMode();
-   
+                            SwitchBehaviourMode();
                             return;
                         }
                     }
                     else
-                    {  //print($"距离门对面还有{distanceRemain}米，初步认为已经认为已经到达目的地，开始重新扫描");
+                    {
                         myTargetDoor = null;
                         return;
                     }
                 }
                 else { myTargetDoor = null; }
-
             }
         }
     }
-    //跟随者模式
-    private void FollowerUpdate_HF()  //Herd Following(盲目跟随)
+
+    // --- 跟随者模式更新逻辑 ---
+    private void FollowerUpdate_HF()  // Herd Following(盲目跟随)
     {
-        //print("切换模式:追随者");
-
-        if (myLeader == null)//如果当前没有领导者，则先寻找领导者
+        if (myLeader == null)
         {
+            // 寻找领导者
             List<GameObject> leaderCandidates = GetCandidate(new List<string> { "Human", "Robot" }, 360, 5).Item1;
-            //FilterLeaderCandidates(ref leaderCandidates);//筛选掉不能作为自己领导者的人；
-            //Debug.Log("我检测到的人类数量为："+leaderCandidates.Count);
-            // GameObject targetLeader= DecideMyLeader(leaderCandidates);//在剩余的人中随机选择一个作为自己的领导者
 
-            // 新增过滤：排除已经有领导者的人类
-            leaderCandidates = leaderCandidates
-                .Where(candidate =>
-                    candidate != gameObject &&  // 排除自己
-                    (candidate.CompareTag("Robot") ||  // 机器人无条件允许
-                     (candidate.CompareTag("Human") &&
-                      candidate.GetComponent<HumanControl>().myLeader == null)) // 人类需无领导者
-                ).ToList();
+            // 使用重构后的过滤函数
+            leaderCandidates = FilterValidLeaders(leaderCandidates);
 
-
-            GameObject targetLeader;
+            GameObject targetLeader = null;
             if (leaderCandidates.Count > 0)
             {
-                 targetLeader = leaderCandidates[Random.Range(0, leaderCandidates.Count)];
-                // 使用 targetLeader...
-                //Debug.Log("！！！！我的领导者是："+targetLeader);
-                if (targetLeader.CompareTag("Human"))
-                {
-                   // print("领导者是人类");
-                    //add
+                // [修改重点] 优先级逻辑：机器人 > 人类
+                // 现实中，人们会优先跟随穿制服的救援人员(Robot)，而不是盲从路人
+                var robotLeaders = leaderCandidates.Where(c => c.CompareTag("Robot")).ToList();
+                var humanLeaders = leaderCandidates.Where(c => c.CompareTag("Human")).ToList();
 
-                    if (targetLeader.GetComponent<HumanControl>().dazingCountDown < 2)
+                if (robotLeaders.Count > 0)
+                {
+                    targetLeader = robotLeaders[Random.Range(0, robotLeaders.Count)];
+                }
+                else if (humanLeaders.Count > 0)
+                {
+                    targetLeader = humanLeaders[Random.Range(0, humanLeaders.Count)];
+                }
+
+                // 绑定领导者逻辑
+                if (targetLeader != null)
+                {
+                    if (targetLeader.CompareTag("Human"))
                     {
-                        dazingCountDown = Random.Range(2, 8);
-                        return;
+                        if (targetLeader.GetComponent<HumanControl>().dazingCountDown < 2)
+                        {
+                            dazingCountDown = Random.Range(2, 8);
+                            return;
+                        }
+                        else
+                        {
+                            myLeader = targetLeader;
+                            myLeader.GetComponent<HumanControl>().myDirectFollowers.Add(this);
+                        }
                     }
-                    else
+                    else if (targetLeader.CompareTag("Robot"))
                     {
                         myLeader = targetLeader;
-                        myLeader.GetComponent<HumanControl>().myDirectFollowers.Add(gameObject.GetComponent<HumanControl>());
+                        myLeader.GetComponent<RobotControl>().myDirectFollowers.Add(this);
                     }
-                }
-                else if (targetLeader.CompareTag("Robot"))
-                {
-                    // 直接跟随机器人
-                    myLeader = targetLeader;
-                    myLeader.GetComponent<RobotControl>().myDirectFollowers.Add(gameObject.GetComponent<HumanControl>());
                 }
             }
             else
             {
-                
-                Debug.LogWarning("没有可选的领导者候选对象！切换回领导者模式");
-                // 处理无候选的情况（如设为 null 或默认值）
-                 targetLeader = null;
+                // 没有合适的领导者，切回自己带队
+                targetLeader = null;
                 SwitchBehaviourMode();
             }
         }
-        else//已经有领导者了，则跟随领导者，直到出口。
+        else
         {
+            // 已经有领导者了
+            // [保护] 防止 myLeader 被销毁导致的空引用
+            if (myLeader == null || !myLeader.activeInHierarchy)
+            {
+                myLeader = null;
+                SwitchBehaviourMode();
+                return;
+            }
+
             Vector3 leaderPosition = myLeader.transform.position;
             List<GameObject> exitList = GetCandidate(new List<string> { "Exit" }, 360, 30).Item1;
 
-            //在跟随的过程中，持续进行检测是否有出口，有的话就直接离开,没有的话就继续跟随机器人
+            // 看到出口就单飞
             if (exitList.Count > 0)
             {
-                if (myLeader.tag == "Robot")
-                {
-                    myLeader.GetComponent<RobotControl>().myDirectFollowers.Remove(gameObject.GetComponent<HumanControl>());
-                }
-                else if (myLeader.tag == "Human")
-                {
-                    myLeader.GetComponent<HumanControl>().myDirectFollowers.Remove(gameObject.GetComponent<HumanControl>());
-                }
-                print(this.name + "将自己移除机器人的跟随列表");
-                //set
+                RemoveSelfFromLeader();
+
                 GameObject exit = exitList[0];
                 SwitchBehaviourMode();
                 myTargetDoor = exit;
@@ -218,22 +229,66 @@ public partial class HumanControl: MonoBehaviour
                 _myNavMeshAgent.SetDestination(myDestination);
                 return;
             }
-            else //一直跟随，直到看到出口
+            else
             {
-                // 假设 leader 有 Transform 组件
+                // [修改重点] 避免拥挤的跟随逻辑
+                // 原代码: targetPosition = leaderPosition - leaderForward * 1f; 
+                // 问题: 所有人都会挤在领导者正后方 1米 处的一个点上。
+
+                // 新逻辑: 添加随机扰动，模拟人群围绕
+                // 每个人在目标点附近 Random.insideUnitCircle 范围内随机选一个点
+                // 这样几十个人跟随也不会看起来像叠罗汉
+
                 Vector3 leaderForward = myLeader.transform.forward;
-                Vector3 targetPosition = leaderPosition - leaderForward * 1f;
-                _myNavMeshAgent.SetDestination(targetPosition);
+
+                // 基础目标在身后 1.2 米
+                Vector3 baseTarget = leaderPosition - leaderForward * 1.2f;
+
+                // 加上随机偏移 (X, Z 平面)
+                // 使用 Hash Code 保证每一帧对同一个人的偏移是相对稳定的，或者直接 Random 也可以(会导致抖动)
+                // 这里为了简单直接用 Random，NavMeshAgent 会平滑掉一部分抖动
+                Vector3 randomOffset = new Vector3(Random.Range(-0.8f, 0.8f), 0, Random.Range(-0.8f, 0.8f));
+
+                _myNavMeshAgent.SetDestination(baseTarget + randomOffset);
             }
         }
     }
 
-
-    private Vector3 GetCrossDoorDestination(GameObject targetDoor)//去到穿过门的位置
+    // --- 辅助函数：从领导者列表中移除自己 ---
+    private void RemoveSelfFromLeader()
     {
-        //Debug.Log("执行了GetCrossDoorDestionation函数");
-        Vector3 myPosition = transform.position;
+        if (myLeader == null) return;
 
+        if (myLeader.CompareTag("Robot"))
+        {
+            var rc = myLeader.GetComponent<RobotControl>();
+            if (rc != null) rc.myDirectFollowers.Remove(this);
+        }
+        else if (myLeader.CompareTag("Human"))
+        {
+            var hc = myLeader.GetComponent<HumanControl>();
+            if (hc != null) hc.myDirectFollowers.Remove(this);
+        }
+    }
+
+    // --- 辅助函数：统一的领导者筛选逻辑 ---
+    // 提取出来，避免 FollowerUpdate 和 LeaderUpdate 写两遍重复的 Lambda
+    private List<GameObject> FilterValidLeaders(List<GameObject> rawCandidates)
+    {
+        return rawCandidates.Where(candidate =>
+            candidate != gameObject &&  // 排除自己
+            (
+                candidate.CompareTag("Robot") ||  // 机器人总是可以跟
+                (candidate.CompareTag("Human") && candidate.GetComponent<HumanControl>().myLeader == null) // 只能跟"没有领导"的人(避免 A跟B，B跟A 的死循环)
+            )
+        ).ToList();
+    }
+
+    // ... (GetCrossDoorDestination, SwitchBehaviourMode, GetCandidate, FilterTargetDoorCandidates 保持不变) ...
+
+    private Vector3 GetCrossDoorDestination(GameObject targetDoor)
+    {
+        Vector3 myPosition = transform.position;
         if (targetDoor.CompareTag("Door"))
         {
             string doorDirection = targetDoor.GetComponent<DoorControl>().doorDirection;
@@ -241,192 +296,122 @@ public partial class HumanControl: MonoBehaviour
             switch (doorDirection)
             {
                 case "Vertical":
-                    if (myPosition.z < doorPosition.z)
-                        return doorPosition + new Vector3(0, 0, 2);
-                    return doorPosition - new Vector3(0, 0, 2);
-                case "Horizontal":  //水平
-                    if (myPosition.x < doorPosition.x)
-                        return doorPosition + new Vector3(2, 0, 0);
-                    return doorPosition - new Vector3(2, 0, 0);
+                    return (myPosition.z < doorPosition.z) ? doorPosition + new Vector3(0, 0, 2) : doorPosition - new Vector3(0, 0, 2);
+                case "Horizontal":
+                    return (myPosition.x < doorPosition.x) ? doorPosition + new Vector3(2, 0, 0) : doorPosition - new Vector3(2, 0, 0);
                 default:
                     return myPosition;
             }
         }
         else if (targetDoor.CompareTag("Exit"))
         {
-            Vector3 doorPosition = targetDoor.transform.position + new Vector3(0, -1.5f, 0);
-            return doorPosition;
+            return targetDoor.transform.position + new Vector3(0, -1.5f, 0);
         }
-        else
-        {
-            return myPosition;
-        }
+        return myPosition;
     }
 
-    /// <summary>
-    /// 切换行为模式
-    /// </summary>
     private void SwitchBehaviourMode()
     {
         if (myBehaviourMode == "Follower")
         {
             myBehaviourMode = "Leader";
-
             myTargetDoor = null;
-            // _myRigidBody.mass = 4;
         }
         else
         {
             myBehaviourMode = "Follower";
-
-            //追随机器人
             myTargetDoor = null;
-            // _myRigidBody.mass = 2;
         }
     }
+
     private Tuple<List<GameObject>, List<Vector3>> GetCandidate(List<string> targetTags, int visionWidth, int visionDiff)
     {
-        // 初始化候选对象列表和未知方向列表
         List<GameObject> candidateList = new();
         List<Vector3> unknownDirections = new();
         Vector3 myPosition = transform.position;
-        // 获取当前对象的位置
-        String layer = "Door";//根据标签来获取射线检测的层次,默认扫描门
+
+        // =========================================================
+        // [修改重点 1] 动态构建 LayerMask，支持多层混合检测
+        // =========================================================
+        List<string> layersToCheck = new List<string>();
+
+        // 1. 如果目标包含 门 或 出口 -> 需要检测 "Default" 层
         if (targetTags.Contains("Door") || targetTags.Contains("Exit"))
         {
-            layer = "Default";
+            layersToCheck.Add("Default");
         }
-        else if (targetTags.Contains("Robot")|| targetTags.Contains("Human"))//射线探索跟随者
+
+        // 2. 如果目标包含 机器人 或 人类 -> 需要检测 "Follower" 层
+        if (targetTags.Contains("Robot") || targetTags.Contains("Human"))
         {
-            layer = "Follower";
+            layersToCheck.Add("Follower");
         }
+
+        // [修改重点 2] 防止透视眼 (X-Ray Vision)
+        // 即使我们只找机器人(Follower层)，也必须检测墙壁(Default层)。
+        // 否则射线会穿透墙壁直接检测到墙后的机器人，这是不合理的。
+        if (!layersToCheck.Contains("Default"))
+        {
+            layersToCheck.Add("Default");
+        }
+
+        // 将字符串列表转换为 Unity 的层级掩码 (int)
+        // LayerMask.GetMask 可以接受多个字符串参数
+        int finalMask = LayerMask.GetMask(layersToCheck.ToArray());
+
+        // =========================================================
+        // [修改重点 3] 射线检测循环
+        // =========================================================
         foreach (Vector3 vision in GetVision(visionWidth, visionDiff))
         {
-            // 从当前位置向视线方向发射射线
-            if (Physics.Raycast(myPosition, vision, out RaycastHit hit, visionLimit, LayerMask.GetMask(layer)))
+            // 使用混合后的 finalMask 发射射线
+            if (Physics.Raycast(myPosition, vision, out RaycastHit hit, visionLimit, finalMask))
             {
-                // 如果射线击中的对象的标签在目标标签列表中，并且该对象不在候选列表中，则添加到候选列表
+                // 击中物体后，再次确认 Tag 是否是我们真正想要的
+                // (因为射线也会击中 Default 层的墙壁，但墙壁的 Tag 不是我们现在的目标，会被这里过滤掉)
                 if (targetTags.Contains(hit.transform.tag) && !candidateList.Contains(hit.transform.gameObject))
-                    // print("扫描到的门有："+hit.transform.gameObject.name);
+                {
                     candidateList.Add(hit.transform.gameObject);
+                }
             }
             else
             {
-                // 如果射线没有击中任何对象，则将该方向添加到未知方向列表
-                //print("没有扫描到物体");
+                // 射线没打中任何东西（既没打中墙，也没打中人），说明这个方向是空旷未知的
                 unknownDirections.Add(vision);
-                // print("扫描到的未知方向有：" + vision);
             }
         }
-        //RbtList = candidateList;
-        // 返回候选对象列表和未知方向列表
+
         return Tuple.Create(candidateList, unknownDirections);
     }
+
     private GameObject FilterTargetDoorCandidates(ref List<GameObject> targetDoorCandidates, string filterMode)
     {
-        // Debug.Log("我在执行出口筛选函数");
         GameObject exit = null;
-
-        // 先筛一遍可以绝对排除的
         if (targetDoorCandidates.Count > 0)
         {
-            for (int doorCandidateIndex = targetDoorCandidates.Count - 1; doorCandidateIndex >= 0; doorCandidateIndex--)
+            for (int i = targetDoorCandidates.Count - 1; i >= 0; i--)
             {
-                // 如果一个候选都没有就直接退出
-                if (targetDoorCandidates.Count <= 0)
-                    break;
-
-                // 如果存在出口就返回出口
-                if (targetDoorCandidates[doorCandidateIndex].CompareTag("Exit"))
+                if (targetDoorCandidates[i].CompareTag("Exit"))
                 {
-                    exit = targetDoorCandidates[doorCandidateIndex];
+                    exit = targetDoorCandidates[i];
                     break;
                 }
-                // 现在还有没探索过的方向，且这个门在记忆队列里
-                if (filterMode is "Explore" && _doorMemoryQueue.Contains(targetDoorCandidates[doorCandidateIndex]))
+                if (filterMode is "Explore" && _doorMemoryQueue.Contains(targetDoorCandidates[i]))
                 {
-                    targetDoorCandidates.Remove(targetDoorCandidates[doorCandidateIndex]);
-                    continue;
+                    targetDoorCandidates.RemoveAt(i);
                 }
             }
         }
-        // 再筛一遍需要比较后排除的
-        if (targetDoorCandidates.Count > 1)
+        if (exit == null && targetDoorCandidates.Count > 1 && filterMode is "Normal")
         {
-            for (int doorCandidateIndex = targetDoorCandidates.Count - 1; doorCandidateIndex >= 0; doorCandidateIndex--)
+            for (int i = targetDoorCandidates.Count - 1; i >= 0; i--)
             {
-                // 在同时存在"上楼楼梯"和"走过的门"时， 优先筛掉"上楼楼梯"
-                // 但是当人类是从经过的门返回时，优先筛掉"走过的门"
-                if (filterMode is "Normal" && targetDoorCandidates[doorCandidateIndex] == lastDoorWentThrough)
+                if (targetDoorCandidates[i] == lastDoorWentThrough)
                 {
-                    targetDoorCandidates.Remove(targetDoorCandidates[doorCandidateIndex]);
-                    continue;
+                    targetDoorCandidates.RemoveAt(i);
                 }
             }
         }
         return exit;
-    }
-    private void FilterLeaderCandidates(ref List<GameObject> leaderCandidates)
-    {
-        if (leaderCandidates.Count > 0)
-        {
-            for (int candidateIndex = leaderCandidates.Count - 1; candidateIndex >= 0; candidateIndex--)
-            {
-                if (leaderCandidates.Count <= 0)
-                    break;
-
-                if (leaderCandidates[candidateIndex] == this.gameObject) //是本物体
-                {
-                    //Debug.Log(leaderCandidates[candidateIndex]);
-                    leaderCandidates.Remove(leaderCandidates[candidateIndex]);
-                }
-                
-              /*  else if (leaderCandidates[candidateIndex].CompareTag("Human"))
-                {
-                    HumanControl candidateInfo = leaderCandidates[candidateIndex].GetComponent<HumanControl>();
-                    //add
-                    if (candidateInfo.myTopLevelLeader.CompareTag("Human"))
-                        leaderCandidates.Remove(leaderCandidates[candidateIndex]);
-
-                    //minus
-                    //if (candidateInfo.myFollowerCounter < myFollowerCounter &&
-                    //    candidateInfo.myTopLevelLeader is not null &&
-                    //    candidateInfo.myTopLevelLeader.CompareTag("Human") &&
-                    //    candidateInfo.myTopLevelLeader.GetComponent<Human>().myFollowerCounter <= myFollowerCounter)
-                    //    leaderCandidates.Remove(leaderCandidates[candidateIndex]);
-                }*/
-            }
-        }
-    }
-
-    private GameObject DecideMyLeader(List<GameObject> leaderCandidates)
-    {
-        List<GameObject> humanCandidates = new();
-        List<GameObject> robotCandidates = new();
-
-        foreach (GameObject candidate in leaderCandidates)
-        {
-            if (candidate.CompareTag("Human"))
-            {
-                humanCandidates.Add(candidate);
-                continue;
-            }
-
-            if (candidate.CompareTag("Robot"))
-            {
-                robotCandidates.Add(candidate);
-                continue;
-            }
-        }
-        //robotCandidates = RbtList;///
-        if (robotCandidates.Count > 0)
-            return robotCandidates[Random.Range(0, robotCandidates.Count)];
-        else if (humanCandidates.Count > 0)
-        {
-            Debug.Log("返回人类列表");
-            return humanCandidates[Random.Range(0, humanCandidates.Count)];
-        }
-        else
-            return null;
     }
 }

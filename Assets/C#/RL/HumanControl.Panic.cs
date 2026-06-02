@@ -76,7 +76,7 @@ public partial class HumanControl : MonoBehaviour
                 // 更新视野 (根据能见度)
                 // 视野最小 5m, 最大 15m. 可见度数据(m) 通常很大，需要缩放
                 // 你的原逻辑: (int)Visibility/3 + 10
-                this.visionLimit = Mathf.Clamp((int)(visibilityM / 3f) + 10, 5, 50);
+                this.visionLimit = 30;
 
                 stateTime = 0; // 重置状态计时
             }
@@ -394,7 +394,7 @@ public partial class HumanControl : MonoBehaviour
                     myLeader = leader;
 
                     // 给 AI 发送成功引导奖励
-                    if (myEnv.useHumanAgent) myHumanBrain.AddReward(0.05f);
+                    if (myEnv.useHumanAgent) myHumanBrain.AddReward(0.05f); // 给 AI 发送成功引导奖励 // 第二阶段：屈服期 (开始跟随)
                 }
             }
         }

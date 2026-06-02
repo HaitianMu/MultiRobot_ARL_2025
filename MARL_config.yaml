@@ -1,5 +1,4 @@
 behaviors:
- 
   RobotBrain:
     trainer_type: poca
     hyperparameters:
@@ -7,7 +6,7 @@ behaviors:
       buffer_size: 20480
       learning_rate: 0.0003
       learning_rate_schedule: linear
-      beta: 0.01
+      beta: 0.2
       epsilon: 0.2
       lambd: 0.95
       num_epoch: 3
@@ -25,13 +24,19 @@ behaviors:
       extrinsic:
         gamma: 0.99
         strength: 1.0
-      
+    
+      curiosity:
+        gamma: 0.99
+        strength: 0.02 
+        learning_rate: 0.0003
+        network_settings:
+          hidden_units: 256
 
     keep_checkpoints: 20
     checkpoint_interval: 100000
     max_steps: 5000000 
     time_horizon: 128   
-    summary_freq: 10000
+    summary_freq: 100
 
   HumanBehavior:
     trainer_type: ppo
@@ -70,40 +75,40 @@ behaviors:
     time_horizon: 64
     summary_freq: 10000
 
-
 environment_parameters:
   spawn_distance_limit:
     curriculum:
-
-      - name: Lesson0_VeryEasy
-        completion_criteria:
-          measure: reward
-          behavior: HumanBehavior 
-          signal_smoothing: true
-          min_lesson_length: 200  
-          threshold: 0.8         
-        value: 5.0               
-
-
-      - name: Lesson1_Easy
+      - name: Lesson0_BabyStep
         completion_criteria:
           measure: reward
           behavior: HumanBehavior
-          signal_smoothing: true
+          threshold: 0.5  
+          min_lesson_length: 200
+        value: 5.0
+
+      - name: Lesson1_CloseRange
+        completion_criteria:
+          measure: reward
+          behavior: HumanBehavior
+          threshold: 0.2  
           min_lesson_length: 500
-          threshold: 1.0        
         value: 15.0
 
-
-      - name: Lesson2_Medium
+      - name: Lesson2_MidRange
         completion_criteria:
           measure: reward
           behavior: HumanBehavior
-          signal_smoothing: true
+          threshold: -0.1
           min_lesson_length: 1000
-          threshold: 1.2        
         value: 30.0
 
+      - name: Lesson3_LongRange  
+        completion_criteria:
+          measure: reward
+          behavior: HumanBehavior
+          threshold: -0.4
+          min_lesson_length: 1000
+        value: 60.0
 
-      - name: Lesson3_FullMap
-        value: 1000.0             
+      - name: Lesson4_FullMap
+        value: 1000.0

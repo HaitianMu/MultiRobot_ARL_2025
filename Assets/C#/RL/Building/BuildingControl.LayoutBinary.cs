@@ -244,7 +244,6 @@ public partial class BuildingControl : MonoBehaviour
         floor.AddComponent<NavMeshModifier>();
         floor.name = "floor";
         floor.tag = "Floor";
-        floor.layer = 8;
         floor.transform.parent = room.transform;
         floor.transform.position = new Vector3(x + width / 2, 0f, z + height / 2);
         floor.transform.localScale = new Vector3(width, 0.1f, height); // 底部宽度和高度

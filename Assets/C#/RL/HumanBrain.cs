@@ -121,7 +121,7 @@ public class HumanBrain : Agent
         {
             float distDelta = _lastDistanceToExit - currentDist;
             // 限制单步奖励上限，防止NavMesh重算导致的跳变
-            AddReward(Mathf.Clamp(distDelta, -2f, 2f) * distanceMultiplier);
+            AddReward(Mathf.Clamp(distDelta, -2f, 2f) * distanceMultiplier); // 限制单步奖励上限，防止NavMesh重算导致的跳变
         }
         _lastDistanceToExit = currentDist;
 
@@ -139,11 +139,11 @@ public class HumanBrain : Agent
 
         // 致命错误：极度危险却选择冷静
         if (envData.SmokeDensity > 800f && actionState == 0)
-            AddReward(-0.0005f);
+            AddReward(-0.0005f); // 致命错误：极度危险却选择冷静
 
         // 效率错误：完全安全却选择极度恐慌
         if (envData.SmokeDensity < 50f && actionState == 2)
-            AddReward(-0.0002f);
+            AddReward(-0.0002f);// 效率错误：完全安全却选择极度恐慌
     }
 
     // ---------------------------------------------------------

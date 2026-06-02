@@ -85,10 +85,23 @@ public partial class EnvControl : MonoBehaviour
         for (int i = 0; i < robotCount; i++)
         {
             Vector3 spawnPosition;
+
+            // [优化逻辑] 循环利用出口
             if (isTest && Exits.Count > 0)
             {
-                // 测试模式：在出口旁排开，防止重叠
-                spawnPosition = Exits[i].transform.position + new Vector3(1 + i, 0, 0);
+                // 1. 使用取模运算，确保索引永远不会超过 Exits.Count - 1
+                // 例如：3个出口，i=0->索引0, i=1->索引1, i=2->索引2, i=3->索引0...
+                int exitIndex = i % Exits.Count;
+
+                // 2. 计算这是该出口分配到的第几个机器人 (排队轮次)
+                // 例如：i=3时，round=1，表示它是该出口的第2个机器人（排在第1个后面）
+                int round = i / Exits.Count;
+
+                // 3. 计算位置：基础位置 + 偏移量
+                // 偏移量根据轮次增加，防止叠在一起。这里假设向X轴正方向排队，间距 1.5米
+                Vector3 offset = new Vector3(1.5f * (round + 1), 0, 0);
+
+                spawnPosition = Exits[exitIndex].transform.position + offset;
             }
             else
             {

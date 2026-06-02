@@ -249,7 +249,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -278,7 +278,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!1001 &104095792
 PrefabInstance:
@@ -354,7 +355,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -383,7 +384,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!4 &106652254 stripped
 Transform:
@@ -421,9 +423,109 @@ Transform:
   - {fileID: 789708397}
   - {fileID: 1056481094}
   - {fileID: 1608379192}
+  - {fileID: 801616704}
+  - {fileID: 1350752247}
   m_Father: {fileID: 464273387}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &173976733
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 133003830}
+    m_Modifications:
+    - target: {fileID: 10268829736374538, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_Model
+      value: 
+      objectReference: {fileID: 5022602860645237092, guid: 3129288f42eb6f141a7fd12f8986ecfe, type: 3}
+    - target: {fileID: 10268829736374538, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_UseChildSensors
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374538, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_BrainParameters.VectorObservationSize
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374538, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_BrainParameters.NumStackedVectorObservations
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.4196596
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.0992656
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.2794428
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374540, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_Name
+      value: RobotBrain5
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374540, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374540, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_TagString
+      value: RobotBrain
+      objectReference: {fileID: 0}
+    - target: {fileID: 6530910501676862312, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: myEnv
+      value: 
+      objectReference: {fileID: 464273388}
+    - target: {fileID: 6530910501676862312, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: robot
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6530910501676862312, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: loiterRadius
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6530910501676862312, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: loiterCheckInterval
+      value: 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 10268829736374536, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
 --- !u!4 &255057539 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1390373734701681569, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
@@ -504,7 +606,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -533,7 +635,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!4 &303673377 stripped
 Transform:
@@ -699,7 +802,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -728,7 +831,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!4 &387657212 stripped
 Transform:
@@ -805,7 +909,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -834,7 +938,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!1001 &411989763
 PrefabInstance:
@@ -906,7 +1011,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -935,7 +1040,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!4 &428129532 stripped
 Transform:
@@ -1059,6 +1165,8 @@ MonoBehaviour:
   sumhealth: 0
   startTime: 0
   robotCount: 3
+  currentExperimentMode: 0
+  scalingRobotCount: 3
   fireBinaryFile: {fileID: 4900000, guid: 3c73a64ab410880479180fdcdf01ecad, type: 3}
   originalDataDuration: 30
   targetRunDuration: 150
@@ -1139,7 +1247,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -1168,7 +1276,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!4 &493644865 stripped
 Transform:
@@ -1245,7 +1354,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -1274,7 +1383,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!1001 &539684736
 PrefabInstance:
@@ -1346,7 +1456,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -1375,7 +1485,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!1001 &541697630
 PrefabInstance:
@@ -1447,7 +1558,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -1476,7 +1587,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!1001 &577064195
 PrefabInstance:
@@ -1548,7 +1660,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -1577,7 +1689,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!1001 &597807121
 PrefabInstance:
@@ -1649,7 +1762,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -1678,7 +1791,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!4 &618526818 stripped
 Transform:
@@ -1755,7 +1869,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -1784,7 +1898,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!4 &633964441 stripped
 Transform:
@@ -1866,7 +1981,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -1895,7 +2010,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!4 &673836736 stripped
 Transform:
@@ -1982,7 +2098,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -2011,7 +2127,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!1001 &785253608
 PrefabInstance:
@@ -2083,7 +2200,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -2112,7 +2229,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!1001 &789708396
 PrefabInstance:
@@ -2124,14 +2242,14 @@ PrefabInstance:
     - target: {fileID: 10268829736374538, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 08900e659683f5640a1ae8c6c3199427, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 3129288f42eb6f141a7fd12f8986ecfe, type: 3}
     - target: {fileID: 10268829736374538, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 10268829736374538, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
       propertyPath: m_BrainParameters.VectorObservationSize
-      value: 72
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 10268829736374538, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
       propertyPath: m_BrainParameters.NumStackedVectorObservations
@@ -2201,12 +2319,26 @@ PrefabInstance:
       propertyPath: robot
       value: 
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 6530910501676862312, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: loiterRadius
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6530910501676862312, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: loiterCheckInterval
+      value: 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 10268829736374536, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
 --- !u!4 &789708397 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
   m_PrefabInstance: {fileID: 789708396}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &801616704 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+  m_PrefabInstance: {fileID: 1672646232}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &805436096
 PrefabInstance:
@@ -2278,7 +2410,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -2307,7 +2439,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!4 &838671941 stripped
 Transform:
@@ -2384,7 +2517,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -2413,7 +2546,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!1001 &870472296
 PrefabInstance:
@@ -2489,7 +2623,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -2518,7 +2652,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!1001 &912252501
 PrefabInstance:
@@ -2590,7 +2725,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -2619,7 +2754,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!4 &926835447 stripped
 Transform:
@@ -2745,7 +2881,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -2774,7 +2910,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!1 &969625062
 GameObject:
@@ -2909,7 +3046,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -2938,7 +3075,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!1001 &1056481093
 PrefabInstance:
@@ -2950,14 +3088,14 @@ PrefabInstance:
     - target: {fileID: 10268829736374538, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 08900e659683f5640a1ae8c6c3199427, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 3129288f42eb6f141a7fd12f8986ecfe, type: 3}
     - target: {fileID: 10268829736374538, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 10268829736374538, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
       propertyPath: m_BrainParameters.VectorObservationSize
-      value: 72
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 10268829736374538, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
       propertyPath: m_BrainParameters.NumStackedVectorObservations
@@ -3027,7 +3165,16 @@ PrefabInstance:
       propertyPath: robot
       value: 
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 6530910501676862312, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: loiterRadius
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6530910501676862312, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: loiterCheckInterval
+      value: 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 10268829736374536, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
 --- !u!4 &1056481094 stripped
 Transform:
@@ -3104,7 +3251,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -3133,7 +3280,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!4 &1082275733 stripped
 Transform:
@@ -3215,7 +3363,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -3244,7 +3392,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!1001 &1112176439
 PrefabInstance:
@@ -3316,7 +3465,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -3345,7 +3494,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!4 &1190081946 stripped
 Transform:
@@ -3422,7 +3572,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -3451,7 +3601,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!4 &1262365735 stripped
 Transform:
@@ -3542,7 +3693,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -3571,7 +3722,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!4 &1327536830 stripped
 Transform:
@@ -3652,7 +3804,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -3681,7 +3833,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!1 &1341671606
 GameObject:
@@ -3714,6 +3867,11 @@ Transform:
   m_Father: {fileID: 464273387}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1350752247 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+  m_PrefabInstance: {fileID: 173976733}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1353587479
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3784,7 +3942,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -3813,7 +3971,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!4 &1356171587 stripped
 Transform:
@@ -3890,7 +4049,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -3919,7 +4078,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!1001 &1368797073
 PrefabInstance:
@@ -3991,7 +4151,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -4020,7 +4180,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!1001 &1372505983
 PrefabInstance:
@@ -4096,7 +4257,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -4125,7 +4286,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!4 &1391424727 stripped
 Transform:
@@ -4354,7 +4516,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -4383,7 +4545,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!4 &1489122107 stripped
 Transform:
@@ -4460,7 +4623,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -4489,7 +4652,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!1001 &1494445285
 PrefabInstance:
@@ -4561,7 +4725,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -4590,7 +4754,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!1001 &1513641506
 PrefabInstance:
@@ -4662,7 +4827,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -4691,7 +4856,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!1001 &1517000588
 PrefabInstance:
@@ -4763,7 +4929,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -4792,7 +4958,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!4 &1525726640 stripped
 Transform:
@@ -4960,7 +5127,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -4989,7 +5156,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!1001 &1608379191
 PrefabInstance:
@@ -5001,14 +5169,14 @@ PrefabInstance:
     - target: {fileID: 10268829736374538, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 08900e659683f5640a1ae8c6c3199427, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 3129288f42eb6f141a7fd12f8986ecfe, type: 3}
     - target: {fileID: 10268829736374538, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 10268829736374538, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
       propertyPath: m_BrainParameters.VectorObservationSize
-      value: 72
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 10268829736374538, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
       propertyPath: m_BrainParameters.NumStackedVectorObservations
@@ -5078,7 +5246,16 @@ PrefabInstance:
       propertyPath: robot
       value: 
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 6530910501676862312, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: loiterRadius
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6530910501676862312, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: loiterCheckInterval
+      value: 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 10268829736374536, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
 --- !u!4 &1608379192 stripped
 Transform:
@@ -5155,7 +5332,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -5184,13 +5361,112 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!4 &1622077930 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1390373734701681569, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_PrefabInstance: {fileID: 539684736}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1672646232
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 133003830}
+    m_Modifications:
+    - target: {fileID: 10268829736374538, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_Model
+      value: 
+      objectReference: {fileID: 5022602860645237092, guid: 3129288f42eb6f141a7fd12f8986ecfe, type: 3}
+    - target: {fileID: 10268829736374538, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_UseChildSensors
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374538, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_BrainParameters.VectorObservationSize
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374538, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_BrainParameters.NumStackedVectorObservations
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.4196596
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.0992656
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.2794428
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374539, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374540, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_Name
+      value: RobotBrain4
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374540, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 10268829736374540, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: m_TagString
+      value: RobotBrain
+      objectReference: {fileID: 0}
+    - target: {fileID: 6530910501676862312, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: myEnv
+      value: 
+      objectReference: {fileID: 464273388}
+    - target: {fileID: 6530910501676862312, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: robot
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6530910501676862312, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: loiterRadius
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6530910501676862312, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+      propertyPath: loiterCheckInterval
+      value: 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 10268829736374536, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 8e87fe450e5992948b646735a56d466f, type: 3}
 --- !u!4 &1701630306 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5382018074620852038, guid: 09b60b70bce9e4444a1c43a135e3dc17, type: 3}
@@ -5266,7 +5542,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -5295,7 +5571,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!4 &1745246167 stripped
 Transform:
@@ -5376,7 +5653,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -5405,7 +5682,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!1001 &1874767919
 PrefabInstance:
@@ -5477,7 +5755,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -5506,7 +5784,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!1001 &1877868019
 PrefabInstance:
@@ -5582,7 +5861,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -5611,7 +5890,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!1001 &1880570061
 PrefabInstance:
@@ -5683,7 +5963,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -5712,7 +5992,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!4 &1916038949 stripped
 Transform:
@@ -5866,7 +6147,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -5895,7 +6176,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!4 &2039616269 stripped
 Transform:
@@ -5977,7 +6259,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -6006,7 +6288,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!1001 &2064092715
 PrefabInstance:
@@ -6082,7 +6365,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -6111,7 +6394,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!1001 &2075428534
 PrefabInstance:
@@ -6183,7 +6467,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -6212,7 +6496,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!1001 &2076258004
 PrefabInstance:
@@ -6284,7 +6569,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -6313,7 +6598,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!4 &2099406924 stripped
 Transform:
@@ -6477,7 +6763,7 @@ PrefabInstance:
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 66bf38ab073ccfd4c8b51eae4a5a161b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 171d5f04da9412440b9a562d48364a41, type: 3}
     - target: {fileID: 1390373734701681629, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
       propertyPath: m_UseChildSensors
       value: 0
@@ -6506,7 +6792,8 @@ PrefabInstance:
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1390373734701681571, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fed51bf97fddbf409d9077b09bcca8f, type: 3}
 --- !u!1001 &5382018073101149732
 PrefabInstance:

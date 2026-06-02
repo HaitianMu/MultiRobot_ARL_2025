@@ -19,7 +19,7 @@ public partial class HumanControl : MonoBehaviour
 
     [Header("Navigation")]
     public Transform targetPosition;
-    public int visionLimit = 10;
+    public int visionLimit = 30;
     private NavMeshAgent _myNavMeshAgent;
     public Queue<GameObject> _doorMemoryQueue;
     public GameObject myTargetDoor = null;
@@ -109,12 +109,12 @@ public partial class HumanControl : MonoBehaviour
         else
         {
             // 额外规则：即使是AI控制，如果血量过低，强制进入焦虑/恐慌状态 (可选规则)
-            if (this.health < 30 && CurrentState == 0)
+            if (this.health < 30)
             {
-                // CurrentState = 1; 
+                 CurrentState = 1; 
             }
         }
-
+       
         // =========================================================
         // 2. 执行移动逻辑 (根据上面确定的 CurrentState)
         // =========================================================
@@ -223,7 +223,7 @@ public partial class HumanControl : MonoBehaviour
                 if (myEnv.useHumanAgent)
                 {
                     // 瞬时惩罚，让Agent对“火”这个标签产生恐惧，而不只是对掉血恐惧
-                    myHumanBrain.AddReward(-0.01f);
+                    myHumanBrain.AddReward(-0.01f);  // 瞬时惩罚，让Agent对“火”这个标签产生恐惧，而不只是对掉血恐惧
                 }
                 break;
 
@@ -231,7 +231,7 @@ public partial class HumanControl : MonoBehaviour
                 // 可选：如果行人主动靠近机器人，可以给一点点奖励，鼓励受引导
                 if (myEnv.useHumanAgent && CurrentState != 0)
                 {
-                    myHumanBrain.AddReward(0.01f);
+                    myHumanBrain.AddReward(0.01f); // 可选：如果行人主动靠近机器人，可以给一点点奖励，鼓励受引导
                 }
                 break;
         }

@@ -221,7 +221,6 @@ public partial class BuildingControl : MonoBehaviour
         door.transform.parent = ParentObject.transform;
         door.GetComponent<BoxCollider>().isTrigger = true;
         DoorControl thisDoor = door.AddComponent<DoorControl>();
-
         // 设置门的名称和标签
         if (Tag == "Door")
         {

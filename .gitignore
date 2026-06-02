@@ -97,3 +97,18 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+
+# ML-Agents timer logs
+Assets/ML-Agents/Timers/
+
+# Training results (large)
+results/
+AutoTrain/
+
+# Test data (generated samples)
+TestData_RobotTrace/
+TestData/[0-9]*/
+
+# IDE
+.idea/
+.vs/

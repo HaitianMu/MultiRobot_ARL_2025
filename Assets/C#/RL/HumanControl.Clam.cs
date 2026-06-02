@@ -11,168 +11,85 @@ public partial class HumanControl : MonoBehaviour
 {
     private void LeaderUpdate_Clam()
     {
-        if (myTargetDoor is null)
+
+        // 如果已经有确定的门目标，或者正在跟随机器人，通常不需要在这里做漫游逻辑
+        // 但这里我们主要处理“没有目标”时的状态
+        if (myTargetDoor is null && myLeader == null)
         {
-            //print(this.gameObject.name+"我目前没有目标门");
-            //先扫描视线里有没有机器人，有的话就直接进行跟随
-            Vector3 myPosition = transform.position;
+            // 1. 优先扫描机器人 (保持你原有的逻辑优先级)
+            // 优化：使用复用的 List，避免 new List
+            var result = GetCandidate_Clam(new List<string> { "Robot" }, 360, 20);
+            List<GameObject> leaderCandidates = result.Item1;
 
-            myPosition.y -= 0.5f;
-            // print(myPosition.y);
-            float distanceRemain = Vector3.Distance(myPosition, myDestination);
-            if (distanceRemain > 0.1f)
-            {//print($"距离门对面还有{distanceRemain}米，扫描沿路是否有合适的领导者");
-                List<GameObject> leaderCandidates = GetCandidate_Clam(new List<string> { "Robot" }, 360, 20).Item1;
-                if (leaderCandidates.Count > 0)
+            if (leaderCandidates.Count > 0)
+            {
+                GameObject potentialLeader = leaderCandidates[0];
+                // 优化：尝试获取组件并检查 null
+                if (potentialLeader.TryGetComponent(out RobotControl robotControl))
                 {
-                   // print("发现了符合追随条件的机器人，进入追随者模式");
-
-                    myLeader = leaderCandidates[0];
-
-                    if (myLeader.GetComponent<RobotControl>().isRunning)
-                    {//如果机器人在工作，就进行跟随
-                     //print("找到了在工作的机器人，我的领导者是：" + leaderCandidates[0].name);
-                        if (!myLeader.GetComponent<RobotControl>().myDirectFollowers.Contains(gameObject.GetComponent<HumanControl>()))
-                        {
-                            //print(this.name + "将自己加入机器人的跟随者列表");
-                            myLeader.GetComponent<RobotControl>().myDirectFollowers.Add(gameObject.GetComponent<HumanControl>());//将自己加入机器人的跟随者列表
-
-                            if (myEnv.useRobotBrain&&isFounded==false)//没有被机器人发现过
-                            {
-                                  //机器人领导奖励
-                                //myLeader.GetComponent<RobotControl>().myAgent.AddReward(health*10);//靠近人类奖励
-                               //myLeader.GetComponent<RobotControl>().myAgent.LogReward("靠近人类奖励", health*10);
-                                isFounded = true;
-                            }
-                        }
-                        //print(myLeader.GetComponent<Robot>().myDirectFollowers);
+                    if (robotControl.isRunning)
+                    {
+                        // 找到了在工作的机器人，设置为 Leader 并结束漫游逻辑
+                        myLeader = potentialLeader;
                         SwitchBehaviourMode();
+                        return; // 退出函数，交给 Update 的跟随逻辑去处理
                     }
-                    return;
                 }
             }
 
-
-            //目前不知道去哪，而且视线里没有找到机器人，开始自己乱逛
-            //print("当前没有计划前往的门，开始扫描，然后筛选");
-            (List<GameObject> doorCandidates, List<Vector3> unknownDirections) = GetCandidate_Clam(new List<string> { "Door", "Exit" }, 360, 20);
-
-            GameObject exit = FilterTargetDoorCandidates(ref doorCandidates, unknownDirections.Count > 0 ? "Explore" : "Normal");
-            if (exit is not null)
+            // 2. 如果没有找到机器人，执行【全图探索逻辑】
+            // 检查当前是否已经到达目的地，或者还没有路径
+            if (!_myNavMeshAgent.hasPath || _myNavMeshAgent.remainingDistance < _myNavMeshAgent.stoppingDistance + 0.5f)
             {
-                // print("发现出口，直接选择出口作为目标");
-                myTargetDoor = exit;
-                myDestination = GetCrossDoorDestination(exit);
-                _myNavMeshAgent.SetDestination(myDestination);
-                return;
-            }
-            else if (doorCandidates.Count <= 0)
-            {
-                if (unknownDirections.Count <= 0)
+                List<GameObject> exitList = GetCandidate_Clam(new List<string> { "Exit" }, 360, 20).Item1;
+                if (exitList.Count > 0)//看到出口了就走
                 {
-                    if (lastDoorWentThrough is not null)
-                    {
-                        myTargetDoor = lastDoorWentThrough;
-                        myDestination = GetCrossDoorDestination(lastDoorWentThrough);
-                        _myNavMeshAgent.SetDestination(myDestination);
-                    }
-
+                    GameObject exit = exitList[0];
+                    SwitchBehaviourMode();
+                    myTargetDoor = exit;
+                    myDestination = GetCrossDoorDestination(exit);
+                    _myNavMeshAgent.SetDestination(myDestination);
                     return;
                 }
-                else if (unknownDirections.Count > 0)
+                else//没有出口就随机探索
                 {
-                    Vector3 exploreDirection = unknownDirections[Random.Range(0, unknownDirections.Count)];
-                    _myNavMeshAgent.SetDestination(transform.position + exploreDirection * visionLimit);
-                    return;
+                    WanderGlobally();
                 }
-            }
-            else if (doorCandidates.Count > 0)
-            {
-                // print("候选的门中不存在出口，随机选择一扇可通过的门作为移动目标");
-                if (lastDoorWentThrough == null)//"自己从没有经历过门"
-                {
-                    myTargetDoor = doorCandidates[Random.Range(0, doorCandidates.Count)];
-                }
-                // Case 2: 有记录门且存在其他候选门 -> 排除记录门后随机选择
-                else if (doorCandidates.Count >= 1)
-                {
-                    // 创建排除列表： 记忆队列中的所有门
-                    var excludedDoors = new HashSet<GameObject>(_doorMemoryQueue);
-                    var validDoors = doorCandidates.Where(door => !excludedDoors.Contains(door)).ToList();
-                    //door => !excludedDoors.Contains(door)，Lambda表达式 
-
-                    if (validDoors.Count > 0)//探索到了记忆中不存在的门，
-                    {//Debug.Log($"{this.name} 我搜索到的门有：{string.Join(", ", validDoors.Select(door => door.name))}");
-                        myTargetDoor = validDoors[Random.Range(0, validDoors.Count)];
-                    }
-                    else
-                    {
-                        // 如果所有门都被排除，则强制选择非历史门的随机门（fallback机制）
-                        var fallbackDoors = doorCandidates.Where(door => door != lastDoorWentThrough).ToList();
-                        myTargetDoor = fallbackDoors.Count > 0 ? fallbackDoors[Random.Range(0, fallbackDoors.Count)] : doorCandidates[0]; // 最终回退
-
-                    }
-                }
-
-
-                // print("选择的门是：" + myTargetDoor.transform.name);
-                myDestination = GetCrossDoorDestination(myTargetDoor);
-
-                if (_myNavMeshAgent.SetDestination(myDestination))
-                {
-                    // print("目的地是：" + myDestination);
-                }
-                else { print("设置目的地失败"); };
-
-                return;
             }
         }
-        else
+    }
+
+    /// <summary>
+    /// 全图探索逻辑：寻找一个足够远的随机点
+    /// </summary>
+    private void WanderGlobally()
+    {
+        // 尝试次数，防止死循环
+        int attempts = 10;
+        float minExploreDistance = 15f; // 最小探索距离：必须走这么远
+        float maxExploreRadius = 60f;   // 最大搜索半径：在这个范围内找
+
+        for (int i = 0; i < attempts; i++)
         {
-            if (myTargetDoor.tag.Contains("Exit"))//如果目标门是出口的话，直接滚蛋
+            // 在球面上随机取一个方向，并乘以随机距离
+            Vector3 randomDirection = Random.onUnitSphere * Random.Range(minExploreDistance, maxExploreRadius);
+            // 加上当前坐标（相对于玩家位置的偏移）
+            // 或者：如果你的地图不大，可以直接用 Vector3(Random.Range(-X, X), 0, Random.Range(-Z, Z)) 来取绝对坐标
+            Vector3 randomDest = transform.position + randomDirection;
+
+            NavMeshHit hit;
+            // 在随机点附近找合法的 NavMesh 位置
+            if (NavMesh.SamplePosition(randomDest, out hit, 10f, NavMesh.AllAreas))
             {
-                return;
-            }
-            else
-            {
-                //检查门是否被烧毁
-                if (myTargetDoor.GetComponent<DoorControl>().isBurnt == false)
+                // 再次检查距离：确保找到的点真的离我很远（防止 SamplePosition 把点吸附回墙这边）
+                if (Vector3.Distance(transform.position, hit.position) >= minExploreDistance)
                 {
-                    // print("当前存在计划前往的门，正在向门对面移动");
-                    Vector3 myPosition = transform.position;
-                    myPosition.y -= 0.5f;
-                    float distanceRemain = Vector3.Distance(myPosition, myDestination);
-                    if (distanceRemain > 0.5f)
-                    {//print($"距离门对面还有{distanceRemain}米，扫描沿路是否有合适的领导者");
-                        List<GameObject> leaderCandidates = GetCandidate_Clam(new List<string> { "Robot" }, 360, 20).Item1;
-                        if (leaderCandidates.Count > 0)
-                        {
-                            //print("发现了符合追随条件的人类或者机器人，进入追随者模式");
-
-                            myLeader = leaderCandidates[0];//默认将
-
-                            if (myLeader.GetComponent<RobotControl>().isRunning)
-                            {//如果机器人在工作，就进行跟随
-                             //print("找到了在工作的机器人，我的领导者是：" + leaderCandidates[0].name);
-                                if (!myLeader.GetComponent<RobotControl>().myDirectFollowers.Contains(gameObject.GetComponent<HumanControl>()))
-                                {
-                                    //print(this.name + "将自己加入机器人的跟随者列表");
-                                    myLeader.GetComponent<RobotControl>().myDirectFollowers.Add(gameObject.GetComponent<HumanControl>());//将自己加入机器人的跟随者列表
-                                }
-                                //print(myLeader.GetComponent<Robot>().myDirectFollowers);
-                                SwitchBehaviourMode();
-                            }
-                            return;
-                        }
-                    }
-                    else
-                    {  //print($"距离门对面还有{distanceRemain}米，初步认为已经认为已经到达目的地，开始重新扫描");
-                        myTargetDoor = null;
-                        return;
-                    }
+                    myDestination = hit.position;
+                    _myNavMeshAgent.SetDestination(myDestination);
+                    // 稍微降低一点探索时的速度，显得悠闲一点，或者保持原速
+                    // _myNavMeshAgent.speed = 3.5f; 
+                    return; // 找到目标，结束
                 }
-                else { myTargetDoor = null; }
-
             }
         }
     }
@@ -185,13 +102,6 @@ public partial class HumanControl : MonoBehaviour
             Vector3 leaderPosition = myLeader.transform.position;
             List<GameObject> exitList = GetCandidate_Clam(new List<string> { "Exit" }, 360, 20).Item1;
 
-            //鼓励机器人主动吸引更多跟随者
-            if (myLeader != null && myLeader.CompareTag("Robot"))
-            {
-                // 每帧给予微小正向奖励（需乘以Time.fixedDeltaTime）
-                /* myEnv.RobotBrainList[0].AddReward(0.3f * (1-panicLevel));
-                 myEnv.RobotBrainList[0].LogReward("人类跟随奖励", 0.3f * (1 - panicLevel));*/
-            }
             //在跟随的过程中，持续进行检测是否有出口，有的话就直接离开,没有的话就继续跟随机器人
 
             if (exitList.Count > 0)
