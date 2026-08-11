@@ -1,0 +1,2 @@
+RunId,Mode,RobotCount,PanicState,Seed,TotalEpisodes,InitialHumans,Escaped,Deaths,SuccessRate,AvgEpisodeTime,AvgEscapedHealthAll,AvgFinalHealthAll,AvgEscapedPerEpisode,AvgDeathsPerEpisode,IsFinal
+checkpoint_FINAL_V11_ZERO_SHOT_20260720_step59962_det_r3_seed204195_ep1_scene_trace_r3_seed204195,Case1_RobotScaling_robots3_panic-1,3,-1,204195,1,50,37,11,74,150.0152,53.8934,57.8401,37,11,true

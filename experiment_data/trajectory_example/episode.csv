@@ -1,0 +1,2 @@
+RunId,Episode,Mode,RobotCount,PanicState,Seed,Termination,InitialHumans,Escaped,Deaths,AliveAtEnd,EpisodeTime,EscapedHealthSum,AliveHealthSum,FinalSurvivorHealthSum,SuccessRate,AvgEscapedHealthAll,AvgFinalHealthAll
+checkpoint_FINAL_V11_ZERO_SHOT_20260720_step59962_det_r3_seed204195_ep1_scene_trace_r3_seed204195,1,Case1_RobotScaling_robots3_panic-1,3,-1,204195,timeout,50,37,11,2,150.0152,2694.672,197.3309,2892.003,74,53.8934,57.8401

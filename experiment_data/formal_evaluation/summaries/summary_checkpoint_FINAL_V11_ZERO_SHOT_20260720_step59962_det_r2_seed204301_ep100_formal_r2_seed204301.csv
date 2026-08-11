@@ -1,0 +1,12 @@
+RunId,Mode,RobotCount,PanicState,Seed,TotalEpisodes,InitialHumans,Escaped,Deaths,SuccessRate,AvgEpisodeTime,AvgEscapedHealthAll,AvgFinalHealthAll,AvgEscapedPerEpisode,AvgDeathsPerEpisode,IsFinal
+checkpoint_FINAL_V11_ZERO_SHOT_20260720_step59962_det_r2_seed204301_ep100_formal_r2_seed204301,Case1_RobotScaling_robots2_panic-1,2,-1,204301,10,500,177,34,35.4,150.0152,26.3973,69.0241,17.7,3.4,false
+checkpoint_FINAL_V11_ZERO_SHOT_20260720_step59962_det_r2_seed204301_ep100_formal_r2_seed204301,Case1_RobotScaling_robots2_panic-1,2,-1,204301,20,1000,367,74,36.7,150.0152,26.5222,67.7531,18.35,3.7,false
+checkpoint_FINAL_V11_ZERO_SHOT_20260720_step59962_det_r2_seed204301_ep100_formal_r2_seed204301,Case1_RobotScaling_robots2_panic-1,2,-1,204301,30,1500,528,144,35.2,150.0152,25.8217,65.4215,17.6,4.8,false
+checkpoint_FINAL_V11_ZERO_SHOT_20260720_step59962_det_r2_seed204301_ep100_formal_r2_seed204301,Case1_RobotScaling_robots2_panic-1,2,-1,204301,40,2000,698,194,34.9,150.0152,25.9714,65.5601,17.45,4.85,false
+checkpoint_FINAL_V11_ZERO_SHOT_20260720_step59962_det_r2_seed204301_ep100_formal_r2_seed204301,Case1_RobotScaling_robots2_panic-1,2,-1,204301,50,2500,852,224,34.08,150.0152,24.9107,66.4441,17.04,4.48,false
+checkpoint_FINAL_V11_ZERO_SHOT_20260720_step59962_det_r2_seed204301_ep100_formal_r2_seed204301,Case1_RobotScaling_robots2_panic-1,2,-1,204301,60,3000,1041,250,34.7,150.0152,25.3622,67.5866,17.35,4.1667,false
+checkpoint_FINAL_V11_ZERO_SHOT_20260720_step59962_det_r2_seed204301_ep100_formal_r2_seed204301,Case1_RobotScaling_robots2_panic-1,2,-1,204301,70,3500,1254,284,35.8286,150.0153,26.006,67.6736,17.9143,4.0571,false
+checkpoint_FINAL_V11_ZERO_SHOT_20260720_step59962_det_r2_seed204301_ep100_formal_r2_seed204301,Case1_RobotScaling_robots2_panic-1,2,-1,204301,80,4000,1463,322,36.575,150.0153,26.1273,67.1633,18.2875,4.025,false
+checkpoint_FINAL_V11_ZERO_SHOT_20260720_step59962_det_r2_seed204301_ep100_formal_r2_seed204301,Case1_RobotScaling_robots2_panic-1,2,-1,204301,90,4500,1644,355,36.5333,150.0154,26.0526,67.571,18.2667,3.9444,false
+checkpoint_FINAL_V11_ZERO_SHOT_20260720_step59962_det_r2_seed204301_ep100_formal_r2_seed204301,Case1_RobotScaling_robots2_panic-1,2,-1,204301,100,5000,1903,388,38.06,150.0154,26.797,67.2637,19.03,3.88,false
+checkpoint_FINAL_V11_ZERO_SHOT_20260720_step59962_det_r2_seed204301_ep100_formal_r2_seed204301,Case1_RobotScaling_robots2_panic-1,2,-1,204301,100,5000,1903,388,38.06,150.0154,26.797,67.2637,19.03,3.88,true

@@ -1,0 +1,45 @@
+behaviors:
+  RobotBrain:
+    trainer_type: poca
+    hyperparameters:
+      batch_size: 512
+      buffer_size: 2048
+      learning_rate: 0.00002
+      learning_rate_schedule: constant
+      beta: 0.0
+      beta_schedule: constant
+      epsilon: 0.08
+      epsilon_schedule: constant
+      lambd: 0.95
+      num_epoch: 3
+
+    network_settings:
+      normalize: true
+      hidden_units: 256
+      num_layers: 3
+      vis_encode_type: simple
+      memory:
+        sequence_length: 64
+        memory_size: 128
+      goal_conditioning_type: hyper
+
+    reward_signals:
+      extrinsic:
+        gamma: 0.995
+        strength: 1.0
+        network_settings:
+          normalize: false
+          hidden_units: 128
+          num_layers: 2
+          vis_encode_type: simple
+          goal_conditioning_type: hyper
+
+    keep_checkpoints: 7
+    checkpoint_interval: 20000
+    max_steps: 120000
+    time_horizon: 256
+    summary_freq: 1000
+    threaded: false
+
+environment_parameters:
+  spawn_distance_limit: 1000.0
