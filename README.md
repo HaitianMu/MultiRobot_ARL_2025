@@ -2,8 +2,14 @@
 
 <p align="center">
 
-**Adversarial Reinforcement Learning for Multi-Robot Emergency Evacuation under Dynamic Fire Hazards and Boundedly Rational Human Behavior**
+**Multi-Robot Coordination for Emergency Evacuation via Adversarial Reinforcement Learning with Complex Crowd Behavior and Dynamic Hazard Modeling**
 
+</p>
+
+<p align="center">
+  <a href="https://github.com/HaitianMu/MultiRobot_ARL_2025/releases/tag/v1.0.0"><img src="https://img.shields.io/badge/release-v1.0.0-2f6f9f" alt="Release v1.0.0"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/code-MIT-3d8b73" alt="MIT License"></a>
+  <a href="experiment_data/LICENSE"><img src="https://img.shields.io/badge/data-CC%20BY%204.0-b5544d" alt="CC BY 4.0"></a>
 </p>
 
 ---
@@ -318,3 +324,18 @@ This project was built using:
 * Unity Physics Engine
 
 for research on intelligent robot-assisted emergency evacuation under dynamic fire hazards.
+
+---
+
+## Citation
+
+Citation metadata for version 1.0.0 is provided in [`CITATION.cff`](CITATION.cff).
+The archived release DOI is issued through Zenodo from the corresponding GitHub
+release.
+
+## Licensing
+
+Project source code is licensed under the [MIT License](LICENSE). The curated
+experimental data, derived statistics, metadata, and trajectory records under
+[`experiment_data/`](experiment_data/) are licensed separately under
+[CC BY 4.0](experiment_data/LICENSE).

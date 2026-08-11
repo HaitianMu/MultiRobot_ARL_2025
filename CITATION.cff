@@ -1,0 +1,48 @@
+cff-version: 1.2.0
+message: >-
+  If you use this software or the accompanying Experiment II dataset, please
+  cite this archived release.
+type: software
+title: >-
+  Multi-Robot Coordination for Emergency Evacuation via Adversarial
+  Reinforcement Learning with Complex Crowd Behavior and Dynamic Hazard Modeling
+version: 1.0.0
+date-released: 2026-08-11
+repository-code: https://github.com/HaitianMu/MultiRobot_ARL_2025
+url: https://github.com/HaitianMu/MultiRobot_ARL_2025/releases/tag/v1.0.0
+license: MIT
+abstract: >-
+  Unity and ML-Agents implementation of an adversarial reinforcement learning
+  framework for multi-robot emergency evacuation, including the curated final
+  V11 Experiment II evaluation dataset, frozen policies, training configuration,
+  seed-level statistics, and a qualitative scene-level trajectory example.
+keywords:
+  - adversarial reinforcement learning
+  - multi-agent reinforcement learning
+  - multi-robot coordination
+  - emergency evacuation
+  - crowd behavior
+  - zero-shot transfer
+  - Unity ML-Agents
+authors:
+  - family-names: Luan
+    given-names: Ruhao
+    affiliation: School of Cyber Science and Engineering, Southeast University, Nanjing 211189, China
+  - family-names: Dubey
+    given-names: Rohit K.
+    affiliation: Department of Humanities, ETH Zurich, 8092 Zurich, Switzerland
+  - family-names: Liang
+    given-names: Zhihao
+    affiliation: School of Computer Science and Engineering, Sun Yat-sen University, Guangzhou 510006, China
+  - family-names: Cao
+    given-names: Jiuxin
+    affiliation: School of Cyber Science and Engineering, Southeast University, Nanjing 211189, China; Purple Mountain Laboratories, Nanjing 211111, China
+  - family-names: Liu
+    given-names: Bo
+    affiliation: Purple Mountain Laboratories, Nanjing 211111, China; School of Computer Science and Engineering, Southeast University, Nanjing 211189, China
+  - family-names: Shi
+    given-names: Xiaomeng
+    affiliation: School of Transportation, Southeast University, Nanjing 211189, China
+  - family-names: Zhao
+    given-names: Hantao
+    affiliation: School of Cyber Science and Engineering, Southeast University, Nanjing 211189, China; Purple Mountain Laboratories, Nanjing 211111, China

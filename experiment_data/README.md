@@ -10,6 +10,11 @@ in this evaluation cycle and is not included here. Historical diagnostics,
 short smoke tests, superseded V12-V16 trials, Unity caches, logs, and builds were
 deliberately excluded.
 
+The data in this directory are released under the
+[Creative Commons Attribution 4.0 International License](LICENSE). Project
+source code outside this directory is licensed separately under the repository's
+MIT License.
+
 ## Formal protocol
 
 - Robot team sizes: 1, 2, 3, 4, and 5.
@@ -79,6 +84,7 @@ experiment_data/
     figures/                      # PDF plus PNG scene-level timeline
   configs/                        # V11 POCA training configuration
   models/                         # exact frozen robot and human policies
+  LICENSE                         # CC BY 4.0 data license
   DATA_DICTIONARY.md
   MANIFEST.csv
   verify_dataset.py

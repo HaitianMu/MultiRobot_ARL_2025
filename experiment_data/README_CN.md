@@ -8,6 +8,9 @@
 论文中的 Experiment I 是单智能体 RL 与 ARL 对照实验，本轮没有复现，因此不在本
 数据包中。请勿使用本目录的数据替代或证明 Experiment I 的结果。
 
+本目录中的实验数据、派生统计、元数据和轨迹记录采用
+[CC BY 4.0](LICENSE) 许可；目录外的项目源代码采用仓库根目录中的 MIT License。
+
 ## 正式测试条件
 
 - 机器人数量：1--5；策略训练时的基准数量为 3。
@@ -60,6 +63,7 @@
 - `trajectory_example/`：3 机器人、seed 204195 的单回合轨迹记录和场景时间线图。
 - `configs/`：V11 POCA 训练配置。
 - `models/`：正式评估所用的机器人 checkpoint 和冻结人类 ONNX。
+- `LICENSE`：实验数据采用的 CC BY 4.0 许可说明。
 - `DATA_DICTIONARY.md`：全部 CSV 字段定义。
 - `MANIFEST.csv` 与 `checksums/SHA256SUMS.txt`：文件清单和完整性校验值。
 

@@ -1,0 +1,56 @@
+{
+  "title": "Multi-Robot Coordination for Emergency Evacuation via Adversarial Reinforcement Learning with Complex Crowd Behavior and Dynamic Hazard Modeling",
+  "description": "<p>Open-source Unity and ML-Agents implementation of an adversarial reinforcement learning framework for multi-robot emergency evacuation. Version 1.0.0 includes the curated final V11 Experiment II zero-shot team-size evaluation (1-5 robots, three seeds, 100 episodes per seed), frozen robot and human policies, the training configuration, seed-level and aggregate statistics, and one qualitative scene-level trajectory example.</p><p>The software is released under the MIT License. The contents of <code>experiment_data/</code> are released under CC BY 4.0.</p>",
+  "upload_type": "software",
+  "access_right": "open",
+  "license": "mit",
+  "version": "1.0.0",
+  "language": "eng",
+  "creators": [
+    {
+      "name": "Luan, Ruhao",
+      "affiliation": "School of Cyber Science and Engineering, Southeast University, Nanjing 211189, China"
+    },
+    {
+      "name": "Dubey, Rohit K.",
+      "affiliation": "Department of Humanities, ETH Zurich, 8092 Zurich, Switzerland"
+    },
+    {
+      "name": "Liang, Zhihao",
+      "affiliation": "School of Computer Science and Engineering, Sun Yat-sen University, Guangzhou 510006, China"
+    },
+    {
+      "name": "Cao, Jiuxin",
+      "affiliation": "School of Cyber Science and Engineering, Southeast University, Nanjing 211189, China; Purple Mountain Laboratories, Nanjing 211111, China"
+    },
+    {
+      "name": "Liu, Bo",
+      "affiliation": "Purple Mountain Laboratories, Nanjing 211111, China; School of Computer Science and Engineering, Southeast University, Nanjing 211189, China"
+    },
+    {
+      "name": "Shi, Xiaomeng",
+      "affiliation": "School of Transportation, Southeast University, Nanjing 211189, China"
+    },
+    {
+      "name": "Zhao, Hantao",
+      "affiliation": "School of Cyber Science and Engineering, Southeast University, Nanjing 211189, China; Purple Mountain Laboratories, Nanjing 211111, China"
+    }
+  ],
+  "keywords": [
+    "adversarial reinforcement learning",
+    "multi-agent reinforcement learning",
+    "multi-robot coordination",
+    "emergency evacuation",
+    "crowd behavior",
+    "zero-shot transfer",
+    "Unity ML-Agents"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/HaitianMu/MultiRobot_ARL_2025/tree/v1.0.0",
+      "relation": "isIdenticalTo",
+      "scheme": "url"
+    }
+  ],
+  "notes": "Experiment I (the single-agent RL/ARL comparison) was not reproduced in this release and is not included in the curated experiment_data package."
+}
