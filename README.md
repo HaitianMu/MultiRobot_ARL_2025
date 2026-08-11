@@ -7,6 +7,7 @@
 </p>
 
 <p align="center">
+  <a href="https://doi.org/10.5281/zenodo.21890561"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.21890561.svg" alt="DOI: 10.5281/zenodo.21890561"></a>
   <a href="https://github.com/HaitianMu/MultiRobot_ARL_2025/releases/tag/v1.0.0"><img src="https://img.shields.io/badge/release-v1.0.0-2f6f9f" alt="Release v1.0.0"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/code-MIT-3d8b73" alt="MIT License"></a>
   <a href="experiment_data/LICENSE"><img src="https://img.shields.io/badge/data-CC%20BY%204.0-b5544d" alt="CC BY 4.0"></a>
@@ -330,8 +331,13 @@ for research on intelligent robot-assisted emergency evacuation under dynamic fi
 ## Citation
 
 Citation metadata for version 1.0.0 is provided in [`CITATION.cff`](CITATION.cff).
-The archived release DOI is issued through Zenodo from the corresponding GitHub
-release.
+The version-specific archived release is available at
+[https://doi.org/10.5281/zenodo.21890561](https://doi.org/10.5281/zenodo.21890561).
+The all-versions DOI, which resolves to the latest archived release, is
+[https://doi.org/10.5281/zenodo.21890560](https://doi.org/10.5281/zenodo.21890560).
+
+Luan, R., Dubey, R. K., Liang, Z., Cao, J., Liu, B., Shi, X., & Zhao, H. (2026).
+*Multi-Robot Coordination for Emergency Evacuation via Adversarial Reinforcement Learning with Complex Crowd Behavior and Dynamic Hazard Modeling* (Version 1.0.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.21890561
 
 ## Licensing
 

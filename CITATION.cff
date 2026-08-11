@@ -8,9 +8,14 @@ title: >-
   Reinforcement Learning with Complex Crowd Behavior and Dynamic Hazard Modeling
 version: 1.0.0
 date-released: 2026-08-11
+doi: 10.5281/zenodo.21890561
 repository-code: https://github.com/HaitianMu/MultiRobot_ARL_2025
 url: https://github.com/HaitianMu/MultiRobot_ARL_2025/releases/tag/v1.0.0
 license: MIT
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.21890561
+    description: Zenodo DOI for version 1.0.0
 abstract: >-
   Unity and ML-Agents implementation of an adversarial reinforcement learning
   framework for multi-robot emergency evacuation, including the curated final

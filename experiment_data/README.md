@@ -95,6 +95,13 @@ The trajectory example uses three robots, seed 204195, and one episode. It was
 collected with trace recording enabled and is **not** one of the formal 3 x 100
 batches. It supports qualitative scene-level interpretation only.
 
+## Citation
+
+The archived version 1.0.0 repository and dataset are available from Zenodo:
+[https://doi.org/10.5281/zenodo.21890561](https://doi.org/10.5281/zenodo.21890561).
+Use [10.5281/zenodo.21890560](https://doi.org/10.5281/zenodo.21890560) when a
+single DOI representing all current and future archived versions is required.
+
 ## Software snapshot
 
 - Unity: 2021.3.43f1c1.
