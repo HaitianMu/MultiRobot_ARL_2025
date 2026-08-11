@@ -2,7 +2,7 @@
 
 <p align="center">
 
-**Adversarial Reinforcement Learning for Multi-Robot Emergency Evacuation under Dynamic Fire Hazards and Boundedly Rational Human Behavior**
+**Multi-Robot Coordination for Emergency Evacuation via Adversarial Reinforcement Learning with Complex Crowd Behavior and Dynamic Hazard Modeling**
 
 </p>
 
