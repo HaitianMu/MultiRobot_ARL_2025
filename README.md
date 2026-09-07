@@ -17,7 +17,7 @@
 
 ## Overview
 
-EvacARL is a multi-robot evacuation guidance framework designed for emergency fire scenarios. The project integrates:
+This is a multi-robot evacuation guidance framework designed for emergency fire scenarios. The project integrates:
 
 * Adversarial Reinforcement Learning (ARL)
 * Multi-Agent Posthumous Credit Assignment (MA-POCA)
